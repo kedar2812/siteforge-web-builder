@@ -1,0 +1,809 @@
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import ThemeToggle from "@/components/ThemeToggle";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Sparkles,
+  Save,
+  Eye,
+  Undo,
+  Redo,
+  Settings,
+  Plus,
+  Type,
+  Image as ImageIcon,
+  Square,
+  Layout,
+  ChevronLeft,
+  ChevronRight,
+  ZoomIn,
+  ZoomOut,
+  Maximize,
+} from "lucide-react";
+import { toast } from "sonner";
+import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
+import { SortableContext, arrayMove, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { SortableSection } from "@/components/builder/SortableSection";
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
+import FreeElement, { FreeElementData } from "@/components/builder/FreeElement";
+import TypographyPresets from "@/components/builder/TypographyPresets";
+import ColorSwatches from "@/components/builder/ColorSwatches";
+import SectionBlocks from "@/components/builder/SectionBlocks";
+import ExportImport from "@/components/builder/ExportImport";
+
+export interface Section {
+  id: string;
+  type: "hero" | "text" | "image" | "cta" | "html";
+  content: {
+    title?: string;
+    subtitle?: string;
+    text?: string;
+    imageUrl?: string;
+    buttonText?: string;
+    htmlPath?: string;
+  };
+}
+
+const Builder = () => {
+  const [sections, setSections] = useState<Section[]>([
+    {
+      id: "1",
+      type: "hero",
+      content: {
+        title: "Welcome to Your Website",
+        subtitle: "Build something amazing",
+        buttonText: "Get Started",
+      },
+    },
+  ]);
+  const location = useLocation();
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const html = params.get("html");
+    if (html) {
+      setSections([
+        { id: "tpl-html", type: "html", content: { title: "Template", htmlPath: html } },
+      ]);
+    }
+  }, [location.search]);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [preview, setPreview] = useState(false);
+  const [leftOpen, setLeftOpen] = useState(true);
+  const [rightOpen, setRightOpen] = useState(true);
+  const [zoom, setZoom] = useState(1);
+  const [freeElements, setFreeElements] = useState<FreeElementData[]>([]);
+  const canvasRef = useRef<HTMLDivElement | null>(null);
+  const canvasWrapperRef = useRef<HTMLDivElement | null>(null);
+  const historyRef = useRef<Section[][]>([]);
+  const futureRef = useRef<Section[][]>([]);
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
+
+  const pushHistory = useCallback((next: Section[]) => {
+    historyRef.current.push(sections);
+    futureRef.current = [];
+    setSections(next);
+  }, [sections]);
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      setSections((items) => {
+        const oldIndex = items.findIndex((item) => item.id === active.id);
+        const newIndex = items.findIndex((item) => item.id === over.id);
+        const moved = arrayMove(items, oldIndex, newIndex);
+        historyRef.current.push(items);
+        futureRef.current = [];
+        return moved;
+      });
+    }
+  };
+
+  const addSection = (type: Section["type"]) => {
+    const newSection: Section = {
+      id: Date.now().toString(),
+      type,
+      content: {
+        title: type === "hero" ? "New Hero Section" : undefined,
+        subtitle: type === "hero" ? "Subtitle text" : undefined,
+        text: type === "text" ? "Your text content here..." : undefined,
+        imageUrl: type === "image" ? "https://via.placeholder.com/800x400" : undefined,
+        buttonText: type === "cta" ? "Click Here" : undefined,
+        htmlPath: type === "html" ? "/templates/business-landing/index.html" : undefined,
+      },
+    };
+    pushHistory([...sections, newSection]);
+    toast.success("Section added");
+  };
+
+  const updateSection = (id: string, content: Section["content"]) => {
+    setSections((prev) => prev.map((s) => (s.id === id ? { ...s, content } : s)));
+  };
+
+  const deleteSection = (id: string) => {
+    pushHistory(sections.filter((s) => s.id !== id));
+    toast.success("Section removed");
+  };
+
+  const handleSave = () => {
+    // Save to localStorage for now (in real app, this would be API call)
+    const projectData = {
+      sections,
+      freeElements,
+      lastSaved: new Date().toISOString(),
+    };
+    localStorage.setItem("website-project", JSON.stringify(projectData));
+    setLastSaved(new Date());
+    toast.success("Site saved successfully!");
+  };
+
+  // Autosave every 30 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (sections.length > 0 || freeElements.length > 0) {
+        const projectData = {
+          sections,
+          freeElements,
+          lastSaved: new Date().toISOString(),
+        };
+        localStorage.setItem("website-project", JSON.stringify(projectData));
+        setLastSaved(new Date());
+      }
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, [sections, freeElements]);
+
+  // Load saved project on mount
+  useEffect(() => {
+    const saved = localStorage.getItem("website-project");
+    if (saved) {
+      try {
+        const data = JSON.parse(saved);
+        if (data.sections) setSections(data.sections);
+        if (data.freeElements) setFreeElements(data.freeElements);
+        if (data.lastSaved) setLastSaved(new Date(data.lastSaved));
+      } catch (error) {
+        console.error("Error loading saved project:", error);
+      }
+    }
+  }, []);
+
+  const canUndo = useMemo(() => historyRef.current.length > 0, []);
+  const canRedo = useMemo(() => futureRef.current.length > 0, []);
+
+  const undo = () => {
+    const prev = historyRef.current.pop();
+    if (!prev) return;
+    futureRef.current.push(sections);
+    setSections(prev);
+  };
+
+  const redo = () => {
+    const next = futureRef.current.pop();
+    if (!next) return;
+    historyRef.current.push(sections);
+    setSections(next);
+  };
+
+  // Keyboard shortcuts: delete/duplicate for elements and sections, undo/redo
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      // Undo / Redo
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") {
+        e.preventDefault();
+        undo();
+        return;
+      }
+      if ((e.ctrlKey || e.metaKey) && (e.key.toLowerCase() === "y" || (e.shiftKey && e.key.toLowerCase() === "z"))) {
+        e.preventDefault();
+        redo();
+        return;
+      }
+
+      if (!selectedId) return;
+
+      const freeTarget = freeElements.find((e2) => e2.id === selectedId);
+      const sectionTarget = sections.find((s) => s.id === selectedId);
+
+      // Delete
+      if (e.key === "Delete" || e.key === "Backspace") {
+        if (freeTarget) {
+          setFreeElements((els) => els.filter((el) => el.id !== selectedId));
+          setSelectedId(null);
+          e.preventDefault();
+          return;
+        }
+        if (sectionTarget) {
+          deleteSection(sectionTarget.id);
+          setSelectedId(null);
+          e.preventDefault();
+          return;
+        }
+      }
+
+      // Duplicate (Ctrl/Cmd + D)
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "d") {
+        if (freeTarget) {
+          const copy: FreeElementData = {
+            ...freeTarget,
+            id: `el-${Date.now()}`,
+            x: freeTarget.x + 16,
+            y: freeTarget.y + 16,
+            locked: false,
+          };
+          setFreeElements((els) => [...els, copy]);
+          setSelectedId(copy.id);
+          e.preventDefault();
+          return;
+        }
+        if (sectionTarget) {
+          const copy: Section = {
+            ...sectionTarget,
+            id: `${Date.now()}`,
+            content: { ...sectionTarget.content },
+          };
+          pushHistory([...sections, copy]);
+          setSelectedId(copy.id);
+          e.preventDefault();
+          return;
+        }
+      }
+
+      // Nudging with arrow keys
+      if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+        if (freeTarget) {
+          const step = e.shiftKey ? 10 : 1;
+          let newX = freeTarget.x;
+          let newY = freeTarget.y;
+          
+          switch (e.key) {
+            case "ArrowUp": newY -= step; break;
+            case "ArrowDown": newY += step; break;
+            case "ArrowLeft": newX -= step; break;
+            case "ArrowRight": newX += step; break;
+          }
+          
+          setFreeElements(els => els.map(el => 
+            el.id === selectedId ? { ...el, x: newX, y: newY } : el
+          ));
+          e.preventDefault();
+          return;
+        }
+      }
+
+      // Align shortcuts
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "l") {
+        // Align left
+        if (freeTarget) {
+          setFreeElements(els => els.map(el => 
+            el.id === selectedId ? { ...el, x: 0 } : el
+          ));
+          e.preventDefault();
+        }
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "r") {
+        // Align right
+        if (freeTarget && canvasRef.current) {
+          const canvasWidth = canvasRef.current.clientWidth;
+          setFreeElements(els => els.map(el => 
+            el.id === selectedId ? { ...el, x: canvasWidth - el.width } : el
+          ));
+          e.preventDefault();
+        }
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "t") {
+        // Align top
+        if (freeTarget) {
+          setFreeElements(els => els.map(el => 
+            el.id === selectedId ? { ...el, y: 0 } : el
+          ));
+          e.preventDefault();
+        }
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "b") {
+        // Align bottom
+        if (freeTarget && canvasRef.current) {
+          const canvasHeight = 800; // fixed canvas height
+          setFreeElements(els => els.map(el => 
+            el.id === selectedId ? { ...el, y: canvasHeight - el.height } : el
+          ));
+          e.preventDefault();
+        }
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [selectedId, sections, freeElements, undo, redo, pushHistory]);
+
+  const applyTemplate = (tpl: Section[]) => {
+    pushHistory(tpl.map((s) => ({ ...s, id: crypto.randomUUID() })));
+    setSelectedId(null);
+  };
+
+  const templates: { name: string; sections: Section[] }[] = [
+    {
+      name: "Simple Landing",
+      sections: [
+        { id: "t1", type: "hero", content: { title: "Build Faster", subtitle: "Your site in minutes", buttonText: "Start" } },
+        { id: "t2", type: "text", content: { text: "Add your selling points and showcase your product." } },
+        { id: "t3", type: "cta", content: { title: "Get Started Today", buttonText: "Sign Up" } },
+      ],
+    },
+    {
+      name: "Portfolio",
+      sections: [
+        { id: "p1", type: "hero", content: { title: "Hi, I'm Alex", subtitle: "Designer & Developer", buttonText: "View Work" } },
+        { id: "p2", type: "image", content: { imageUrl: "https://via.placeholder.com/1200x600" } },
+        { id: "p3", type: "text", content: { text: "I create delightful user experiences with a focus on performance." } },
+      ],
+    },
+  ];
+
+  return (
+    <div className="min-h-screen bg-background flex flex-col">
+      {/* Top Toolbar */}
+      <header className="border-b border-border/50 bg-card/50 backdrop-blur-sm sticky top-0 z-50">
+        <div className="flex items-center justify-between px-4 h-14">
+          <div className="flex items-center gap-4">
+            <Link to="/dashboard">
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-primary" />
+                <span className="font-semibold hidden sm:inline">SiteForge</span>
+              </div>
+            </Link>
+            <Link to="/dashboard">
+              <Button variant="secondary" size="sm">Go to Dashboard</Button>
+            </Link>
+            <div className="h-6 w-px bg-border" />
+            <input
+              type="text"
+              defaultValue="Untitled Site"
+              className="bg-transparent border-none outline-none font-medium text-sm max-w-[200px]"
+            />
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="icon" onClick={() => setZoom((z) => Math.min(2, parseFloat((z + 0.1).toFixed(2))))} title="Zoom in">
+              <ZoomIn className="w-4 h-4" />
+            </Button>
+            <Button variant="ghost" size="icon" onClick={() => setZoom((z) => Math.max(0.4, parseFloat((z - 0.1).toFixed(2))))} title="Zoom out">
+              <ZoomOut className="w-4 h-4" />
+            </Button>
+            <Button variant="ghost" size="icon" onClick={() => {
+              const wrapper = canvasWrapperRef.current;
+              const canvas = canvasRef.current;
+              if (!wrapper || !canvas) { setZoom(1); return; }
+              const availW = wrapper.clientWidth - 16;
+              const availH = wrapper.clientHeight - 16;
+              const rect = canvas.getBoundingClientRect();
+              const baseW = rect.width / zoom;
+              const baseH = 800; // fixed base canvas height
+              const scale = Math.max(0.2, Math.min(availW / baseW, availH / baseH));
+              setZoom(parseFloat(scale.toFixed(2)));
+            }} title="Fit to screen">
+              <Maximize className="w-4 h-4" />
+            </Button>
+            <Button variant="ghost" size="icon" className="hidden md:flex" onClick={undo} disabled={!historyRef.current.length}>
+              <Undo className="w-4 h-4" />
+            </Button>
+            <Button variant="ghost" size="icon" className="hidden md:flex" onClick={redo} disabled={!futureRef.current.length}>
+              <Redo className="w-4 h-4" />
+            </Button>
+            <Button variant="ghost" size="icon" onClick={() => setPreview((v) => !v)} aria-pressed={preview}>
+              <Eye className="w-4 h-4" />
+            </Button>
+            <Button variant="hero" size="sm" onClick={handleSave} className="gap-2">
+              <Save className="w-4 h-4" />
+              <span className="hidden sm:inline">Save</span>
+            </Button>
+            {lastSaved && (
+              <span className="text-xs text-muted-foreground hidden md:inline">
+                Last saved: {lastSaved.toLocaleTimeString()}
+              </span>
+            )}
+            <ThemeToggle />
+          </div>
+        </div>
+      </header>
+
+      <div className="flex flex-1 overflow-hidden relative">
+        <ResizablePanelGroup direction="horizontal" className="w-full">
+        {/* Left Sidebar - Elements */}
+          {leftOpen && (
+          <ResizablePanel defaultSize={20} minSize={15} maxSize={35} className="min-w-[200px]">
+            <aside className="h-full border-r border-border/50 bg-card/30 p-4 overflow-y-auto">
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
+                <Plus className="w-4 h-4" />
+                Add Sections
+              </h3>
+              <div className="space-y-2">
+                <Button
+                  variant="outline"
+                  className="w-full justify-start gap-2"
+                  onClick={() => addSection("hero")}
+                >
+                  <Layout className="w-4 h-4" />
+                  Hero Section
+                </Button>
+                <Button
+                  variant="outline"
+                  className="w-full justify-start gap-2"
+                  onClick={() => addSection("text")}
+                >
+                  <Type className="w-4 h-4" />
+                  Text Block
+                </Button>
+                <Button
+                  variant="outline"
+                  className="w-full justify-start gap-2"
+                  onClick={() => addSection("image")}
+                >
+                  <ImageIcon className="w-4 h-4" />
+                  Image
+                </Button>
+                <Button
+                  variant="outline"
+                  className="w-full justify-start gap-2"
+                  onClick={() => addSection("cta")}
+                >
+                  <Square className="w-4 h-4" />
+                  Call to Action
+                </Button>
+              <Button
+                variant="outline"
+                className="w-full justify-start gap-2"
+                onClick={() => addSection("html")}
+              >
+                <Square className="w-4 h-4" />
+                HTML Template
+              </Button>
+
+                {/* Draggable freeform elements */}
+                <div
+                  draggable
+                  onDragStart={(e) => e.dataTransfer.setData("application/x-element-type", "text")}
+                  className="w-full px-3 py-2 rounded border bg-card cursor-grab"
+                >
+                  Add Text
+                </div>
+                <div
+                  draggable
+                  onDragStart={(e) => e.dataTransfer.setData("application/x-element-type", "shape")}
+                  className="w-full px-3 py-2 rounded border bg-card cursor-grab"
+                >
+                  Add Shape
+                </div>
+                <div
+                  draggable
+                  onDragStart={(e) => e.dataTransfer.setData("application/x-element-type", "image")}
+                  className="w-full px-3 py-2 rounded border bg-card cursor-grab"
+                >
+                  Add Image
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
+                <Layout className="w-4 h-4" />
+                Templates
+              </h3>
+              <div className="space-y-2">
+                {templates.map((t) => (
+                  <Button key={t.name} variant="outline" className="w-full justify-start" onClick={() => applyTemplate(t.sections)}>
+                    {t.name}
+                  </Button>
+                ))}
+              </div>
+            </div>
+
+            {/* Typography Presets */}
+            <TypographyPresets onApply={(preset) => {
+              // Apply to all text elements
+              setFreeElements(els => els.map(el => 
+                el.type === "text" 
+                  ? { ...el, props: { ...el.props, fontFamily: preset.heading.fontFamily, fontSize: preset.heading.fontSize, fontWeight: preset.heading.fontWeight } }
+                  : el
+              ));
+              toast.success("Typography preset applied");
+            }} />
+
+            {/* Color Swatches */}
+            <ColorSwatches 
+              onSelect={(color) => {
+                if (selectedId) {
+                  const freeTarget = freeElements.find(e => e.id === selectedId);
+                  if (freeTarget) {
+                    setFreeElements(els => els.map(e => 
+                      e.id === selectedId 
+                        ? { ...e, props: { ...e.props, color } }
+                        : e
+                    ));
+                  }
+                }
+              }}
+              currentColor={freeElements.find(e => e.id === selectedId)?.props?.color}
+            />
+
+            {/* Section Blocks */}
+            <SectionBlocks onAdd={(template) => {
+              const newSection: Section = {
+                id: Date.now().toString(),
+                type: template.type as any,
+                content: template.content,
+              };
+              pushHistory([...sections, newSection]);
+              toast.success("Section block added");
+            }} />
+
+            {/* Export & Import */}
+            <ExportImport 
+              sections={sections}
+              freeElements={freeElements}
+              onImport={(data) => {
+                setSections(data.sections);
+                setFreeElements(data.freeElements);
+                setSelectedId(null);
+                toast.success("Project imported successfully");
+              }}
+            />
+          </div>
+        </aside>
+          </ResizablePanel>
+          )}
+          {leftOpen && <ResizableHandle withHandle />}
+
+        {/* Main Canvas */}
+          <ResizablePanel defaultSize={60} minSize={30}>
+            <main className="h-full overflow-auto bg-muted/30 p-0">
+          <div className="w-full h-full" ref={canvasWrapperRef}>
+            <Card className="min-h-[600px] bg-background border-border/50 shadow-elevation">
+              <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                <SortableContext items={sections.map((s) => s.id)} strategy={verticalListSortingStrategy}>
+                  {sections.map((section) => (
+                    <SortableSection
+                      key={section.id}
+                      section={section}
+                      onUpdate={updateSection}
+                      onDelete={deleteSection}
+                      onSelect={setSelectedId}
+                      selected={selectedId === section.id}
+                      preview={preview}
+                    />
+                  ))}
+                </SortableContext>
+              </DndContext>
+              {/* Freeform canvas */}
+              <div
+                ref={canvasRef}
+                className="relative h-[800px] editor-grid"
+                style={{ transform: `scale(${zoom})`, transformOrigin: "top left" }}
+                onDragOver={(e) => {
+                  e.preventDefault();
+                }}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  const type = e.dataTransfer.getData("application/x-element-type");
+                  if (!type) return;
+                  const rect = canvasRef.current?.getBoundingClientRect();
+                  if (!rect) return;
+                  const x = Math.round((e.clientX - rect.left) / zoom);
+                  const y = Math.round((e.clientY - rect.top) / zoom);
+                  const id = `el-${Date.now()}`;
+                  const base: FreeElementData = {
+                    id,
+                    type: type as any,
+                    x: x - 50,
+                    y: y - 25,
+                    width: type === "text" ? 200 : 120,
+                    height: type === "text" ? 60 : 120,
+                    props: type === "text" ? { text: "Double-click to edit", fontSize: 20, align: "center" } : type === "shape" ? { bg: "hsl(var(--card))", radius: 8 } : { src: "/placeholder.svg" },
+                  };
+                  setFreeElements((els) => [...els, base]);
+                  setSelectedId(id);
+                }}
+              >
+                {/* center alignment guides */}
+                <div className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 h-full w-px bg-primary/30" />
+                <div className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 w-full h-px bg-primary/30" />
+                {freeElements.map(el => (
+                  <FreeElement
+                    key={el.id}
+                    data={el}
+                    selected={selectedId === el.id}
+                    zoom={zoom}
+                    onSelect={setSelectedId}
+                    onChange={(id, patch) => setFreeElements(els => els.map(e => e.id === id ? { ...e, ...patch } : e))}
+                    onDragStateChange={(_, __) => { /* reserved for future snapping to guides */ }}
+                  />
+                ))}
+              </div>
+              {sections.length === 0 && (
+                <div className="flex items-center justify-center h-[600px] text-muted-foreground">
+                  <div className="text-center">
+                    <Layout className="w-16 h-16 mx-auto mb-4 opacity-20" />
+                    <p>Add sections from the left sidebar to start building</p>
+                  </div>
+                </div>
+              )}
+            </Card>
+          </div>
+        </main>
+          </ResizablePanel>
+          {rightOpen && <ResizableHandle withHandle />}
+
+        {/* Right Sidebar - Properties */}
+          {rightOpen && (
+          <ResizablePanel defaultSize={20} minSize={15} maxSize={35} className="min-w-[220px]">
+            <aside className="h-full border-l border-border/50 bg-card/30 p-4 overflow-y-auto">
+          <div className="space-y-4">
+            <h3 className="text-sm font-semibold flex items-center gap-2">
+              <Settings className="w-4 h-4" />
+              Properties
+            </h3>
+            {!selectedId && (
+              <p className="text-sm text-muted-foreground">Select an element or section to edit its properties</p>
+            )}
+            {selectedId && (
+              <div className="space-y-4">
+                {(() => {
+                  const sectionTarget = sections.find((s) => s.id === selectedId);
+                  if (sectionTarget) {
+                    const update = (patch: Partial<Section["content"]>) => updateSection(sectionTarget.id, { ...sectionTarget.content, ...patch });
+                    switch (sectionTarget.type) {
+                      case "hero":
+                        return (
+                          <div className="space-y-3">
+                            <Input value={sectionTarget.content.title || ""} onChange={(e) => update({ title: e.target.value })} placeholder="Title" />
+                            <Input value={sectionTarget.content.subtitle || ""} onChange={(e) => update({ subtitle: e.target.value })} placeholder="Subtitle" />
+                            <Input value={sectionTarget.content.buttonText || ""} onChange={(e) => update({ buttonText: e.target.value })} placeholder="Button Text" />
+                          </div>
+                        );
+                      case "text":
+                        return (
+                          <Textarea value={sectionTarget.content.text || ""} onChange={(e) => update({ text: e.target.value })} placeholder="Text" />
+                        );
+                      case "image":
+                        return (
+                          <Input value={sectionTarget.content.imageUrl || ""} onChange={(e) => update({ imageUrl: e.target.value })} placeholder="Image URL" />
+                        );
+                      case "cta":
+                        return (
+                          <div className="space-y-3">
+                            <Input value={sectionTarget.content.title || ""} onChange={(e) => update({ title: e.target.value })} placeholder="Title" />
+                            <Input value={sectionTarget.content.buttonText || ""} onChange={(e) => update({ buttonText: e.target.value })} placeholder="Button Text" />
+                          </div>
+                        );
+                      case "html":
+                        return (
+                          <Input value={sectionTarget.content.htmlPath || ""} onChange={(e) => update({ htmlPath: e.target.value })} placeholder="HTML Path" />
+                        );
+                    }
+                  }
+                  const freeTarget = freeElements.find((e) => e.id === selectedId);
+                  if (freeTarget) {
+                    const update = (patch: Partial<FreeElementData>) => setFreeElements((els) => els.map((e) => e.id === freeTarget.id ? { ...e, ...patch } : e));
+                    return (
+                      <div className="space-y-3">
+                        <div className="grid grid-cols-2 gap-2">
+                          <Input type="number" value={freeTarget.x} onChange={(e) => update({ x: parseInt(e.target.value || "0", 10) })} placeholder="X" />
+                          <Input type="number" value={freeTarget.y} onChange={(e) => update({ y: parseInt(e.target.value || "0", 10) })} placeholder="Y" />
+                          <Input type="number" value={freeTarget.width} onChange={(e) => update({ width: parseInt(e.target.value || "0", 10) })} placeholder="W" />
+                          <Input type="number" value={freeTarget.height} onChange={(e) => update({ height: parseInt(e.target.value || "0", 10) })} placeholder="H" />
+                          <Input type="number" value={freeTarget.rotation || 0} onChange={(e) => update({ rotation: parseInt(e.target.value || "0", 10) })} placeholder="Rotation" />
+                        </div>
+                        {freeTarget.type === "text" && (
+                          <div className="space-y-2">
+                            <Input value={freeTarget.props?.text || ""} onChange={(e) => update({ props: { ...freeTarget.props, text: e.target.value } })} placeholder="Text" />
+                            <Input type="number" value={freeTarget.props?.fontSize || 24} onChange={(e) => update({ props: { ...freeTarget.props, fontSize: parseInt(e.target.value || "0", 10) } })} placeholder="Font size" />
+                            <Input value={freeTarget.props?.color || ""} onChange={(e) => update({ props: { ...freeTarget.props, color: e.target.value } })} placeholder="Color (e.g., #fff or hsl())" />
+                          </div>
+                        )}
+                        {freeTarget.type === "image" && (
+                          <div className="space-y-2">
+                            <Input value={freeTarget.props?.src || ""} onChange={(e) => update({ props: { ...freeTarget.props, src: e.target.value } })} placeholder="Image URL" />
+                            <Input type="number" value={freeTarget.props?.opacity ?? 1} onChange={(e) => update({ props: { ...freeTarget.props, opacity: parseFloat(e.target.value || "1") } })} placeholder="Opacity (0-1)" />
+                          </div>
+                        )}
+                        {freeTarget.type === "shape" && (
+                          <div className="space-y-2">
+                            <Input value={freeTarget.props?.bg || ""} onChange={(e) => update({ props: { ...freeTarget.props, bg: e.target.value } })} placeholder="Background" />
+                            <Input type="number" value={freeTarget.props?.radius ?? 8} onChange={(e) => update({ props: { ...freeTarget.props, radius: parseInt(e.target.value || "0", 10) } })} placeholder="Radius" />
+                          </div>
+                        )}
+                      </div>
+                    );
+                  }
+                })()}
+                <div className="pt-2">
+                  <Button variant="outline" onClick={() => setSelectedId(null)} className="w-full">Deselect</Button>
+                </div>
+              </div>
+            )}
+            {/* Enhanced Layers Panel */}
+            <div className="pt-4">
+              <h4 className="text-xs uppercase tracking-wide text-muted-foreground mb-2">Layers</h4>
+              <div className="space-y-1">
+                {/* Sections */}
+                {sections.map((section) => (
+                  <div key={section.id} className={`flex items-center justify-between text-sm px-2 py-1 rounded ${selectedId === section.id ? 'bg-primary/10' : 'hover:bg-muted/50'}`}
+                       onClick={() => setSelectedId(section.id)}>
+                    <div className="flex items-center gap-2">
+                      <Layout className="w-3 h-3" />
+                      <span>{section.type} Section</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Button variant="ghost" size="sm" onClick={(e) => {
+                        e.stopPropagation();
+                        deleteSection(section.id);
+                      }}>Delete</Button>
+                    </div>
+                  </div>
+                ))}
+                
+                {/* Free Elements */}
+                {freeElements
+                  .slice()
+                  .sort((a, b) => (b.zIndex || 0) - (a.zIndex || 0))
+                  .map((el) => (
+                    <div key={el.id} className={`flex items-center justify-between text-sm px-2 py-1 rounded ${selectedId === el.id ? 'bg-primary/10' : 'hover:bg-muted/50'}`}
+                         onClick={() => setSelectedId(el.id)}>
+                      <div className="flex items-center gap-2">
+                        <div className={`w-3 h-3 rounded ${el.locked ? 'bg-orange-500' : 'bg-green-500'}`} title={el.locked ? 'Locked' : 'Unlocked'} />
+                        <span>{el.type} ({el.id.slice(-4)})</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Button variant="ghost" size="sm" onClick={(e) => {
+                          e.stopPropagation();
+                          setFreeElements(els => els.map(e => e.id === el.id ? { ...e, zIndex: (e.zIndex || 1) + 1 } : e));
+                        }}>↑</Button>
+                        <Button variant="ghost" size="sm" onClick={(e) => {
+                          e.stopPropagation();
+                          setFreeElements(els => els.map(e => e.id === el.id ? { ...e, zIndex: Math.max(1, (e.zIndex || 1) - 1) } : e));
+                        }}>↓</Button>
+                        <Button variant="ghost" size="sm" onClick={(e) => {
+                          e.stopPropagation();
+                          setFreeElements(els => els.map(e => e.id === el.id ? { ...e, locked: !e.locked } : e));
+                        }}>{el.locked ? '🔒' : '🔓'}</Button>
+                        <Button variant="ghost" size="sm" onClick={(e) => {
+                          e.stopPropagation();
+                          setFreeElements(els => els.filter(e => e.id !== el.id));
+                          if (selectedId === el.id) setSelectedId(null);
+                        }}>🗑</Button>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          </div>
+        </aside>
+          </ResizablePanel>
+          )}
+        </ResizablePanelGroup>
+      </div>
+      {/* Corner Arrow Buttons */}
+      <button
+        onClick={() => setLeftOpen(v => !v)}
+        className="absolute left-2 top-1/2 -translate-y-1/2 z-40 rounded-full border border-border/50 bg-background/70 backdrop-blur p-1 hover:bg-background transition-transform"
+        title={leftOpen ? "Collapse left" : "Expand left"}
+      >
+        {leftOpen ? <ChevronLeft className="w-4 h-4 transition-transform" /> : <ChevronRight className="w-4 h-4 transition-transform" />}
+      </button>
+      <button
+        onClick={() => setRightOpen(v => !v)}
+        className="absolute right-2 top-1/2 -translate-y-1/2 z-40 rounded-full border border-border/50 bg-background/70 backdrop-blur p-1 hover:bg-background transition-transform"
+        title={rightOpen ? "Collapse right" : "Expand right"}
+      >
+        {rightOpen ? <ChevronRight className="w-4 h-4 transition-transform" /> : <ChevronLeft className="w-4 h-4 transition-transform" />}
+      </button>
+    </div>
+  );
+};
+
+export default Builder;

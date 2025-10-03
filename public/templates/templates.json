@@ -1,0 +1,20 @@
+[
+  {
+    "id": "tpl-001",
+    "name": "Business Landing",
+    "category": "Business",
+    "thumbnail": "/placeholder.svg",
+    "htmlPath": "/templates/business-landing/index.html",
+    "cssPath": "/templates/business-landing/style.css"
+  },
+  {
+    "id": "tpl-002",
+    "name": "Creative Portfolio",
+    "category": "Portfolio",
+    "thumbnail": "/placeholder.svg",
+    "htmlPath": "/templates/creative-portfolio/index.html",
+    "cssPath": "/templates/creative-portfolio/style.css"
+  }
+]
+
+
