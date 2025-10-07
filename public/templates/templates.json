@@ -3,17 +3,161 @@
     "id": "tpl-001",
     "name": "Business Landing",
     "category": "Business",
-    "thumbnail": "/placeholder.svg",
+    "thumbnail": "/thumbnails/business-landing.svg",
     "htmlPath": "/templates/business-landing/index.html",
     "cssPath": "/templates/business-landing/style.css"
   },
   {
     "id": "tpl-002",
-    "name": "Creative Portfolio",
+    "name": "Personal Portfolio",
     "category": "Portfolio",
-    "thumbnail": "/placeholder.svg",
-    "htmlPath": "/templates/creative-portfolio/index.html",
-    "cssPath": "/templates/creative-portfolio/style.css"
+    "thumbnail": "/thumbnails/personal-portfolio.svg",
+    "htmlPath": "/templates/personal-portfolio/index.html",
+    "cssPath": "/templates/personal-portfolio/style.css"
+  },
+  {
+    "id": "tpl-003",
+    "name": "Restaurant & Cafe",
+    "category": "Restaurant",
+    "thumbnail": "/thumbnails/restaurant-cafe.svg",
+    "htmlPath": "/templates/restaurant-cafe/index.html",
+    "cssPath": "/templates/restaurant-cafe/style.css"
+  },
+  {
+    "id": "tpl-004",
+    "name": "Tech Startup",
+    "category": "Tech",
+    "thumbnail": "/thumbnails/tech-startup.svg",
+    "htmlPath": "/templates/tech-startup/index.html",
+    "cssPath": "/templates/tech-startup/style.css"
+  },
+  {
+    "id": "tpl-005",
+    "name": "Fashion & Lifestyle",
+    "category": "Fashion",
+    "thumbnail": "/thumbnails/fashion-lifestyle.svg",
+    "htmlPath": "/templates/fashion-lifestyle/index.html",
+    "cssPath": "/templates/fashion-lifestyle/style.css"
+  },
+  {
+    "id": "tpl-006",
+    "name": "Education Platform",
+    "category": "Education",
+    "thumbnail": "/thumbnails/education-platform.svg",
+    "htmlPath": "/templates/education-platform/index.html",
+    "cssPath": "/templates/education-platform/style.css"
+  },
+  {
+    "id": "tpl-007",
+    "name": "E-commerce Store",
+    "category": "E-commerce",
+    "thumbnail": "/thumbnails/ecommerce-store.svg",
+    "htmlPath": "/templates/ecommerce-store/index.html",
+    "cssPath": "/templates/ecommerce-store/style.css"
+  },
+  {
+    "id": "tpl-008",
+    "name": "Agency Showcase",
+    "category": "Business",
+    "thumbnail": "/thumbnails/agency-showcase.svg",
+    "htmlPath": "/templates/agency-showcase/index.html",
+    "cssPath": "/templates/agency-showcase/style.css"
+  },
+  {
+    "id": "tpl-009",
+    "name": "Event & Conference",
+    "category": "Event",
+    "thumbnail": "/thumbnails/event-conference.svg",
+    "htmlPath": "/templates/event-conference/index.html",
+    "cssPath": "/templates/event-conference/style.css"
+  },
+  {
+    "id": "tpl-010",
+    "name": "Fitness & Health",
+    "category": "Fitness",
+    "thumbnail": "/thumbnails/fitness-health.svg",
+    "htmlPath": "/templates/fitness-health/index.html",
+    "cssPath": "/templates/fitness-health/style.css"
+  },
+  {
+    "id": "tpl-011",
+    "name": "Blog & Magazine",
+    "category": "Blog",
+    "thumbnail": "/thumbnails/blog-magazine.svg",
+    "htmlPath": "/templates/blog-magazine/index.html",
+    "cssPath": "/templates/blog-magazine/style.css"
+  },
+  {
+    "id": "tpl-012",
+    "name": "Photography",
+    "category": "Photography",
+    "thumbnail": "/thumbnails/photography.svg",
+    "htmlPath": "/templates/photography/index.html",
+    "cssPath": "/templates/photography/style.css"
+  },
+  {
+    "id": "tpl-013",
+    "name": "Travel Agency",
+    "category": "Travel",
+    "thumbnail": "/thumbnails/travel-agency.svg",
+    "htmlPath": "/templates/travel-agency/index.html",
+    "cssPath": "/templates/travel-agency/style.css"
+  },
+  {
+    "id": "tpl-014",
+    "name": "Real Estate",
+    "category": "Real Estate",
+    "thumbnail": "/thumbnails/real-estate.svg",
+    "htmlPath": "/templates/real-estate/index.html",
+    "cssPath": "/templates/real-estate/style.css"
+  },
+  {
+    "id": "tpl-015",
+    "name": "Resume & CV",
+    "category": "Resume",
+    "thumbnail": "/thumbnails/resume-cv.svg",
+    "htmlPath": "/templates/resume-cv/index.html",
+    "cssPath": "/templates/resume-cv/style.css"
+  },
+  {
+    "id": "tpl-016",
+    "name": "Creative Studio",
+    "category": "Creative",
+    "thumbnail": "/thumbnails/creative-studio.svg",
+    "htmlPath": "/templates/creative-studio/index.html",
+    "cssPath": "/templates/creative-studio/style.css"
+  },
+  {
+    "id": "tpl-017",
+    "name": "NGO & Charity",
+    "category": "NGO",
+    "thumbnail": "/thumbnails/ngo-charity.svg",
+    "htmlPath": "/templates/ngo-charity/index.html",
+    "cssPath": "/templates/ngo-charity/style.css"
+  },
+  {
+    "id": "tpl-018",
+    "name": "Product Launch",
+    "category": "Product",
+    "thumbnail": "/thumbnails/product-launch.svg",
+    "htmlPath": "/templates/product-launch/index.html",
+    "cssPath": "/templates/product-launch/style.css"
+  },
+  {
+    "id": "tpl-019",
+    "name": "SaaS Product",
+    "category": "SaaS",
+    "thumbnail": "/thumbnails/saas-product.svg",
+    "htmlPath": "/templates/saas-product/index.html",
+    "cssPath": "/templates/saas-product/style.css"
+  },
+  {
+    "id": "tpl-020",
+    "name": "Consulting Service",
+    "category": "Consulting",
+    "thumbnail": "/thumbnails/consulting-service.svg",
+    "htmlPath": "/templates/consulting-service/index.html",
+    "cssPath": "/templates/consulting-service/style.css"
   }
 ]
 
