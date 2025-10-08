@@ -3,52 +3,328 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduLearn Platform</title>
+    <title>EduLearn - Online Education Platform</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="hero">
         <nav class="nav">
-            <div class="nav-brand">EduLearn</div>
+            <div class="nav-brand">
+                <div class="logo">
+                    <div class="logo-icon">🎓</div>
+                    <span class="logo-text">EduLearn</span>
+                </div>
+            </div>
             <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
                 <li><a href="#courses">Courses</a></li>
+                <li><a href="#instructors">Instructors</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <div class="nav-actions">
+                <button class="login-btn">Login</button>
+                <button class="signup-btn">Sign Up</button>
+            </div>
         </nav>
         <div class="hero-content">
-            <h1 class="hero-title">Learn Without Limits</h1>
-            <p class="hero-subtitle">Master new skills with our comprehensive online courses</p>
-            <button class="cta-button">Start Learning</button>
+            <div class="hero-badge">
+                <span class="badge-icon">🚀</span>
+                <span>Join 50,000+ students worldwide</span>
+            </div>
+            <h1 class="hero-title">Learn Without <span class="gradient-text">Limits</span></h1>
+            <p class="hero-subtitle">Access thousands of courses, expert instructors, and cutting-edge learning tools. Transform your career with our comprehensive online education platform designed for modern learners.</p>
+            <div class="hero-actions">
+                <button class="cta-button primary">
+                    <span>Start Learning</span>
+                    <div class="button-icon">→</div>
+                </button>
+                <button class="cta-button secondary">
+                    <span class="play-icon">▶</span>
+                    <span>Watch Demo</span>
+                </button>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">50K+</span>
+                    <span class="stat-label">Students</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">2K+</span>
+                    <span class="stat-label">Courses</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">98%</span>
+                    <span class="stat-label">Success Rate</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="learning-dashboard">
+                <div class="dashboard-header">
+                    <div class="dashboard-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="dashboard-content">
+                    <div class="course-card">
+                        <div class="course-image"></div>
+                        <div class="course-info">
+                            <h4>Web Development</h4>
+                            <p>Progress: 75%</p>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-image"></div>
+                        <div class="course-info">
+                            <h4>Data Science</h4>
+                            <p>Progress: 60%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="floating-elements">
+                <div class="floating-card card-1">
+                    <div class="card-icon">📚</div>
+                    <span>Courses</span>
+                </div>
+                <div class="floating-card card-2">
+                    <div class="card-icon">👨‍🏫</div>
+                    <span>Instructors</span>
+                </div>
+                <div class="floating-card card-3">
+                    <div class="card-icon">🏆</div>
+                    <span>Achievements</span>
+                </div>
+            </div>
         </div>
     </header>
 
     <section class="courses-section">
-        <h2 class="section-title">Featured Courses</h2>
-        <div class="courses-grid">
-            <div class="course-card">
-                <h3>Web Development</h3>
-                <p>Learn modern web technologies</p>
-                <span class="course-price">$99</span>
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Popular Courses</h2>
+                <p class="section-subtitle">Discover our most popular courses across various fields and skill levels</p>
             </div>
-            <div class="course-card">
-                <h3>Data Science</h3>
-                <p>Master data analysis and visualization</p>
-                <span class="course-price">$149</span>
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-image"></div>
+                    <div class="course-content">
+                        <div class="course-category">Technology</div>
+                        <h3>Full-Stack Web Development</h3>
+                        <p>Master modern web development with React, Node.js, and databases</p>
+                        <div class="course-meta">
+                            <span class="rating">⭐ 4.9 (1,234 reviews)</span>
+                            <span class="duration">⏱️ 40 hours</span>
+                        </div>
+                        <div class="course-price">$199</div>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-image"></div>
+                    <div class="course-content">
+                        <div class="course-category">Data Science</div>
+                        <h3>Machine Learning Fundamentals</h3>
+                        <p>Learn AI and machine learning from industry experts</p>
+                        <div class="course-meta">
+                            <span class="rating">⭐ 4.8 (856 reviews)</span>
+                            <span class="duration">⏱️ 35 hours</span>
+                        </div>
+                        <div class="course-price">$249</div>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-image"></div>
+                    <div class="course-content">
+                        <div class="course-category">Design</div>
+                        <h3>UI/UX Design Masterclass</h3>
+                        <p>Create stunning user interfaces and experiences</p>
+                        <div class="course-meta">
+                            <span class="rating">⭐ 4.9 (2,156 reviews)</span>
+                            <span class="duration">⏱️ 30 hours</span>
+                        </div>
+                        <div class="course-price">$179</div>
+                    </div>
+                </div>
             </div>
-            <div class="course-card">
-                <h3>Digital Marketing</h3>
-                <p>Build your marketing expertise</p>
-                <span class="course-price">$79</span>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title">Why Choose EduLearn?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <div class="icon-bg">🎯</div>
+                    </div>
+                    <h3>Expert Instructors</h3>
+                    <p>Learn from industry professionals with years of real-world experience and proven track records.</p>
+                    <div class="feature-highlights">
+                        <span class="highlight">Industry Experts</span>
+                        <span class="highlight">Real Projects</span>
+                        <span class="highlight">Mentorship</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <div class="icon-bg">📱</div>
+                    </div>
+                    <h3>Flexible Learning</h3>
+                    <p>Study at your own pace with mobile-friendly courses and lifetime access to materials.</p>
+                    <div class="feature-highlights">
+                        <span class="highlight">Self-Paced</span>
+                        <span class="highlight">Mobile Access</span>
+                        <span class="highlight">Lifetime Access</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <div class="icon-bg">🏆</div>
+                    </div>
+                    <h3>Certification</h3>
+                    <p>Earn industry-recognized certificates that boost your career prospects and credibility.</p>
+                    <div class="feature-highlights">
+                        <span class="highlight">Industry Certificates</span>
+                        <span class="highlight">Portfolio Building</span>
+                        <span class="highlight">Career Support</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <div class="icon-bg">👥</div>
+                    </div>
+                    <h3>Community Support</h3>
+                    <p>Join a vibrant community of learners, get help from peers, and network with professionals.</p>
+                    <div class="feature-highlights">
+                        <span class="highlight">Study Groups</span>
+                        <span class="highlight">Peer Learning</span>
+                        <span class="highlight">Networking</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">Student Success Stories</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">"</div>
+                        <p>"EduLearn transformed my career completely. The courses are comprehensive and the instructors are amazing!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>Alex Johnson</h4>
+                            <span>Software Engineer at Google</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">"</div>
+                        <p>"The flexibility of learning at my own pace while having access to expert guidance was perfect for my schedule."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>Sarah Chen</h4>
+                            <span>Data Scientist at Microsoft</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">"</div>
+                        <p>"The community support and networking opportunities helped me land my dream job in tech."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>Michael Rodriguez</h4>
+                            <span>UX Designer at Apple</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Start Your Learning Journey Today</h2>
+                <p>Join thousands of students who have transformed their careers with EduLearn</p>
+                <div class="cta-actions">
+                    <button class="cta-button primary large">Get Started Free</button>
+                    <button class="cta-button secondary large">Browse Courses</button>
+                </div>
+                <div class="cta-guarantee">
+                    <span class="guarantee-icon">✓</span>
+                    <span>7-day free trial • No credit card required • Cancel anytime</span>
+                </div>
             </div>
         </div>
     </section>
 
     <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>EduLearn</h3>
-                <p>Empowering learners worldwide</p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <div class="logo">
+                            <div class="logo-icon">🎓</div>
+                            <span class="logo-text">EduLearn</span>
+                        </div>
+                        <p>Empowering learners worldwide with quality education and cutting-edge technology. Your success is our mission.</p>
+                        <div class="social-links">
+                            <a href="#" class="social-link">📘</a>
+                            <a href="#" class="social-link">🐦</a>
+                            <a href="#" class="social-link">📷</a>
+                            <a href="#" class="social-link">💼</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Courses</h3>
+                    <ul>
+                        <li><a href="#web-dev">Web Development</a></li>
+                        <li><a href="#data-science">Data Science</a></li>
+                        <li><a href="#design">UI/UX Design</a></li>
+                        <li><a href="#business">Business</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#blog">Blog</a></li>
+                        <li><a href="#career">Career Guide</a></li>
+                        <li><a href="#certificates">Certificates</a></li>
+                        <li><a href="#help">Help Center</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>📧 hello@edulearn.com</p>
+                    <p>📞 +1 (555) 123-4567</p>
+                    <p>📍 San Francisco, CA</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2024 EduLearn. All rights reserved.</p>
+                    <div class="footer-links">
+                        <a href="#privacy">Privacy</a>
+                        <a href="#terms">Terms</a>
+                        <a href="#cookies">Cookies</a>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>

@@ -3,57 +3,316 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StyleHub Fashion</title>
+    <title>StyleHub - Fashion & Lifestyle</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="hero">
         <nav class="nav">
-            <div class="nav-brand">StyleHub</div>
+            <div class="nav-brand">
+                <div class="logo">
+                    <div class="logo-icon">👗</div>
+                    <span class="logo-text">StyleHub</span>
+                </div>
+            </div>
             <ul class="nav-links">
-                <li><a href="#shop">Shop</a></li>
+                <li><a href="#home">Home</a></li>
                 <li><a href="#collections">Collections</a></li>
-                <li><a href="#about">About</a></li>
+                <li><a href="#trends">Trends</a></li>
+                <li><a href="#lifestyle">Lifestyle</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <div class="nav-actions">
+                <button class="search-btn">🔍</button>
+                <button class="cart-btn">🛒</button>
+            </div>
         </nav>
         <div class="hero-content">
-            <h1 class="hero-title">Fashion Forward</h1>
-            <p class="hero-subtitle">Discover your unique style with our curated collection</p>
-            <button class="cta-button">Shop Now</button>
+            <div class="hero-badge">
+                <span class="badge-icon">✨</span>
+                <span>New Spring Collection Available</span>
+            </div>
+            <h1 class="hero-title">Discover Your <span class="gradient-text">Perfect Style</span></h1>
+            <p class="hero-subtitle">Explore the latest fashion trends, lifestyle tips, and curated collections that reflect your unique personality. From casual chic to elegant evening wear, we have everything you need to express yourself.</p>
+            <div class="hero-actions">
+                <button class="cta-button primary">
+                    <span>Shop Now</span>
+                    <div class="button-icon">→</div>
+                </button>
+                <button class="cta-button secondary">
+                    <span class="play-icon">▶</span>
+                    <span>Watch Lookbook</span>
+                </button>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">10K+</span>
+                    <span class="stat-label">Happy Customers</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">Fashion Items</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">4.9★</span>
+                    <span class="stat-label">Customer Rating</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="fashion-showcase">
+                <div class="showcase-header">
+                    <div class="showcase-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="showcase-content">
+                    <div class="fashion-item">
+                        <div class="item-image"></div>
+                        <div class="item-info">
+                            <h4>Summer Dress</h4>
+                            <p>$89.99</p>
+                        </div>
+                    </div>
+                    <div class="fashion-item">
+                        <div class="item-image"></div>
+                        <div class="item-info">
+                            <h4>Casual Blazer</h4>
+                            <p>$129.99</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="floating-elements">
+                <div class="floating-card card-1">
+                    <div class="card-icon">👗</div>
+                    <span>Fashion</span>
+                </div>
+                <div class="floating-card card-2">
+                    <div class="card-icon">💄</div>
+                    <span>Beauty</span>
+                </div>
+                <div class="floating-card card-3">
+                    <div class="card-icon">✨</div>
+                    <span>Style</span>
+                </div>
+            </div>
         </div>
     </header>
 
     <section class="collections-section">
-        <h2 class="section-title">New Collections</h2>
-        <div class="collections-grid">
-            <div class="collection-item">
-                <div class="collection-image"></div>
-                <h3>Summer Vibes</h3>
-                <p>Light and breezy styles for the season</p>
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Featured Collections</h2>
+                <p class="section-subtitle">Curated fashion collections for every occasion and style preference</p>
             </div>
-            <div class="collection-item">
-                <div class="collection-image"></div>
-                <h3>Urban Edge</h3>
-                <p>Street style meets sophistication</p>
+            <div class="collections-grid">
+                <div class="collection-card">
+                    <div class="collection-image"></div>
+                    <div class="collection-content">
+                        <div class="collection-badge">New</div>
+                        <h3>Spring Essentials</h3>
+                        <p>Fresh styles for the new season</p>
+                        <div class="collection-stats">
+                            <span class="stat">25 items</span>
+                            <span class="stat">From $29</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="collection-card">
+                    <div class="collection-image"></div>
+                    <div class="collection-content">
+                        <div class="collection-badge">Trending</div>
+                        <h3>Evening Wear</h3>
+                        <p>Elegant pieces for special occasions</p>
+                        <div class="collection-stats">
+                            <span class="stat">18 items</span>
+                            <span class="stat">From $89</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="collection-card">
+                    <div class="collection-image"></div>
+                    <div class="collection-content">
+                        <div class="collection-badge">Popular</div>
+                        <h3>Casual Chic</h3>
+                        <p>Comfortable yet stylish everyday wear</p>
+                        <div class="collection-stats">
+                            <span class="stat">32 items</span>
+                            <span class="stat">From $39</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="collection-item">
-                <div class="collection-image"></div>
-                <h3>Minimalist</h3>
-                <p>Clean lines and timeless pieces</p>
+        </div>
+    </section>
+
+    <section class="trends-section">
+        <div class="container">
+            <h2 class="section-title">Latest Fashion Trends</h2>
+            <div class="trends-grid">
+                <div class="trend-card">
+                    <div class="trend-image"></div>
+                    <div class="trend-content">
+                        <div class="trend-category">Fashion</div>
+                        <h3>Sustainable Fashion</h3>
+                        <p>Eco-friendly clothing options that don't compromise on style</p>
+                        <div class="trend-tags">
+                            <span class="tag">Sustainable</span>
+                            <span class="tag">Eco-friendly</span>
+                            <span class="tag">Ethical</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="trend-card">
+                    <div class="trend-image"></div>
+                    <div class="trend-content">
+                        <div class="trend-category">Beauty</div>
+                        <h3>Natural Beauty</h3>
+                        <p>Embrace your natural beauty with minimal makeup looks</p>
+                        <div class="trend-tags">
+                            <span class="tag">Natural</span>
+                            <span class="tag">Minimal</span>
+                            <span class="tag">Glowing</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="trend-card">
+                    <div class="trend-image"></div>
+                    <div class="trend-content">
+                        <div class="trend-category">Lifestyle</div>
+                        <h3>Wellness Focus</h3>
+                        <p>Fashion that supports your wellness journey</p>
+                        <div class="trend-tags">
+                            <span class="tag">Wellness</span>
+                            <span class="tag">Comfort</span>
+                            <span class="tag">Health</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">What Our Community Says</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">"</div>
+                        <p>"StyleHub has completely transformed my wardrobe. The quality is amazing and the styles are always on-trend!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>Emma Wilson</h4>
+                            <span>Fashion Blogger</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">"</div>
+                        <p>"I love how StyleHub combines fashion with lifestyle tips. It's become my go-to for everything style-related."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>Sarah Chen</h4>
+                            <span>Lifestyle Influencer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">"</div>
+                        <p>"The customer service is exceptional and the quality of items exceeds expectations every time."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>Maria Rodriguez</h4>
+                            <span>Fashion Enthusiast</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Join Our Style Community</h2>
+                <p>Get exclusive access to new collections, styling tips, and special offers</p>
+                <div class="cta-actions">
+                    <button class="cta-button primary large">Subscribe Now</button>
+                    <button class="cta-button secondary large">Follow Us</button>
+                </div>
+                <div class="cta-guarantee">
+                    <span class="guarantee-icon">✓</span>
+                    <span>Free shipping on orders over $100 • 30-day returns</span>
+                </div>
             </div>
         </div>
     </section>
 
     <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>StyleHub</h3>
-                <p>Fashion for the modern lifestyle</p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <div class="logo">
+                            <div class="logo-icon">👗</div>
+                            <span class="logo-text">StyleHub</span>
+                        </div>
+                        <p>Your ultimate destination for fashion and lifestyle inspiration. Discover your perfect style with us.</p>
+                        <div class="social-links">
+                            <a href="#" class="social-link">📘</a>
+                            <a href="#" class="social-link">📷</a>
+                            <a href="#" class="social-link">🐦</a>
+                            <a href="#" class="social-link">💼</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Shop</h3>
+                    <ul>
+                        <li><a href="#women">Women's Fashion</a></li>
+                        <li><a href="#men">Men's Fashion</a></li>
+                        <li><a href="#accessories">Accessories</a></li>
+                        <li><a href="#sale">Sale</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Lifestyle</h3>
+                    <ul>
+                        <li><a href="#beauty">Beauty Tips</a></li>
+                        <li><a href="#wellness">Wellness</a></li>
+                        <li><a href="#trends">Trend Reports</a></li>
+                        <li><a href="#styling">Styling Guides</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <p>📧 hello@stylehub.com</p>
+                    <p>📞 +1 (555) 123-4567</p>
+                    <p>📍 New York, NY</p>
+                </div>
             </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <p>Shop<br>Collections<br>About</p>
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2024 StyleHub. All rights reserved.</p>
+                    <div class="footer-links">
+                        <a href="#privacy">Privacy</a>
+                        <a href="#terms">Terms</a>
+                        <a href="#shipping">Shipping</a>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
