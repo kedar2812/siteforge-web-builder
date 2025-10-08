@@ -3,54 +3,285 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Landing Page</title>
+    <title>BusinessPro - Professional Business Solutions</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="header">
+    <header class="hero">
         <nav class="nav">
-            <div class="logo">BusinessPro</div>
-            <div class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#services">Services</a>
-                <a href="#contact">Contact</a>
+            <div class="nav-brand">
+                <div class="logo">
+                    <div class="logo-icon">💼</div>
+                    <span class="logo-text">BusinessPro</span>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#solutions">Solutions</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="contact-btn">Get Quote</button>
             </div>
         </nav>
-    </header>
-
-    <main>
-        <section class="hero" id="home">
-            <div class="hero-content">
-                <h1 class="hero-title">Transform Your Business Today</h1>
-                <p class="hero-subtitle">We provide innovative solutions to help your business grow and succeed in the digital age.</p>
-                <button class="cta-button">Get Started</button>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-icon">🚀</span>
+                <span>Trusted by 500+ companies worldwide</span>
             </div>
-        </section>
-
-        <section class="features" id="services">
-            <div class="container">
-                <h2>Our Services</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <h3>Digital Marketing</h3>
-                        <p>Boost your online presence with our comprehensive digital marketing strategies.</p>
+            <h1 class="hero-title">Transform Your Business with <span class="gradient-text">Professional Solutions</span></h1>
+            <p class="hero-subtitle">We help businesses grow, scale, and succeed through strategic consulting, innovative solutions, and expert guidance. Partner with us to unlock your company's full potential.</p>
+            <div class="hero-actions">
+                <button class="cta-button primary">
+                    <span>Get Started</span>
+                    <div class="button-icon">→</div>
+                </button>
+                <button class="cta-button secondary">
+                    <span class="play-icon">▶</span>
+                    <span>Watch Demo</span>
+                </button>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">Companies Served</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">15+</span>
+                    <span class="stat-label">Years Experience</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">98%</span>
+                    <span class="stat-label">Success Rate</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="dashboard-mockup">
+                <div class="mockup-header">
+                    <div class="mockup-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
                     </div>
-                    <div class="feature-card">
-                        <h3>Web Development</h3>
-                        <p>Create stunning, responsive websites that convert visitors into customers.</p>
+                </div>
+                <div class="mockup-content">
+                    <div class="chart-container">
+                        <div class="chart-bar" style="height: 60%"></div>
+                        <div class="chart-bar" style="height: 80%"></div>
+                        <div class="chart-bar" style="height: 45%"></div>
+                        <div class="chart-bar" style="height: 90%"></div>
+                        <div class="chart-bar" style="height: 70%"></div>
                     </div>
-                    <div class="feature-card">
-                        <h3>Consulting</h3>
-                        <p>Expert advice to optimize your business processes and increase efficiency.</p>
+                    <div class="data-points">
+                        <div class="data-point">
+                            <span class="data-label">Revenue</span>
+                            <span class="data-value">+32.5%</span>
+                        </div>
+                        <div class="data-point">
+                            <span class="data-label">Growth</span>
+                            <span class="data-value">+28.1%</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+            <div class="floating-elements">
+                <div class="floating-card card-1">
+                    <div class="card-icon">📊</div>
+                    <span>Analytics</span>
+                </div>
+                <div class="floating-card card-2">
+                    <div class="card-icon">💡</div>
+                    <span>Strategy</span>
+                </div>
+                <div class="floating-card card-3">
+                    <div class="card-icon">🎯</div>
+                    <span>Results</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="services-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Comprehensive Business Solutions</h2>
+                <p class="section-subtitle">We provide end-to-end business services to help you achieve your goals</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <div class="icon-bg">💼</div>
+                    </div>
+                    <h3>Strategic Consulting</h3>
+                    <p>Expert business advice and strategic planning to help you make informed decisions and achieve sustainable growth.</p>
+                    <div class="service-features">
+                        <span class="feature">Business Analysis</span>
+                        <span class="feature">Market Research</span>
+                        <span class="feature">Strategic Planning</span>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <div class="icon-bg">📈</div>
+                    </div>
+                    <h3>Growth Solutions</h3>
+                    <p>Proven strategies and implementation support to accelerate your business growth and market expansion.</p>
+                    <div class="service-features">
+                        <span class="feature">Growth Strategy</span>
+                        <span class="feature">Market Expansion</span>
+                        <span class="feature">Performance Optimization</span>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <div class="icon-bg">🔧</div>
+                    </div>
+                    <h3>Process Optimization</h3>
+                    <p>Streamline your operations and improve efficiency with our proven process optimization methodologies.</p>
+                    <div class="service-features">
+                        <span class="feature">Process Analysis</span>
+                        <span class="feature">Efficiency Improvement</span>
+                        <span class="feature">Automation</span>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <div class="icon-bg">🎯</div>
+                    </div>
+                    <h3>Digital Transformation</h3>
+                    <p>Modernize your business with cutting-edge technology solutions and digital transformation strategies.</p>
+                    <div class="service-features">
+                        <span class="feature">Technology Integration</span>
+                        <span class="feature">Digital Strategy</span>
+                        <span class="feature">Change Management</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">What Our Clients Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">"</div>
+                        <p>"BusinessPro transformed our operations completely. We've seen a 40% increase in efficiency and 60% growth in revenue within just 6 months."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>Sarah Mitchell</h4>
+                            <span>CEO, TechCorp Industries</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">"</div>
+                        <p>"The strategic guidance and implementation support we received was exceptional. Our market share increased by 35% in the first year."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>David Chen</h4>
+                            <span>Founder, Global Solutions</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">"</div>
+                        <p>"Outstanding expertise and dedication. BusinessPro helped us navigate complex challenges and achieve unprecedented growth."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>Emily Rodriguez</h4>
+                            <span>President, InnovateCorp</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Transform Your Business?</h2>
+                <p>Join hundreds of successful companies that trust BusinessPro for their growth</p>
+                <div class="cta-actions">
+                    <button class="cta-button primary large">Get Free Consultation</button>
+                    <button class="cta-button secondary large">Download Case Study</button>
+                </div>
+                <div class="cta-guarantee">
+                    <span class="guarantee-icon">✓</span>
+                    <span>Free initial consultation • No commitment required</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <footer class="footer">
-        <p>&copy; 2024 BusinessPro. All rights reserved.</p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <div class="logo">
+                            <div class="logo-icon">💼</div>
+                            <span class="logo-text">BusinessPro</span>
+                        </div>
+                        <p>Your trusted partner for business growth and success. We deliver results that matter.</p>
+                        <div class="social-links">
+                            <a href="#" class="social-link">📘</a>
+                            <a href="#" class="social-link">🐦</a>
+                            <a href="#" class="social-link">📷</a>
+                            <a href="#" class="social-link">💼</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#consulting">Strategic Consulting</a></li>
+                        <li><a href="#growth">Growth Solutions</a></li>
+                        <li><a href="#optimization">Process Optimization</a></li>
+                        <li><a href="#digital">Digital Transformation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#team">Our Team</a></li>
+                        <li><a href="#careers">Careers</a></li>
+                        <li><a href="#news">News & Insights</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>📧 hello@businesspro.com</p>
+                    <p>📞 +1 (555) 123-4567</p>
+                    <p>📍 New York, NY</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2024 BusinessPro. All rights reserved.</p>
+                    <div class="footer-links">
+                        <a href="#privacy">Privacy</a>
+                        <a href="#terms">Terms</a>
+                        <a href="#cookies">Cookies</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </footer>
 </body>
 </html>

@@ -3,61 +3,320 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Portfolio</title>
+    <title>Alex Chen - Creative Designer & Developer</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="header">
+    <header class="hero">
         <nav class="nav">
-            <div class="logo">Alex Johnson</div>
-            <div class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#portfolio">Portfolio</a>
-                <a href="#contact">Contact</a>
+            <div class="nav-brand">
+                <div class="logo">
+                    <div class="logo-icon">✨</div>
+                    <span class="logo-text">Alex Chen</span>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="contact-btn">Let's Talk</button>
             </div>
         </nav>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-icon">👋</span>
+                <span>Available for new projects</span>
+            </div>
+            <h1 class="hero-title">Creative Designer & <span class="gradient-text">Full-Stack Developer</span></h1>
+            <p class="hero-subtitle">I craft beautiful, functional digital experiences that tell your story and drive results. Specializing in modern web design, user experience, and cutting-edge development.</p>
+            <div class="hero-actions">
+                <button class="cta-button primary">
+                    <span>View My Work</span>
+                    <div class="button-icon">→</div>
+                </button>
+                <button class="cta-button secondary">
+                    <span class="play-icon">▶</span>
+                    <span>Watch Reel</span>
+                </button>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Projects Completed</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">5+</span>
+                    <span class="stat-label">Years Experience</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Client Satisfaction</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="portfolio-preview">
+                <div class="preview-header">
+                    <div class="preview-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="preview-content">
+                    <div class="project-card">
+                        <div class="project-image"></div>
+                        <div class="project-info">
+                            <h4>E-commerce Platform</h4>
+                            <p>Modern shopping experience</p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image"></div>
+                        <div class="project-info">
+                            <h4>Mobile App Design</h4>
+                            <p>iOS & Android interface</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="floating-elements">
+                <div class="floating-card card-1">
+                    <div class="card-icon">🎨</div>
+                    <span>Design</span>
+                </div>
+                <div class="floating-card card-2">
+                    <div class="card-icon">💻</div>
+                    <span>Development</span>
+                </div>
+                <div class="floating-card card-3">
+                    <div class="card-icon">📱</div>
+                    <span>Mobile</span>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <main>
-        <section class="hero" id="home">
-            <div class="hero-content">
-                <div class="profile-image">
-                    <div class="avatar"></div>
+    <section class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="section-title">About Me</h2>
+                    <p class="about-description">I'm a passionate designer and developer with 5+ years of experience creating beautiful, functional websites and applications. I specialize in modern web design, user experience, and full-stack development.</p>
+                    <div class="skills-grid">
+                        <div class="skill-category">
+                            <h3>Design</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">UI/UX Design</span>
+                                <span class="skill-tag">Prototyping</span>
+                                <span class="skill-tag">Branding</span>
+                                <span class="skill-tag">Figma</span>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>Development</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">React</span>
+                                <span class="skill-tag">Node.js</span>
+                                <span class="skill-tag">TypeScript</span>
+                                <span class="skill-tag">Next.js</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <h1 class="hero-title">Hi, I'm Alex Johnson</h1>
-                <p class="hero-subtitle">Creative Designer & Developer</p>
-                <p class="hero-description">I create beautiful, functional websites and digital experiences that make a difference.</p>
-                <button class="cta-button">View My Work</button>
+                <div class="about-image">
+                    <div class="image-placeholder"></div>
+                    <div class="image-badge">
+                        <span class="badge-text">Available for hire</span>
+                    </div>
+                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="portfolio" id="portfolio">
-            <div class="container">
-                <h2>My Portfolio</h2>
-                <div class="portfolio-grid">
-                    <div class="portfolio-item">
-                        <div class="portfolio-image"></div>
-                        <h3>E-commerce Website</h3>
-                        <p>Modern online store with seamless user experience</p>
+    <section class="portfolio-section">
+        <div class="container">
+            <h2 class="section-title">Featured Work</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item featured">
+                    <div class="portfolio-image"></div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-category">Web Design</div>
+                        <h3>E-commerce Platform</h3>
+                        <p>Modern shopping experience with seamless checkout flow</p>
+                        <div class="portfolio-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">Stripe</span>
+                        </div>
                     </div>
-                    <div class="portfolio-item">
-                        <div class="portfolio-image"></div>
-                        <h3>Mobile App Design</h3>
-                        <p>Intuitive mobile application for fitness tracking</p>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image"></div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-category">Mobile App</div>
+                        <h3>Fitness Tracker</h3>
+                        <p>iOS and Android app for workout tracking</p>
+                        <div class="portfolio-tech">
+                            <span class="tech-tag">React Native</span>
+                            <span class="tech-tag">Firebase</span>
+                        </div>
                     </div>
-                    <div class="portfolio-item">
-                        <div class="portfolio-image"></div>
-                        <h3>Brand Identity</h3>
-                        <p>Complete brand identity for startup company</p>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image"></div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-category">Web App</div>
+                        <h3>Project Management</h3>
+                        <p>Team collaboration and task management platform</p>
+                        <div class="portfolio-tech">
+                            <span class="tech-tag">Vue.js</span>
+                            <span class="tech-tag">Express</span>
+                            <span class="tech-tag">MongoDB</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
+
+    <section class="services-section">
+        <div class="container">
+            <h2 class="section-title">Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🎨</div>
+                    <h3>UI/UX Design</h3>
+                    <p>Creating intuitive and beautiful user interfaces that enhance user experience and drive engagement.</p>
+                    <div class="service-features">
+                        <span class="feature">User Research</span>
+                        <span class="feature">Wireframing</span>
+                        <span class="feature">Prototyping</span>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💻</div>
+                    <h3>Web Development</h3>
+                    <p>Building responsive, fast, and scalable web applications using modern technologies and best practices.</p>
+                    <div class="service-features">
+                        <span class="feature">Frontend Development</span>
+                        <span class="feature">Backend Development</span>
+                        <span class="feature">API Integration</span>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📱</div>
+                    <h3>Mobile Development</h3>
+                    <p>Developing cross-platform mobile applications that provide native performance and user experience.</p>
+                    <div class="service-features">
+                        <span class="feature">React Native</span>
+                        <span class="feature">iOS Development</span>
+                        <span class="feature">Android Development</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">What Clients Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">"</div>
+                        <p>"Alex delivered an exceptional website that exceeded our expectations. The design is beautiful and the functionality is flawless."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <span>CEO, TechStart Inc</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">"</div>
+                        <p>"Working with Alex was a pleasure. Professional, creative, and always delivered on time. Highly recommended!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>Michael Chen</h4>
+                            <span>Founder, DesignStudio</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Start Your Project?</h2>
+                <p>Let's work together to bring your ideas to life</p>
+                <div class="cta-actions">
+                    <button class="cta-button primary large">Get In Touch</button>
+                    <button class="cta-button secondary large">Download CV</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <footer class="footer">
-        <p>&copy; 2024 Alex Johnson. All rights reserved.</p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <div class="logo">
+                            <div class="logo-icon">✨</div>
+                            <span class="logo-text">Alex Chen</span>
+                        </div>
+                        <p>Creative Designer & Full-Stack Developer</p>
+                        <div class="social-links">
+                            <a href="#" class="social-link">📘</a>
+                            <a href="#" class="social-link">🐦</a>
+                            <a href="#" class="social-link">📷</a>
+                            <a href="#" class="social-link">💼</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#ui-ux">UI/UX Design</a></li>
+                        <li><a href="#web-dev">Web Development</a></li>
+                        <li><a href="#mobile">Mobile Development</a></li>
+                        <li><a href="#consulting">Consulting</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>📧 alex@example.com</p>
+                    <p>📞 +1 (555) 123-4567</p>
+                    <p>📍 San Francisco, CA</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Alex Chen. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 </body>
 </html>
