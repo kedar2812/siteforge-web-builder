@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Layout, Zap, Palette, Code, Shield, ArrowRight, Star, Users, Globe, Rocket } from "lucide-react";
-import ThemeToggle from "@/components/ThemeToggle";
 import Particles from "@/components/Particles";
 
 const Landing = () => {
@@ -89,16 +88,15 @@ const Landing = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity" />
               </Button>
             </Link>
-            <ThemeToggle />
           </div>
         </div>
       </nav>
 
       {/* Spacer for fixed header */}
-      <div className="h-16" />
+      <div className="h-12" />
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20 md:py-32">
+      <section className="container mx-auto px-4 py-8 md:py-16">
         <div className="relative grid lg:grid-cols-2 gap-12 items-center">
           <div className="absolute -z-10 inset-0 opacity-60">
             <Particles />
