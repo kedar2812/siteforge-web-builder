@@ -3,61 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurant & Cafe</title>
+    <title>Bella Vista - Authentic Italian Restaurant</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="hero">
         <nav class="nav">
-            <div class="nav-brand">Bella Vista</div>
+            <div class="nav-brand">
+                <span class="brand-icon">🍝</span>
+                <span class="brand-text">Bella Vista</span>
+            </div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#menu">Menu</a></li>
                 <li><a href="#about">About</a></li>
+                <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <div class="nav-actions">
+                <button class="reservation-btn">Reserve Table</button>
+            </div>
         </nav>
         <div class="hero-content">
-            <h1 class="hero-title">Authentic Italian Cuisine</h1>
-            <p class="hero-subtitle">Experience the finest flavors of Italy in the heart of the city</p>
-            <button class="cta-button">Reserve Table</button>
+            <div class="hero-badge">⭐ Award-Winning Italian Cuisine</div>
+            <h1 class="hero-title">Authentic Italian<br><span class="highlight">Culinary Experience</span></h1>
+            <p class="hero-subtitle">Experience the finest flavors of Italy with our handcrafted dishes made from traditional family recipes passed down through generations.</p>
+            <div class="hero-actions">
+                <button class="cta-button primary">Reserve Table</button>
+                <button class="cta-button secondary">View Menu</button>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">25+</span>
+                    <span class="stat-label">Years Experience</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">4.9</span>
+                    <span class="stat-label">Customer Rating</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">Happy Customers</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="floating-elements">
+                <div class="floating-pasta">🍝</div>
+                <div class="floating-wine">🍷</div>
+                <div class="floating-chef">👨‍🍳</div>
+            </div>
         </div>
     </header>
 
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title">Why Choose Bella Vista?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🌿</div>
+                    <h3>Fresh Ingredients</h3>
+                    <p>We source only the finest, freshest ingredients directly from Italy and local farms.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👨‍🍳</div>
+                    <h3>Master Chefs</h3>
+                    <p>Our chefs trained in authentic Italian kitchens bring decades of experience.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🍷</div>
+                    <h3>Wine Selection</h3>
+                    <p>Curated wine cellar featuring the best Italian and international wines.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💎</div>
+                    <h3>Elegant Atmosphere</h3>
+                    <p>Sophisticated dining environment perfect for any special occasion.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="menu-section">
-        <h2 class="section-title">Our Menu</h2>
-        <div class="menu-grid">
-            <div class="menu-item">
-                <h3>Pasta Carbonara</h3>
-                <p>Classic Roman pasta with eggs, cheese, and pancetta</p>
-                <span class="price">$18</span>
+        <div class="container">
+            <h2 class="section-title">Our Signature Menu</h2>
+            <div class="menu-categories">
+                <button class="category-btn active">Appetizers</button>
+                <button class="category-btn">Main Courses</button>
+                <button class="category-btn">Desserts</button>
+                <button class="category-btn">Wine</button>
             </div>
-            <div class="menu-item">
-                <h3>Margherita Pizza</h3>
-                <p>Fresh mozzarella, tomato sauce, and basil</p>
-                <span class="price">$16</span>
+            <div class="menu-grid">
+                <div class="menu-item featured">
+                    <div class="menu-badge">Chef's Special</div>
+                    <div class="menu-image"></div>
+                    <div class="menu-content">
+                        <h3>Pasta Carbonara</h3>
+                        <p>Classic Roman pasta with fresh eggs, pecorino cheese, and crispy pancetta</p>
+                        <div class="menu-footer">
+                            <span class="price">$24</span>
+                            <button class="add-to-cart">Add to Order</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-image"></div>
+                    <div class="menu-content">
+                        <h3>Margherita Pizza</h3>
+                        <p>Wood-fired pizza with San Marzano tomatoes, fresh mozzarella, and basil</p>
+                        <div class="menu-footer">
+                            <span class="price">$18</span>
+                            <button class="add-to-cart">Add to Order</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-image"></div>
+                    <div class="menu-content">
+                        <h3>Osso Buco</h3>
+                        <p>Braised veal shanks with risotto Milanese and gremolata</p>
+                        <div class="menu-footer">
+                            <span class="price">$32</span>
+                            <button class="add-to-cart">Add to Order</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-image"></div>
+                    <div class="menu-content">
+                        <h3>Tiramisu</h3>
+                        <p>Traditional Italian dessert with espresso-soaked ladyfingers and mascarpone</p>
+                        <div class="menu-footer">
+                            <span class="price">$12</span>
+                            <button class="add-to-cart">Add to Order</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="menu-item">
-                <h3>Tiramisu</h3>
-                <p>Traditional Italian dessert with coffee and mascarpone</p>
-                <span class="price">$8</span>
+        </div>
+    </section>
+
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">What Our Guests Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                    <p>"The best Italian food I've had outside of Italy. The pasta is absolutely divine!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <span>Food Critic</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                    <p>"Amazing atmosphere and incredible service. Perfect for our anniversary dinner."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>Michael Chen</h4>
+                            <span>Regular Customer</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Bella Vista</h3>
-                <p>123 Main Street<br>New York, NY 10001</p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <span class="brand-icon">🍝</span>
+                        <span class="brand-text">Bella Vista</span>
+                    </div>
+                    <p>Authentic Italian cuisine in the heart of the city. Experience the true taste of Italy.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">📘</a>
+                        <a href="#" class="social-link">📷</a>
+                        <a href="#" class="social-link">🐦</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#menu">Menu</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>📍 123 Main Street<br>New York, NY 10001</p>
+                    <p>📞 (555) 123-4567</p>
+                    <p>✉️ info@bellavista.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Hours</h3>
+                    <p>Monday - Friday: 11am - 10pm</p>
+                    <p>Saturday - Sunday: 10am - 11pm</p>
+                    <p>Closed on Thanksgiving & Christmas</p>
+                </div>
             </div>
-            <div class="footer-section">
-                <h3>Hours</h3>
-                <p>Mon-Fri: 11am-10pm<br>Sat-Sun: 10am-11pm</p>
-            </div>
-            <div class="footer-section">
-                <h3>Contact</h3>
-                <p>Phone: (555) 123-4567<br>Email: info@bellavista.com</p>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Bella Vista Restaurant. All rights reserved.</p>
             </div>
         </div>
     </footer>
