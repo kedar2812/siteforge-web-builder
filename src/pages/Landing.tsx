@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ThemeToggle";
-import { Sparkles, Layout, Zap, Palette, Code, Shield, ArrowRight, Star, Users, Globe, Rocket } from "lucide-react";
+import { Sparkles, Layout, Zap, Palette, Code, Shield, ArrowRight, Star, Users, Globe, Rocket, Settings } from "lucide-react";
 import Particles from "@/components/Particles";
 
 const Landing = () => {
@@ -96,6 +96,16 @@ const Landing = () => {
                   <Button variant="hero" className="gap-2 text-black dark:text-white no-hover-effect">
                     Get Started
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
+                <Link to="/settings">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="hover:bg-primary/10 transition-colors"
+                    title="Settings"
+                  >
+                    <Settings className="w-5 h-5" />
                   </Button>
                 </Link>
                 <ThemeToggle />

@@ -24,11 +24,13 @@ const Dashboard = () => {
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon">
-              <Settings className="w-5 h-5" />
-            </Button>
+            <Link to="/settings">
+              <Button variant="ghost" size="icon" title="Settings">
+                <Settings className="w-5 h-5" />
+              </Button>
+            </Link>
             <Link to="/">
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" title="Logout">
                 <LogOut className="w-5 h-5" />
               </Button>
             </Link>

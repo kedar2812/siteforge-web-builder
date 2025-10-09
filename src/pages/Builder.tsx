@@ -642,6 +642,16 @@ const Builder = () => {
                 Last saved: {lastSaved.toLocaleTimeString()}
               </span>
             )}
+            <Link to="/settings">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hover:bg-primary/10 transition-colors"
+                title="Settings"
+              >
+                <Settings className="w-5 h-5" />
+              </Button>
+            </Link>
             <ThemeToggle />
           </div>
         </div>

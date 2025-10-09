@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import Builder from "./pages/Builder";
 import NotFound from "./pages/NotFound";
 import Templates from "./pages/Templates";
+import Settings from "./pages/Settings";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/builder" element={<Builder />} />
             <Route path="/templates" element={<Templates />} />
+            <Route path="/settings" element={<Settings />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

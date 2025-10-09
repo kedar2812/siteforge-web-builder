@@ -5,7 +5,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Sparkles, Search, Eye, ExternalLink, Star, Filter } from "lucide-react";
+import { Sparkles, Search, Eye, ExternalLink, Star, Filter, Settings } from "lucide-react";
 
 type TemplateMeta = {
   id: string;
@@ -72,6 +72,16 @@ const Templates = () => {
             </Button>
             <Link to="/">
               <Button variant="ghost">Back to Home</Button>
+            </Link>
+            <Link to="/settings">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hover:bg-primary/10 transition-colors"
+                title="Settings"
+              >
+                <Settings className="w-5 h-5" />
+              </Button>
             </Link>
             <ThemeToggle />
           </div>
