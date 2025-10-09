@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import ThemeToggle from "@/components/ThemeToggle";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -37,12 +38,17 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4 relative">
+      {/* Theme Toggle - Top Right Corner */}
+      <div className="absolute top-4 right-4">
+        <ThemeToggle />
+      </div>
+      
       <div className="w-full max-w-md space-y-8 animate-scale-in">
         <div className="text-center">
           <Link to="/" className="inline-flex items-center gap-2 mb-8">
             <Sparkles className="w-8 h-8 text-primary" />
-            <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+            <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary-glow bg-clip-text text-transparent">
               SiteForge
             </span>
           </Link>
@@ -80,7 +86,7 @@ const Auth = () => {
                       required
                     />
                   </div>
-                  <Button type="submit" className="w-full" disabled={isLoading} variant="hero">
+                  <Button type="submit" className="w-full text-black dark:text-white" disabled={isLoading} variant="hero">
                     {isLoading ? "Signing in..." : "Sign In"}
                   </Button>
                 </form>
@@ -116,7 +122,7 @@ const Auth = () => {
                       minLength={8}
                     />
                   </div>
-                  <Button type="submit" className="w-full" disabled={isLoading} variant="hero">
+                  <Button type="submit" className="w-full text-black dark:text-white" disabled={isLoading} variant="hero">
                     {isLoading ? "Creating account..." : "Create Account"}
                   </Button>
                 </form>

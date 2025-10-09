@@ -8,99 +8,119 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Light theme */
-    --background: 0 0% 100%;
-    --foreground: 222.2 47.4% 11.2%;
+    /* Light theme - SiteForge Brand Identity - Balanced */
+    --background: 220 25% 95%; /* More vibrant light blue */
+    --foreground: 222 47% 11%; /* #0A0A0A - Dark text */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 47.4% 11.2%;
+    --card: 0 0% 100%; /* #FFFFFF - Pure white cards */
+    --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 47.4% 11.2%;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 217 90% 50%;
+    --primary: 195 100% 50%; /* #00BFFF - Accent blue */
     --primary-foreground: 0 0% 100%;
     
     --primary-glow: 217 92% 60%;
-    --secondary-glow: 200 80% 60%;
+    --secondary-glow: 195 100% 50%;
 
-    --secondary: 210 16% 96%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 220 20% 96%; /* Slightly more saturated panel */
+    --secondary-foreground: 222 47% 11%;
 
-    --muted: 210 16% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 220 20% 96%;
+    --muted-foreground: 222 20% 35%; /* #2B2B2B - Secondary text */
 
-    --accent: 217 90% 50%;
+    --accent: 195 100% 50%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 217 90% 50%;
+    --border: 220 15% 88%; /* More defined borders */
+    --input: 220 15% 88%;
+    --ring: 195 100% 50%;
 
     --radius: 0.75rem;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(217 90% 50%) 0%, hsl(217 92% 60%) 100%);
-    --gradient-secondary: linear-gradient(135deg, hsl(200 80% 60%) 0%, hsl(217 90% 50%) 100%);
-    --gradient-hero: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(210 16% 96%) 100%);
+    /* SiteForge Gradients - Light Mode - More Vibrant */
+    --bg-gradient-start: 220 25% 95%; /* More vibrant start */
+    --bg-gradient-end: 214 60% 85%; /* More saturated end */
+    --gradient-primary: linear-gradient(135deg, hsl(220 25% 95%) 0%, hsl(214 60% 85%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(195 100% 50%) 0%, hsl(214 60% 85%) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(220 25% 95%) 0%, hsl(220 20% 96%) 100%);
+    
+    /* Canvas and Panel Backgrounds */
+    --canvas-bg: 220 15% 98%; /* Slightly more defined */
+    --panel-bg: 220 20% 96%; /* More defined panel */
     
     /* Shadows */
-    --shadow-glow: 0 0 40px hsl(217 90% 50% / 0.25);
+    --shadow-glow: 0 0 40px hsl(195 100% 50% / 0.25);
     --shadow-elevation: 0 10px 30px -10px hsl(220 40% 20% / 0.15);
+    
+    /* Theme color for meta tag */
+    --theme-color: #E8F2FF;
     
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-theme: background 0.4s ease, color 0.3s ease, border-color 0.3s ease;
   }
 
   .dark {
-    /* Dark theme */
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    /* Dark theme - SiteForge Brand Identity - Balanced */
+    --background: 225 45% 20%; /* Lighter navy - more balanced */
+    --foreground: 0 0% 100%; /* #FFFFFF - White text */
 
-    --card: 240 10% 7%;
-    --card-foreground: 0 0% 98%;
+    --card: 225 35% 25%; /* Lighter dark card */
+    --card-foreground: 0 0% 100%;
 
-    --popover: 240 10% 7%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 225 35% 25%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 217 90% 60%;
+    --primary: 195 100% 50%; /* #00BFFF - Accent blue */
     --primary-foreground: 0 0% 100%;
     
     --primary-glow: 217 92% 70%;
-    --secondary-glow: 200 80% 60%;
+    --secondary-glow: 195 100% 50%;
 
-    --secondary: 240 10% 15%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 225 30% 18%; /* Lighter dark panel */
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 240 10% 15%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted: 225 30% 18%;
+    --muted-foreground: 220 30% 75%; /* #C0C8E0 - Muted text */
 
-    --accent: 217 90% 60%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 195 100% 50%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 10% 15%;
-    --input: 240 10% 15%;
-    --ring: 217 90% 60%;
+    --border: 225 25% 30%; /* Lighter borders */
+    --input: 225 25% 30%;
+    --ring: 195 100% 50%;
 
     --radius: 0.75rem;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(217 90% 60%) 0%, hsl(217 92% 70%) 100%);
-    --gradient-secondary: linear-gradient(135deg, hsl(200 80% 60%) 0%, hsl(217 90% 60%) 100%);
-    --gradient-hero: linear-gradient(180deg, hsl(240 10% 3.9%) 0%, hsl(217 60% 15%) 100%);
+    /* SiteForge Gradients - Dark Mode - More Balanced */
+    --bg-gradient-start: 225 45% 20%; /* Lighter start */
+    --bg-gradient-end: 225 60% 30%; /* More vibrant end */
+    --gradient-primary: linear-gradient(135deg, hsl(225 45% 20%) 0%, hsl(225 60% 30%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(195 100% 50%) 0%, hsl(225 60% 30%) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(225 45% 20%) 0%, hsl(225 30% 18%) 100%);
+    
+    /* Canvas and Panel Backgrounds */
+    --canvas-bg: 225 40% 22%; /* Lighter canvas */
+    --panel-bg: 225 30% 18%; /* Lighter panel */
     
     /* Shadows */
-    --shadow-glow: 0 0 40px hsl(217 90% 60% / 0.3);
+    --shadow-glow: 0 0 40px hsl(195 100% 50% / 0.3);
     --shadow-elevation: 0 10px 30px -10px hsl(0 0% 0% / 0.5);
+    
+    /* Theme color for meta tag */
+    --theme-color: #2A3F5F;
     
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-theme: background 0.4s ease, color 0.3s ease, border-color 0.3s ease;
   }
 }
 
@@ -111,6 +131,13 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    transition: var(--transition-theme);
+  }
+
+  /* Smooth transitions for theme-aware components */
+  header, nav, aside, main, section, footer,
+  .card, [class*="card-"], [class*="panel-"], [class*="sidebar-"] {
+    transition: var(--transition-theme);
   }
 }
 

@@ -45,7 +45,7 @@ const Dashboard = () => {
             <p className="text-muted-foreground">Manage and create your websites</p>
           </div>
           <Link to="/builder">
-            <Button variant="hero" size="lg" className="gap-2">
+            <Button variant="hero" size="lg" className="gap-2 text-black dark:text-white">
               <Plus className="w-5 h-5" />
               Create New Site
             </Button>

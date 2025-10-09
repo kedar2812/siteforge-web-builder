@@ -1,35 +1,31 @@
-import { useEffect, useState } from "react";
 import { Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-const THEME_STORAGE_KEY = "theme";
-
-function getInitialTheme(): "light" | "dark" {
-  if (typeof window === "undefined") return "dark";
-  const stored = window.localStorage.getItem(THEME_STORAGE_KEY);
-  if (stored === "light" || stored === "dark") return stored;
-  const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-  return prefersDark ? "dark" : "light";
-}
+import { useTheme } from "./theme-provider";
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<"light" | "dark">(getInitialTheme());
+  const { theme, setTheme, actualTheme } = useTheme();
 
-  useEffect(() => {
-    const root = document.documentElement;
-    if (theme === "dark") {
-      root.classList.add("dark");
+  const toggleTheme = () => {
+    // If currently on system, switch to the opposite of current actual theme
+    if (theme === "system") {
+      setTheme(actualTheme === "dark" ? "light" : "dark");
     } else {
-      root.classList.remove("dark");
+      // Toggle between light and dark
+      setTheme(theme === "dark" ? "light" : "dark");
     }
-    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
-  }, [theme]);
-
-  const toggle = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
+  };
 
   return (
-    <Button variant="ghost" onClick={toggle} aria-label="Toggle theme">
-      {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={toggleTheme}
+      aria-label="Toggle theme"
+      className="relative rounded-full w-10 h-10 p-0 hover:bg-primary/10 transition-all duration-300"
+    >
+      <Sun className="h-5 w-5 rotate-0 scale-100 transition-all duration-300 dark:-rotate-90 dark:scale-0" />
+      <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all duration-300 dark:rotate-0 dark:scale-100" />
+      <span className="sr-only">Toggle theme</span>
     </Button>
   );
 }

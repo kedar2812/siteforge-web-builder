@@ -37,7 +37,7 @@ export const SortableSection = ({ section, onUpdate, onDelete, onSelect, selecte
             )}
             {section.content.buttonText && (
               <div className="pt-4">
-                <Button variant="hero">{section.content.buttonText}</Button>
+                <Button variant="hero" className="text-black dark:text-white">{section.content.buttonText}</Button>
               </div>
             )}
           </div>
@@ -56,7 +56,7 @@ export const SortableSection = ({ section, onUpdate, onDelete, onSelect, selecte
               placeholder="Subtitle"
             />
             <div className="pt-4">
-              <Button variant="hero">
+              <Button variant="hero" className="text-black dark:text-white">
                 {section.content.buttonText || "Button"}
               </Button>
             </div>
@@ -101,7 +101,7 @@ export const SortableSection = ({ section, onUpdate, onDelete, onSelect, selecte
           <div className="py-12 px-8 text-center bg-card">
             <h3 className="text-2xl font-bold">{section.content.title}</h3>
             {section.content.buttonText && (
-              <Button variant="hero" className="mt-4">
+              <Button variant="hero" className="mt-4 text-black dark:text-white">
                 {section.content.buttonText}
               </Button>
             )}
@@ -114,7 +114,7 @@ export const SortableSection = ({ section, onUpdate, onDelete, onSelect, selecte
               className="text-2xl font-bold text-center bg-transparent border-dashed mb-4"
               placeholder="CTA Title"
             />
-            <Button variant="hero" className="mt-4">
+            <Button variant="hero" className="mt-4 text-black dark:text-white">
               {section.content.buttonText || "Take Action"}
             </Button>
           </div>
@@ -146,7 +146,7 @@ export const SortableSection = ({ section, onUpdate, onDelete, onSelect, selecte
         <Button
           variant="ghost"
           size="icon"
-          className="cursor-grab active:cursor-grabbing bg-background/70 backdrop-blur border border-border/50"
+          className="cursor-grab active:cursor-grabbing bg-background/70 backdrop-blur border border-border/50 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white"
           {...attributes}
           {...listeners}
         >
@@ -156,7 +156,7 @@ export const SortableSection = ({ section, onUpdate, onDelete, onSelect, selecte
           variant="ghost"
           size="icon"
           onClick={() => onDelete(section.id)}
-          className="text-destructive hover:text-destructive bg-background/70 backdrop-blur border border-border/50"
+          className="text-destructive hover:text-destructive bg-background/70 backdrop-blur border border-border/50 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white"
         >
           <Trash2 className="w-4 h-4" />
         </Button>

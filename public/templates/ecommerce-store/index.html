@@ -3,63 +3,404 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShopHub Store</title>
+    <title>ShopHub - Premium E-commerce Store</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="hero">
         <nav class="nav">
-            <div class="nav-brand">ShopHub</div>
+            <div class="nav-brand">
+                <div class="logo">
+                    <div class="logo-icon">🛍️</div>
+                    <span class="logo-text">ShopHub</span>
+                </div>
+            </div>
             <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
                 <li><a href="#products">Products</a></li>
                 <li><a href="#categories">Categories</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#cart">Cart (0)</a></li>
+                <li><a href="#deals">Deals</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
+            <div class="nav-actions">
+                <button class="search-btn">🔍</button>
+                <button class="cart-btn">🛒 <span class="cart-count">3</span></button>
+                <button class="account-btn">👤</button>
+            </div>
         </nav>
         <div class="hero-content">
-            <h1 class="hero-title">Discover Amazing Products</h1>
-            <p class="hero-subtitle">Shop the latest trends and best deals</p>
-            <button class="cta-button">Shop Now</button>
+            <div class="hero-badge">
+                <span class="badge-icon">🔥</span>
+                <span>Flash Sale - Up to 70% Off!</span>
+            </div>
+            <h1 class="hero-title">Discover Amazing <span class="gradient-text">Products</span></h1>
+            <p class="hero-subtitle">Shop the latest trends with unbeatable prices, fast shipping, and exceptional customer service. Find everything you need in one place.</p>
+            <div class="hero-actions">
+                <button class="cta-button primary">
+                    <span>Shop Now</span>
+                    <div class="button-icon">→</div>
+                </button>
+                <button class="cta-button secondary">
+                    <span class="play-icon">▶</span>
+                    <span>View Collection</span>
+                </button>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">50K+</span>
+                    <span class="stat-label">Happy Customers</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">10K+</span>
+                    <span class="stat-label">Products</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">4.9★</span>
+                    <span class="stat-label">Rating</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="product-showcase">
+                <div class="showcase-header">
+                    <div class="showcase-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="showcase-content">
+                    <div class="product-card">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h4>Wireless Headphones</h4>
+                            <p class="price">$99.99</p>
+                            <div class="rating">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h4>Smart Watch</h4>
+                            <p class="price">$199.99</p>
+                            <div class="rating">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="floating-elements">
+                <div class="floating-card card-1">
+                    <div class="card-icon">⚡</div>
+                    <span>Fast Shipping</span>
+                </div>
+                <div class="floating-card card-2">
+                    <div class="card-icon">🔒</div>
+                    <span>Secure Payment</span>
+                </div>
+                <div class="floating-card card-3">
+                    <div class="card-icon">💎</div>
+                    <span>Premium Quality</span>
+                </div>
+            </div>
         </div>
     </header>
 
+    <section class="categories-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Shop by Category</h2>
+                <p class="section-subtitle">Explore our wide range of product categories</p>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-image"></div>
+                    <div class="category-content">
+                        <h3>Electronics</h3>
+                        <p>Latest gadgets and tech</p>
+                        <div class="category-stats">
+                            <span class="count">500+ items</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-image"></div>
+                    <div class="category-content">
+                        <h3>Fashion</h3>
+                        <p>Trendy clothing & accessories</p>
+                        <div class="category-stats">
+                            <span class="count">800+ items</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-image"></div>
+                    <div class="category-content">
+                        <h3>Home & Garden</h3>
+                        <p>Everything for your home</p>
+                        <div class="category-stats">
+                            <span class="count">300+ items</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-image"></div>
+                    <div class="category-content">
+                        <h3>Sports</h3>
+                        <p>Fitness & outdoor gear</p>
+                        <div class="category-stats">
+                            <span class="count">400+ items</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="products-section">
-        <h2 class="section-title">Featured Products</h2>
-        <div class="products-grid">
-            <div class="product-card">
-                <div class="product-image"></div>
-                <h3>Wireless Headphones</h3>
-                <p>Premium sound quality</p>
-                <span class="product-price">$199</span>
-                <button class="add-to-cart">Add to Cart</button>
+        <div class="container">
+            <h2 class="section-title">Featured Products</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <div class="product-badge">Sale</div>
+                    <div class="product-content">
+                        <h3>Premium Wireless Earbuds</h3>
+                        <p>High-quality sound with noise cancellation</p>
+                        <div class="product-rating">
+                            <span class="stars">⭐⭐⭐⭐⭐</span>
+                            <span class="rating-count">(234)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$79.99</span>
+                            <span class="original-price">$99.99</span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <div class="product-badge new">New</div>
+                    <div class="product-content">
+                        <h3>Smart Fitness Tracker</h3>
+                        <p>Track your health and fitness goals</p>
+                        <div class="product-rating">
+                            <span class="stars">⭐⭐⭐⭐⭐</span>
+                            <span class="rating-count">(189)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$149.99</span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <div class="product-content">
+                        <h3>Bluetooth Speaker</h3>
+                        <p>Portable speaker with amazing sound</p>
+                        <div class="product-rating">
+                            <span class="stars">⭐⭐⭐⭐⭐</span>
+                            <span class="rating-count">(156)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$59.99</span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"></div>
+                    <div class="product-badge">Hot</div>
+                    <div class="product-content">
+                        <h3>Gaming Mouse</h3>
+                        <p>Precision gaming mouse for professionals</p>
+                        <div class="product-rating">
+                            <span class="stars">⭐⭐⭐⭐⭐</span>
+                            <span class="rating-count">(312)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$89.99</span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
             </div>
-            <div class="product-card">
-                <div class="product-image"></div>
-                <h3>Smart Watch</h3>
-                <p>Track your fitness goals</p>
-                <span class="product-price">$299</span>
-                <button class="add-to-cart">Add to Cart</button>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title">Why Choose ShopHub?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <div class="icon-bg">🚚</div>
+                    </div>
+                    <h3>Free Shipping</h3>
+                    <p>Free shipping on orders over $50 with fast delivery worldwide</p>
+                    <div class="feature-highlights">
+                        <span class="highlight">Free over $50</span>
+                        <span class="highlight">2-3 Day Delivery</span>
+                        <span class="highlight">Worldwide</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <div class="icon-bg">🔒</div>
+                    </div>
+                    <h3>Secure Payment</h3>
+                    <p>Your payment information is protected with bank-level security</p>
+                    <div class="feature-highlights">
+                        <span class="highlight">SSL Encrypted</span>
+                        <span class="highlight">Multiple Methods</span>
+                        <span class="highlight">Safe & Secure</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <div class="icon-bg">↩️</div>
+                    </div>
+                    <h3>Easy Returns</h3>
+                    <p>30-day return policy with hassle-free returns and exchanges</p>
+                    <div class="feature-highlights">
+                        <span class="highlight">30 Days</span>
+                        <span class="highlight">No Questions</span>
+                        <span class="highlight">Free Returns</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <div class="icon-bg">💬</div>
+                    </div>
+                    <h3>24/7 Support</h3>
+                    <p>Round-the-clock customer support to help with any questions</p>
+                    <div class="feature-highlights">
+                        <span class="highlight">24/7 Available</span>
+                        <span class="highlight">Live Chat</span>
+                        <span class="highlight">Expert Help</span>
+                    </div>
+                </div>
             </div>
-            <div class="product-card">
-                <div class="product-image"></div>
-                <h3>Laptop Stand</h3>
-                <p>Ergonomic design</p>
-                <span class="product-price">$89</span>
-                <button class="add-to-cart">Add to Cart</button>
+        </div>
+    </section>
+
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">"</div>
+                        <p>"Amazing shopping experience! Fast shipping and great customer service. Will definitely shop here again."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>Jessica Martinez</h4>
+                            <span>Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">"</div>
+                        <p>"Great quality products at unbeatable prices. The return policy gives me confidence in my purchases."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>David Kim</h4>
+                            <span>Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">"</div>
+                        <p>"Excellent customer service and fast delivery. The product quality exceeded my expectations!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <span>Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Start Shopping?</h2>
+                <p>Join thousands of satisfied customers and discover amazing products</p>
+                <div class="cta-actions">
+                    <button class="cta-button primary large">Shop Now</button>
+                    <button class="cta-button secondary large">Browse Categories</button>
+                </div>
+                <div class="cta-guarantee">
+                    <span class="guarantee-icon">✓</span>
+                    <span>Free shipping on orders over $50 • 30-day returns • Secure payment</span>
+                </div>
             </div>
         </div>
     </section>
 
     <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>ShopHub</h3>
-                <p>Your trusted online store</p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <div class="logo">
+                            <div class="logo-icon">🛍️</div>
+                            <span class="logo-text">ShopHub</span>
+                        </div>
+                        <p>Your trusted online shopping destination with quality products, great prices, and exceptional service.</p>
+                        <div class="social-links">
+                            <a href="#" class="social-link">📘</a>
+                            <a href="#" class="social-link">🐦</a>
+                            <a href="#" class="social-link">📷</a>
+                            <a href="#" class="social-link">💼</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Shop</h3>
+                    <ul>
+                        <li><a href="#electronics">Electronics</a></li>
+                        <li><a href="#fashion">Fashion</a></li>
+                        <li><a href="#home">Home & Garden</a></li>
+                        <li><a href="#sports">Sports</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="#help">Help Center</a></li>
+                        <li><a href="#shipping">Shipping Info</a></li>
+                        <li><a href="#returns">Returns</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>📧 support@shophub.com</p>
+                    <p>📞 +1 (555) 123-4567</p>
+                    <p>📍 New York, NY</p>
+                </div>
             </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <p>Products<br>Categories<br>Support</p>
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2024 ShopHub. All rights reserved.</p>
+                    <div class="footer-links">
+                        <a href="#privacy">Privacy</a>
+                        <a href="#terms">Terms</a>
+                        <a href="#cookies">Cookies</a>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>

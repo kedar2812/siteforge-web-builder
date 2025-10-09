@@ -132,22 +132,22 @@ export default function ExportImport({ sections, freeElements, onImport }: Expor
     <div className="space-y-3">
       <h4 className="text-sm font-medium">Export & Import</h4>
       <div className="space-y-2">
-        <Button onClick={exportProject} className="w-full justify-start gap-2" variant="outline">
+        <Button onClick={exportProject} className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600" variant="outline">
           <Download className="w-4 h-4" />
           Export Project (JSON)
         </Button>
-        <Button onClick={exportHTML} className="w-full justify-start gap-2" variant="outline">
+        <Button onClick={exportHTML} className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600" variant="outline">
           <Code className="w-4 h-4" />
           Export HTML
         </Button>
-        <div className="relative">
+        <div className="relative group">
           <input
             type="file"
             accept=".json"
             onChange={handleFileImport}
-            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
           />
-          <Button className="w-full justify-start gap-2" variant="outline">
+          <Button className="w-full justify-start gap-2 group-hover:bg-gradient-to-r group-hover:from-blue-700 group-hover:to-blue-800 group-hover:text-white group-hover:border-blue-600" variant="outline">
             <Upload className="w-4 h-4" />
             Import Project
           </Button>

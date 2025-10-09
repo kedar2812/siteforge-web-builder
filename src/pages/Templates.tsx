@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import ThemeToggle from "@/components/ThemeToggle";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -39,38 +40,39 @@ const Templates = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+    <div className="min-h-screen bg-gradient-hero">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-black/20 backdrop-blur-xl border-b border-white/10">
+      <header className="sticky top-0 z-50 bg-card/50 backdrop-blur-xl border-b border-border/50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 group cursor-pointer">
-            <Sparkles className="w-6 h-6 text-blue-400 group-hover:scale-110 transition-transform" />
-            <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            <Sparkles className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
+            <span className="text-xl font-bold bg-gradient-to-r from-primary to-secondary-glow bg-clip-text text-transparent">
               SiteForge Templates
             </span>
           </Link>
           <div className="flex items-center gap-4">
             <Button 
               variant="outline" 
-              className="border-white/20 text-white hover:bg-white/10"
+              className="border-border hover:bg-accent"
               onClick={() => setPreview(null)}
             >
               <Filter className="w-4 h-4 mr-2" />
               Filters
             </Button>
             <Link to="/">
-              <Button variant="ghost" className="text-white hover:bg-white/10">Back to Home</Button>
+              <Button variant="ghost">Back to Home</Button>
             </Link>
+            <ThemeToggle />
           </div>
         </div>
       </header>
 
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-12 text-center">
-        <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-          Choose Your Perfect <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Template</span>
+        <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-4">
+          Choose Your Perfect <span className="bg-gradient-to-r from-primary to-secondary-glow bg-clip-text text-transparent">Template</span>
         </h1>
-        <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+        <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
           Professional templates designed for every industry. Customize them to match your brand perfectly.
         </p>
         
@@ -81,9 +83,9 @@ const Templates = () => {
               placeholder="Search templates..." 
               value={query} 
               onChange={(e) => setQuery(e.target.value)} 
-              className="pl-12 pr-4 py-3 rounded-xl bg-white/10 border-white/20 text-white placeholder:text-gray-400"
+              className="pl-12 pr-4 py-3 rounded-xl"
             />
-            <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
           </div>
         </div>
 
@@ -92,12 +94,7 @@ const Templates = () => {
           {CATEGORIES.map(cat => (
             <Button
               key={cat}
-              variant={category === cat ? "default" : "outline"}
-              className={`flex-shrink-0 ${
-                category === cat 
-                  ? "bg-blue-600 hover:bg-blue-700 text-white" 
-                  : "border-white/20 text-white hover:bg-white/10"
-              }`}
+              variant={category === cat ? "hero" : "outline"}
               onClick={() => setCategory(c => c === cat ? null : cat)}
             >
               {cat}
@@ -112,7 +109,7 @@ const Templates = () => {
           {filtered.map((tpl) => (
             <Card
               key={tpl.id}
-              className="group overflow-hidden rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-blue-400/50 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-2"
+              className="group overflow-hidden rounded-2xl bg-card backdrop-blur-sm border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-glow hover:-translate-y-2"
             >
               <div className="relative w-full h-64 overflow-hidden">
                 <img
@@ -120,12 +117,13 @@ const Templates = () => {
                   alt={tpl.name}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className="flex gap-2">
                     <Button
                       size="sm"
-                      className="bg-blue-600 hover:bg-blue-700 text-white"
+                      variant="hero"
+                      className="text-black dark:text-white"
                       onClick={() => setPreview(tpl)}
                     >
                       <Eye className="w-4 h-4 mr-2" />
@@ -134,7 +132,6 @@ const Templates = () => {
                     <Button
                       size="sm"
                       variant="outline"
-                      className="border-white/20 text-white hover:bg-white/10"
                       onClick={() => useTemplate(tpl)}
                     >
                       <ExternalLink className="w-4 h-4 mr-2" />
@@ -145,15 +142,16 @@ const Templates = () => {
               </div>
               <div className="p-6">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-lg font-semibold text-white">{tpl.name}</h3>
+                  <h3 className="text-lg font-semibold text-foreground">{tpl.name}</h3>
                   <div className="flex items-center gap-1">
                     <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                    <span className="text-sm text-gray-400">4.8</span>
+                    <span className="text-sm text-muted-foreground">4.8</span>
                   </div>
                 </div>
-                <p className="text-sm text-gray-400 mb-3">{tpl.category}</p>
+                <p className="text-sm text-muted-foreground mb-3">{tpl.category}</p>
                 <Button
-                  className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white"
+                  variant="hero"
+                  className="w-full text-black dark:text-white"
                   onClick={() => useTemplate(tpl)}
                 >
                   Use This Template
@@ -166,15 +164,15 @@ const Templates = () => {
 
       {/* Full Screen Preview Dialog */}
       <Dialog open={!!preview} onOpenChange={() => setPreview(null)}>
-        <DialogContent className="max-w-[98vw] w-[98vw] h-[98vh] flex flex-col p-0 bg-black">
-          <DialogHeader className="px-6 py-4 border-b border-white/10 shrink-0 bg-black/50">
+        <DialogContent className="max-w-[98vw] w-[98vw] h-[98vh] flex flex-col p-0 bg-background">
+          <DialogHeader className="px-6 py-4 border-b border-border shrink-0 bg-card/50">
             <div className="flex items-center justify-between">
-              <DialogTitle className="text-white text-xl">Preview: {preview?.name}</DialogTitle>
+              <DialogTitle className="text-foreground text-xl">Preview: {preview?.name}</DialogTitle>
               <div className="flex items-center gap-2">
                 <Button
-                  variant="outline"
+                  variant="hero"
                   size="sm"
-                  className="border-white/20 text-white hover:bg-white/10"
+                  className="text-black dark:text-white"
                   onClick={() => useTemplate(preview!)}
                 >
                   Use Template
@@ -182,7 +180,6 @@ const Templates = () => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="text-white hover:bg-white/10"
                   onClick={() => setPreview(null)}
                 >
                   Close
@@ -190,7 +187,7 @@ const Templates = () => {
               </div>
             </div>
           </DialogHeader>
-          <div className="flex-1 min-h-0 bg-white">
+          <div className="flex-1 min-h-0 bg-white dark:bg-card">
             {preview && (
               <iframe 
                 title={preview.name} 

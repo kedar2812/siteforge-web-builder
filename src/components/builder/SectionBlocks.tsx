@@ -75,14 +75,14 @@ export default function SectionBlocks({ onAdd }: SectionBlocksProps) {
         {SECTION_BLOCKS.map((block) => (
           <Card
             key={block.name}
-            className="p-3 cursor-pointer hover:border-primary/50 transition-colors"
+            className="p-3 cursor-pointer hover:border-primary/50 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white transition-colors group"
             onClick={() => onAdd(block.template)}
           >
             <div className="flex items-start gap-3">
-              <block.icon className="w-5 h-5 text-primary mt-0.5" />
+              <block.icon className="w-5 h-5 text-primary mt-0.5 group-hover:text-white" />
               <div className="flex-1">
-                <div className="font-medium text-sm">{block.name}</div>
-                <div className="text-xs text-muted-foreground">{block.description}</div>
+                <div className="font-medium text-sm group-hover:text-white">{block.name}</div>
+                <div className="text-xs text-muted-foreground group-hover:text-white/80">{block.description}</div>
               </div>
             </div>
           </Card>

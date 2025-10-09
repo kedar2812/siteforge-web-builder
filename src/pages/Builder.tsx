@@ -17,8 +17,6 @@ import {
   Image as ImageIcon,
   Square,
   Layout,
-  ChevronLeft,
-  ChevronRight,
   ZoomIn,
   ZoomOut,
   Maximize,
@@ -71,8 +69,6 @@ const Builder = () => {
   }, [location.search]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [preview, setPreview] = useState(false);
-  const [leftOpen, setLeftOpen] = useState(true);
-  const [rightOpen, setRightOpen] = useState(true);
   const [zoom, setZoom] = useState(1);
   const [freeElements, setFreeElements] = useState<FreeElementData[]>([]);
   const canvasRef = useRef<HTMLDivElement | null>(null);
@@ -356,7 +352,7 @@ const Builder = () => {
               </div>
             </Link>
             <Link to="/dashboard">
-              <Button variant="secondary" size="sm">Go to Dashboard</Button>
+              <Button variant="secondary" size="sm" className="hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white">Go to Dashboard</Button>
             </Link>
             <div className="h-6 w-px bg-border" />
             <input
@@ -367,10 +363,10 @@ const Builder = () => {
           </div>
 
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" onClick={() => setZoom((z) => Math.min(2, parseFloat((z + 0.1).toFixed(2))))} title="Zoom in">
+            <Button variant="ghost" size="icon" onClick={() => setZoom((z) => Math.min(2, parseFloat((z + 0.1).toFixed(2))))} title="Zoom in" className="hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white">
               <ZoomIn className="w-4 h-4" />
             </Button>
-            <Button variant="ghost" size="icon" onClick={() => setZoom((z) => Math.max(0.4, parseFloat((z - 0.1).toFixed(2))))} title="Zoom out">
+            <Button variant="ghost" size="icon" onClick={() => setZoom((z) => Math.max(0.4, parseFloat((z - 0.1).toFixed(2))))} title="Zoom out" className="hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white">
               <ZoomOut className="w-4 h-4" />
             </Button>
             <Button variant="ghost" size="icon" onClick={() => {
@@ -384,19 +380,19 @@ const Builder = () => {
               const baseH = 800; // fixed base canvas height
               const scale = Math.max(0.2, Math.min(availW / baseW, availH / baseH));
               setZoom(parseFloat(scale.toFixed(2)));
-            }} title="Fit to screen">
+            }} title="Fit to screen" className="hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white">
               <Maximize className="w-4 h-4" />
             </Button>
-            <Button variant="ghost" size="icon" className="hidden md:flex" onClick={undo} disabled={!historyRef.current.length}>
+            <Button variant="ghost" size="icon" className="hidden md:flex hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white" onClick={undo} disabled={!historyRef.current.length}>
               <Undo className="w-4 h-4" />
             </Button>
-            <Button variant="ghost" size="icon" className="hidden md:flex" onClick={redo} disabled={!futureRef.current.length}>
+            <Button variant="ghost" size="icon" className="hidden md:flex hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white" onClick={redo} disabled={!futureRef.current.length}>
               <Redo className="w-4 h-4" />
             </Button>
-            <Button variant="ghost" size="icon" onClick={() => setPreview((v) => !v)} aria-pressed={preview}>
+            <Button variant="ghost" size="icon" onClick={() => setPreview((v) => !v)} aria-pressed={preview} className="hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white">
               <Eye className="w-4 h-4" />
             </Button>
-            <Button variant="hero" size="sm" onClick={handleSave} className="gap-2">
+            <Button variant="hero" size="sm" onClick={handleSave} className="gap-2 text-black dark:text-white hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white">
               <Save className="w-4 h-4" />
               <span className="hidden sm:inline">Save</span>
             </Button>
@@ -413,7 +409,6 @@ const Builder = () => {
       <div className="flex flex-1 overflow-hidden relative">
         <ResizablePanelGroup direction="horizontal" className="w-full">
         {/* Left Sidebar - Elements */}
-          {leftOpen && (
           <ResizablePanel defaultSize={20} minSize={15} maxSize={35} className="min-w-[200px]">
             <aside className="h-full border-r border-border/50 bg-card/30 p-4 overflow-y-auto">
           <div className="space-y-4">
@@ -425,7 +420,7 @@ const Builder = () => {
               <div className="space-y-2">
                 <Button
                   variant="outline"
-                  className="w-full justify-start gap-2"
+                  className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
                   onClick={() => addSection("hero")}
                 >
                   <Layout className="w-4 h-4" />
@@ -433,7 +428,7 @@ const Builder = () => {
                 </Button>
                 <Button
                   variant="outline"
-                  className="w-full justify-start gap-2"
+                  className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
                   onClick={() => addSection("text")}
                 >
                   <Type className="w-4 h-4" />
@@ -441,7 +436,7 @@ const Builder = () => {
                 </Button>
                 <Button
                   variant="outline"
-                  className="w-full justify-start gap-2"
+                  className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
                   onClick={() => addSection("image")}
                 >
                   <ImageIcon className="w-4 h-4" />
@@ -449,7 +444,7 @@ const Builder = () => {
                 </Button>
                 <Button
                   variant="outline"
-                  className="w-full justify-start gap-2"
+                  className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
                   onClick={() => addSection("cta")}
                 >
                   <Square className="w-4 h-4" />
@@ -457,7 +452,7 @@ const Builder = () => {
                 </Button>
               <Button
                 variant="outline"
-                className="w-full justify-start gap-2"
+                className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
                 onClick={() => addSection("html")}
               >
                 <Square className="w-4 h-4" />
@@ -468,21 +463,21 @@ const Builder = () => {
                 <div
                   draggable
                   onDragStart={(e) => e.dataTransfer.setData("application/x-element-type", "text")}
-                  className="w-full px-3 py-2 rounded border bg-card cursor-grab"
+                  className="w-full px-3 py-2 rounded border bg-card cursor-grab hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
                 >
                   Add Text
                 </div>
                 <div
                   draggable
                   onDragStart={(e) => e.dataTransfer.setData("application/x-element-type", "shape")}
-                  className="w-full px-3 py-2 rounded border bg-card cursor-grab"
+                  className="w-full px-3 py-2 rounded border bg-card cursor-grab hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
                 >
                   Add Shape
                 </div>
                 <div
                   draggable
                   onDragStart={(e) => e.dataTransfer.setData("application/x-element-type", "image")}
-                  className="w-full px-3 py-2 rounded border bg-card cursor-grab"
+                  className="w-full px-3 py-2 rounded border bg-card cursor-grab hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
                 >
                   Add Image
                 </div>
@@ -496,7 +491,7 @@ const Builder = () => {
               </h3>
               <div className="space-y-2">
                 {templates.map((t) => (
-                  <Button key={t.name} variant="outline" className="w-full justify-start" onClick={() => applyTemplate(t.sections)}>
+                  <Button key={t.name} variant="outline" className="w-full justify-start hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600" onClick={() => applyTemplate(t.sections)}>
                     {t.name}
                   </Button>
                 ))}
@@ -556,8 +551,7 @@ const Builder = () => {
           </div>
         </aside>
           </ResizablePanel>
-          )}
-          {leftOpen && <ResizableHandle withHandle />}
+          <ResizableHandle withHandle />
 
         {/* Main Canvas */}
           <ResizablePanel defaultSize={60} minSize={30}>
@@ -636,10 +630,9 @@ const Builder = () => {
           </div>
         </main>
           </ResizablePanel>
-          {rightOpen && <ResizableHandle withHandle />}
+          <ResizableHandle withHandle />
 
         {/* Right Sidebar - Properties */}
-          {rightOpen && (
           <ResizablePanel defaultSize={20} minSize={15} maxSize={35} className="min-w-[220px]">
             <aside className="h-full border-l border-border/50 bg-card/30 p-4 overflow-y-auto">
           <div className="space-y-4">
@@ -722,7 +715,7 @@ const Builder = () => {
                   }
                 })()}
                 <div className="pt-2">
-                  <Button variant="outline" onClick={() => setSelectedId(null)} className="w-full">Deselect</Button>
+                  <Button variant="outline" onClick={() => setSelectedId(null)} className="w-full hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600">Deselect</Button>
                 </div>
               </div>
             )}
@@ -739,7 +732,7 @@ const Builder = () => {
                       <span>{section.type} Section</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <Button variant="ghost" size="sm" onClick={(e) => {
+                      <Button variant="ghost" size="sm" className="hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white" onClick={(e) => {
                         e.stopPropagation();
                         deleteSection(section.id);
                       }}>Delete</Button>
@@ -759,19 +752,19 @@ const Builder = () => {
                         <span>{el.type} ({el.id.slice(-4)})</span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <Button variant="ghost" size="sm" onClick={(e) => {
+                        <Button variant="ghost" size="sm" className="hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white" onClick={(e) => {
                           e.stopPropagation();
                           setFreeElements(els => els.map(e => e.id === el.id ? { ...e, zIndex: (e.zIndex || 1) + 1 } : e));
                         }}>↑</Button>
-                        <Button variant="ghost" size="sm" onClick={(e) => {
+                        <Button variant="ghost" size="sm" className="hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white" onClick={(e) => {
                           e.stopPropagation();
                           setFreeElements(els => els.map(e => e.id === el.id ? { ...e, zIndex: Math.max(1, (e.zIndex || 1) - 1) } : e));
                         }}>↓</Button>
-                        <Button variant="ghost" size="sm" onClick={(e) => {
+                        <Button variant="ghost" size="sm" className="hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white" onClick={(e) => {
                           e.stopPropagation();
                           setFreeElements(els => els.map(e => e.id === el.id ? { ...e, locked: !e.locked } : e));
                         }}>{el.locked ? '🔒' : '🔓'}</Button>
-                        <Button variant="ghost" size="sm" onClick={(e) => {
+                        <Button variant="ghost" size="sm" className="hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white" onClick={(e) => {
                           e.stopPropagation();
                           setFreeElements(els => els.filter(e => e.id !== el.id));
                           if (selectedId === el.id) setSelectedId(null);
@@ -784,24 +777,8 @@ const Builder = () => {
           </div>
         </aside>
           </ResizablePanel>
-          )}
         </ResizablePanelGroup>
       </div>
-      {/* Corner Arrow Buttons */}
-      <button
-        onClick={() => setLeftOpen(v => !v)}
-        className="absolute left-2 top-1/2 -translate-y-1/2 z-40 rounded-full border border-border/50 bg-background/70 backdrop-blur p-1 hover:bg-background transition-transform"
-        title={leftOpen ? "Collapse left" : "Expand left"}
-      >
-        {leftOpen ? <ChevronLeft className="w-4 h-4 transition-transform" /> : <ChevronRight className="w-4 h-4 transition-transform" />}
-      </button>
-      <button
-        onClick={() => setRightOpen(v => !v)}
-        className="absolute right-2 top-1/2 -translate-y-1/2 z-40 rounded-full border border-border/50 bg-background/70 backdrop-blur p-1 hover:bg-background transition-transform"
-        title={rightOpen ? "Collapse right" : "Expand right"}
-      >
-        {rightOpen ? <ChevronRight className="w-4 h-4 transition-transform" /> : <ChevronLeft className="w-4 h-4 transition-transform" />}
-      </button>
     </div>
   );
 };
