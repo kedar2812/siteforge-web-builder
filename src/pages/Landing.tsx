@@ -54,8 +54,8 @@ const Landing = () => {
           <div className="absolute left-0 z-10">
             <div className="container mx-auto px-4">
               <Link to="/" className="flex items-center gap-2 group cursor-pointer">
-                <Sparkles className="w-6 h-6 text-primary group-hover:rotate-180 transition-transform duration-500 ease-in-out" />
-                <span className="text-xl font-bold bg-gradient-to-r from-blue-700 via-blue-800 to-blue-900 bg-clip-text text-transparent group-hover:from-blue-600 group-hover:via-blue-700 group-hover:to-blue-800 transition-all duration-300">
+                <Sparkles className="w-6 h-6 text-primary group-hover:rotate-180 transition-transform duration-200 ease-in-out" />
+                <span className="text-xl font-bold bg-gradient-to-r from-blue-700 via-blue-800 to-blue-900 bg-clip-text text-transparent group-hover:from-blue-600 group-hover:via-blue-700 group-hover:to-blue-800 transition-all duration-100">
                   SiteForge
                 </span>
               </Link>
@@ -64,7 +64,7 @@ const Landing = () => {
           
           {/* Center Navigation - Centered to entire website width */}
           <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-4">
-            <Link to="/templates" className="text-base font-semibold relative group cursor-pointer px-4 py-2 rounded-lg hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white transition-all duration-300">
+            <Link to="/templates" className="text-base font-semibold relative group cursor-pointer px-4 py-2 rounded-lg hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white transition-all duration-100">
               <span className="relative z-10">Templates</span>
             </Link>
             <button 
@@ -77,7 +77,7 @@ const Landing = () => {
                   window.scrollTo({ top: y, behavior: 'smooth' });
                 }
               }}
-              className="text-base font-semibold relative group cursor-pointer px-4 py-2 rounded-lg hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white transition-all duration-300"
+              className="text-base font-semibold relative group cursor-pointer px-4 py-2 rounded-lg hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white transition-all duration-100"
             >
               Features
             </button>
