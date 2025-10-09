@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ThemeToggle";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, Sparkles, Layout, Globe, Settings, LogOut } from "lucide-react";
+import { Plus, Sparkles, Layout, Globe, Settings, LogOut, LayoutGrid } from "lucide-react";
 
 const Dashboard = () => {
   // Mock data - will be replaced with real data from Lovable Cloud
@@ -24,6 +24,12 @@ const Dashboard = () => {
             </span>
           </div>
           <div className="flex items-center gap-4">
+            <Link to="/templates">
+              <Button variant="outline" className="gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600">
+                <LayoutGrid className="w-4 h-4" />
+                <span className="hidden sm:inline">View Templates</span>
+              </Button>
+            </Link>
             <Link to="/settings">
               <Button variant="ghost" size="icon" title="Settings">
                 <Settings className="w-5 h-5" />

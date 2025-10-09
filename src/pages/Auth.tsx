@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Sparkles, ArrowLeft, LayoutGrid, Eye } from "lucide-react";
+import { Sparkles, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 
 const Auth = () => {
@@ -143,28 +143,6 @@ const Auth = () => {
             </Tabs>
           </CardContent>
         </Card>
-
-        {/* View Templates Option */}
-        <div className="text-center space-y-4">
-          <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-            <div className="flex-1 h-px bg-border/50"></div>
-            <span>or</span>
-            <div className="flex-1 h-px bg-border/50"></div>
-          </div>
-          
-          <Button
-            variant="outline"
-            onClick={() => navigate('/templates')}
-            className="w-full hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-          >
-            <LayoutGrid className="w-4 h-4 mr-2" />
-            Browse Templates
-          </Button>
-          
-          <p className="text-xs text-muted-foreground">
-            Explore our collection of professional website templates
-          </p>
-        </div>
 
         <p className="text-center text-sm text-muted-foreground">
           By continuing, you agree to our Terms of Service and Privacy Policy
