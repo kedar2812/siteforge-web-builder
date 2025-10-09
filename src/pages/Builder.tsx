@@ -903,30 +903,28 @@ const Builder = () => {
               </div>
             </div>
 
-                    {/* Section Blocks */}
-                    <SectionBlocks onAdd={(template) => {
-                      const newSection: Section = {
-                        id: Date.now().toString(),
-                        type: template.type as any,
-                        content: template.content,
-                      };
-                      pushHistory([...sections, newSection]);
-                      toast.success("Section block added");
-                    }} />
+            {/* Section Blocks */}
+            <SectionBlocks onAdd={(template) => {
+              const newSection: Section = {
+                id: Date.now().toString(),
+                type: template.type as any,
+                content: template.content,
+              };
+              pushHistory([...sections, newSection]);
+              toast.success("Section block added");
+            }} />
 
-                    {/* Export & Import */}
-                    <ExportImport 
-                      sections={sections}
-                      freeElements={freeElements}
-                      onImport={(data) => {
-                        setSections(data.sections);
-                        setFreeElements(data.freeElements);
-                        setSelectedId(null);
-                        toast.success("Project imported successfully");
-                      }}
-                    />
-                  </div>
-                </div>
+            {/* Export & Import */}
+            <ExportImport 
+              sections={sections}
+              freeElements={freeElements}
+              onImport={(data) => {
+                setSections(data.sections);
+                setFreeElements(data.freeElements);
+                setSelectedId(null);
+                toast.success("Project imported successfully");
+              }}
+            />
 
                 {/* Templates Tab - temporarily disabled */}
                 {/* {activeSidebarTab === 'templates' && (
@@ -970,14 +968,14 @@ const Builder = () => {
         {/* Main Canvas */}
           <ResizablePanel defaultSize={60} minSize={30}>
             <main className="h-full overflow-auto bg-muted/30 p-0">
-          <div 
-            className="w-full h-full transition-all duration-300" 
-            ref={canvasWrapperRef}
-            style={{
-              maxWidth: responsiveView === 'tablet' ? '768px' : responsiveView === 'mobile' ? '420px' : '100%',
-              margin: responsiveView !== 'desktop' ? '0 auto' : '0'
-            }}
-          >
+              <div 
+                className="w-full h-full transition-all duration-300" 
+                ref={canvasWrapperRef}
+                style={{
+                  maxWidth: responsiveView === 'tablet' ? '768px' : responsiveView === 'mobile' ? '420px' : '100%',
+                  margin: responsiveView !== 'desktop' ? '0 auto' : '0'
+                }}
+              >
             <Card className="min-h-[600px] bg-background border-border/50 shadow-elevation">
               <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                 <SortableContext items={sections.map((s) => s.id)} strategy={verticalListSortingStrategy}>
@@ -1054,20 +1052,20 @@ const Builder = () => {
           <ResizableHandle withHandle />
 
         {/* Right Sidebar - Properties */}
-          <ResizablePanel defaultSize={20} minSize={15} maxSize={35} className="min-w-[220px]">
-            <aside className="h-full border-l border-border/50 bg-card/30 p-4 overflow-y-auto sidebar-scrollbar">
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold flex items-center gap-2">
-              <Settings className="w-4 h-4" />
-              Inspector
-            </h3>
-            {!selectedId && (
-              <p className="text-sm text-muted-foreground">Select an element or section to edit its properties</p>
-            )}
-            {selectedId && (
-              <div className="space-y-4">
-                {(() => {
-                  const sectionTarget = sections.find((s) => s.id === selectedId);
+        <ResizablePanel defaultSize={20} minSize={15} maxSize={35} className="min-w-[220px]">
+          <aside className="h-full border-l border-border/50 bg-card/30 p-4 overflow-y-auto sidebar-scrollbar">
+            <div className="space-y-4">
+              <h3 className="text-sm font-semibold flex items-center gap-2">
+                <Settings className="w-4 h-4" />
+                Inspector
+              </h3>
+              {!selectedId && (
+                <p className="text-sm text-muted-foreground">Select an element or section to edit its properties</p>
+              )}
+              {selectedId && (
+                <div className="space-y-4">
+                  {(() => {
+                    const sectionTarget = sections.find((s) => s.id === selectedId);
                   if (sectionTarget) {
                     const update = (patch: Partial<Section["content"]>) => updateSection(sectionTarget.id, { ...sectionTarget.content, ...patch });
                     switch (sectionTarget.type) {
@@ -1225,7 +1223,7 @@ const Builder = () => {
             </div>
           </div>
         </aside>
-          </ResizablePanel>
+        </ResizablePanel>
         </ResizablePanelGroup>
       </div>
       
