@@ -44,8 +44,8 @@ import ColorSwatches from "@/components/builder/ColorSwatches";
 import SectionBlocks from "@/components/builder/SectionBlocks";
 import ExportImport from "@/components/builder/ExportImport";
 import TemplatePreview from "@/components/builder/TemplatePreview";
-import TemplateGallery from "@/components/builder/TemplateGallery";
-import LiveTemplateEditor from "@/components/builder/LiveTemplateEditor";
+// import TemplateGallery from "@/components/builder/TemplateGallery";
+// import LiveTemplateEditor from "@/components/builder/LiveTemplateEditor";
 import { useTemplateLoader } from "@/hooks/useTemplateLoader";
 import { TemplateMeta, TemplateCategory, TemplateSearchFilters } from "@/types/template";
 
@@ -162,9 +162,9 @@ const Builder = () => {
   const [zoom, setZoom] = useState(1);
   const [freeElements, setFreeElements] = useState<FreeElementData[]>([]);
   const [responsiveView, setResponsiveView] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
-  const [activeSidebarTab, setActiveSidebarTab] = useState<'components' | 'templates'>('components');
-  const [liveEditorOpen, setLiveEditorOpen] = useState(false);
-  const [currentTemplate, setCurrentTemplate] = useState<string>('');
+  // const [activeSidebarTab, setActiveSidebarTab] = useState<'components' | 'templates'>('components');
+  // const [liveEditorOpen, setLiveEditorOpen] = useState(false);
+  // const [currentTemplate, setCurrentTemplate] = useState<string>('');
   const canvasRef = useRef<HTMLDivElement | null>(null);
   const canvasWrapperRef = useRef<HTMLDivElement | null>(null);
   const historyRef = useRef<Section[][]>([]);
@@ -254,41 +254,41 @@ const Builder = () => {
     toast.success("Website exported successfully!");
   };
 
-  // Template loading and live editing functions
-  const handleTemplateLoad = async (templateId: string) => {
-    try {
-      const response = await fetch(`/templates/${templateId}/index.html`);
-      const htmlContent = await response.text();
-      setCurrentTemplate(htmlContent);
-      setLiveEditorOpen(true);
-      toast.success('Template loaded for live editing!');
-    } catch (error) {
-      console.error('Error loading template:', error);
-      toast.error('Failed to load template');
-    }
-  };
+  // Template loading and live editing functions - temporarily disabled
+  // const handleTemplateLoad = async (templateId: string) => {
+  //   try {
+  //     const response = await fetch(`/templates/${templateId}/index.html`);
+  //     const htmlContent = await response.text();
+  //     setCurrentTemplate(htmlContent);
+  //     setLiveEditorOpen(true);
+  //     toast.success('Template loaded for live editing!');
+  //   } catch (error) {
+  //     console.error('Error loading template:', error);
+  //     toast.error('Failed to load template');
+  //   }
+  // };
 
-  const handleLiveEditorSave = (htmlContent: string) => {
-    // Convert the edited HTML back to sections
-    // This is a simplified conversion - in a real app, you'd want more sophisticated parsing
-    const newSection = {
-      id: `template-${Date.now()}`,
-      type: 'html' as const,
-      content: {
-        title: 'Live Edited Template',
-        htmlPath: htmlContent
-      }
-    };
+  // const handleLiveEditorSave = (htmlContent: string) => {
+  //   // Convert the edited HTML back to sections
+  //   // This is a simplified conversion - in a real app, you'd want more sophisticated parsing
+  //   const newSection = {
+  //     id: `template-${Date.now()}`,
+  //     type: 'html' as const,
+  //     content: {
+  //       title: 'Live Edited Template',
+  //       htmlPath: htmlContent
+  //     }
+  //   };
     
-    setSections([...sections, newSection]);
-    setLiveEditorOpen(false);
-    toast.success('Template saved to canvas!');
-  };
+  //   setSections([...sections, newSection]);
+  //   setLiveEditorOpen(false);
+  //   toast.success('Template saved to canvas!');
+  // };
 
-  const handleLiveEditorClose = () => {
-    setLiveEditorOpen(false);
-    setCurrentTemplate('');
-  };
+  // const handleLiveEditorClose = () => {
+  //   setLiveEditorOpen(false);
+  //   setCurrentTemplate('');
+  // };
 
   // Autosave every 30 seconds
   useEffect(() => {
@@ -653,35 +653,11 @@ const Builder = () => {
           <ResizablePanel defaultSize={20} minSize={15} maxSize={35} className="min-w-[200px]">
             <aside className="h-full border-r border-border/50 bg-card/30 p-4 overflow-y-auto sidebar-scrollbar">
               <div className="space-y-4">
-                {/* Sidebar Tabs */}
-                <div className="flex border-b border-border/50 mb-4">
-                  <Button
-                    variant={activeSidebarTab === 'components' ? 'default' : 'ghost'}
-                    size="sm"
-                    onClick={() => setActiveSidebarTab('components')}
-                    className="flex-1 rounded-none hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white"
-                  >
-                    <Plus className="w-4 h-4 mr-2" />
+                <div>
+                  <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
+                    <Plus className="w-4 h-4" />
                     Components
-                  </Button>
-                  <Button
-                    variant={activeSidebarTab === 'templates' ? 'default' : 'ghost'}
-                    size="sm"
-                    onClick={() => setActiveSidebarTab('templates')}
-                    className="flex-1 rounded-none hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white"
-                  >
-                    <LayoutGrid className="w-4 h-4 mr-2" />
-                    Templates
-                  </Button>
-                </div>
-
-                {/* Components Tab */}
-                {activeSidebarTab === 'components' && (
-                  <div>
-                    <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
-                      <Plus className="w-4 h-4" />
-                      Components
-                    </h3>
+                  </h3>
                     <div className="space-y-2">
                       {/* Layout Components */}
                       <div className="space-y-1">
@@ -949,33 +925,50 @@ const Builder = () => {
                         toast.success("Project imported successfully");
                       }}
                     />
-                  </div>
-                )}
+                </div>
 
-                {/* Templates Tab */}
-                {activeSidebarTab === 'templates' && (
+                {/* Templates Tab - temporarily disabled */}
+                {/* {activeSidebarTab === 'templates' && (
                   <div>
                     <TemplateGallery
                       onTemplateLoad={handleTemplateLoad}
                       onTemplatePreview={handleTemplatePreview}
                     />
                   </div>
-                )}
-          </div>
-        </aside>
+                )} */}
+
+                <TypographyPresets onApply={(preset) => {
+                  // Apply to all text elements
+                  setFreeElements(els => els.map(el => 
+                    el.type === "text" 
+                      ? { ...el, props: { ...el.props, fontFamily: preset.heading.fontFamily, fontSize: preset.heading.fontSize, fontWeight: preset.heading.fontWeight } }
+                      : el
+                  ));
+                  toast.success("Typography preset applied");
+                }} />
+
+                <ColorSwatches 
+                  onSelect={(color) => {
+                    if (selectedId) {
+                      const freeTarget = freeElements.find(e => e.id === selectedId);
+                      if (freeTarget) {
+                        setFreeElements(els => els.map(e => 
+                          e.id === selectedId 
+                            ? { ...e, props: { ...e.props, backgroundColor: color } }
+                            : e
+                        ));
+                      }
+                    }
+                  }} 
+                />
+              </div>
+            </aside>
           </ResizablePanel>
           <ResizableHandle withHandle />
 
         {/* Main Canvas */}
           <ResizablePanel defaultSize={60} minSize={30}>
-            {liveEditorOpen ? (
-              <LiveTemplateEditor
-                templateHtml={currentTemplate}
-                onSave={handleLiveEditorSave}
-                onClose={handleLiveEditorClose}
-              />
-            ) : (
-              <main className="h-full overflow-auto bg-muted/30 p-0">
+            <main className="h-full overflow-auto bg-muted/30 p-0">
           <div 
             className="w-full h-full transition-all duration-300" 
             ref={canvasWrapperRef}
@@ -1056,7 +1049,6 @@ const Builder = () => {
             </Card>
               </div>
             </main>
-            )}
           </ResizablePanel>
           <ResizableHandle withHandle />
 
