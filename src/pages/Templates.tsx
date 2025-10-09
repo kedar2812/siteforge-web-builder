@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Sparkles, Search, Eye, ExternalLink, Star, Filter, Settings } from "lucide-react";
+import { toast } from "sonner";
 
 type TemplateMeta = {
   id: string;
@@ -105,6 +106,27 @@ const Templates = () => {
   }, [templates, category, query]);
 
   const useTemplate = (tpl: TemplateMeta) => {
+    // Check if user is authenticated
+    if (!isAuthenticated) {
+      // Store template data for after authentication
+      sessionStorage.setItem('pendingTemplate', JSON.stringify({
+        template: tpl.id,
+        html: tpl.htmlPath,
+        css: tpl.cssPath,
+        name: tpl.name,
+        category: tpl.category
+      }));
+      
+      // Show notification
+      toast.info("Please sign in to use this template", {
+        description: "You'll be redirected to the sign-in page"
+      });
+      
+      // Redirect to Auth page
+      navigate('/auth');
+      return;
+    }
+    
     // Navigate to Builder with template data
     const params = new URLSearchParams({
       template: tpl.id,

@@ -24,8 +24,34 @@ const Auth = () => {
       sessionStorage.setItem('isAuthenticated', 'true');
       document.cookie = 'authenticated=true; path=/';
       
-      toast.success("Welcome back!");
-      navigate("/dashboard");
+      // Check if there's a pending template
+      const pendingTemplate = sessionStorage.getItem('pendingTemplate');
+      if (pendingTemplate) {
+        try {
+          const templateData = JSON.parse(pendingTemplate);
+          // Clear the pending template
+          sessionStorage.removeItem('pendingTemplate');
+          
+          // Navigate to Builder with the template
+          const params = new URLSearchParams({
+            template: templateData.template,
+            html: templateData.html,
+            css: templateData.css,
+            name: templateData.name,
+            category: templateData.category
+          });
+          
+          toast.success("Welcome back! Redirecting to your template...");
+          navigate(`/builder?${params.toString()}`);
+        } catch (error) {
+          console.error('Error parsing pending template:', error);
+          toast.success("Welcome back!");
+          navigate("/dashboard");
+        }
+      } else {
+        toast.success("Welcome back!");
+        navigate("/dashboard");
+      }
       setIsLoading(false);
     }, 1000);
   };
@@ -41,8 +67,34 @@ const Auth = () => {
       sessionStorage.setItem('isAuthenticated', 'true');
       document.cookie = 'authenticated=true; path=/';
       
-      toast.success("Account created! Welcome to SiteForge!");
-      navigate("/dashboard");
+      // Check if there's a pending template
+      const pendingTemplate = sessionStorage.getItem('pendingTemplate');
+      if (pendingTemplate) {
+        try {
+          const templateData = JSON.parse(pendingTemplate);
+          // Clear the pending template
+          sessionStorage.removeItem('pendingTemplate');
+          
+          // Navigate to Builder with the template
+          const params = new URLSearchParams({
+            template: templateData.template,
+            html: templateData.html,
+            css: templateData.css,
+            name: templateData.name,
+            category: templateData.category
+          });
+          
+          toast.success("Account created! Redirecting to your template...");
+          navigate(`/builder?${params.toString()}`);
+        } catch (error) {
+          console.error('Error parsing pending template:', error);
+          toast.success("Account created! Welcome to SiteForge!");
+          navigate("/dashboard");
+        }
+      } else {
+        toast.success("Account created! Welcome to SiteForge!");
+        navigate("/dashboard");
+      }
       setIsLoading(false);
     }, 1000);
   };
