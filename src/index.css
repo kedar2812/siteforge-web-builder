@@ -153,6 +153,7 @@ All colors MUST be HSL.
   .card, [class*="card-"], [class*="panel-"], [class*="sidebar-"] {
     transition: var(--transition-theme);
   }
+
 }
 
 @layer utilities {

@@ -20,6 +20,9 @@ import {
   ZoomIn,
   ZoomOut,
   Maximize,
+  Search,
+  Filter,
+  Star,
 } from "lucide-react";
 import { toast } from "sonner";
 import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
@@ -31,6 +34,9 @@ import TypographyPresets from "@/components/builder/TypographyPresets";
 import ColorSwatches from "@/components/builder/ColorSwatches";
 import SectionBlocks from "@/components/builder/SectionBlocks";
 import ExportImport from "@/components/builder/ExportImport";
+import TemplatePreview from "@/components/builder/TemplatePreview";
+import { useTemplateLoader } from "@/hooks/useTemplateLoader";
+import { TemplateMeta, TemplateCategory, TemplateSearchFilters } from "@/types/template";
 
 export interface Section {
   id: string;
@@ -58,15 +64,88 @@ const Builder = () => {
     },
   ]);
   const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const templateId = searchParams.get('template');
+  const htmlPath = searchParams.get('html');
+  const cssPath = searchParams.get('css');
+  
+  // Template loading functionality
+  const [templates, setTemplates] = useState<TemplateMeta[]>([]);
+  const [templateFilters, setTemplateFilters] = useState<TemplateSearchFilters>({
+    category: 'All',
+    searchQuery: '',
+    sortBy: 'name'
+  });
+  const [previewTemplate, setPreviewTemplate] = useState<TemplateMeta | null>(null);
+  const { loadTemplate, isLoading: templateLoading, error: templateError } = useTemplateLoader();
+  
+  // Load templates on component mount
+  useEffect(() => {
+    fetch('/templates/templates.json')
+      .then(res => res.json())
+      .then(setTemplates)
+      .catch(() => setTemplates([]));
+  }, []);
+
+  // Cleanup template styles on unmount
+  useEffect(() => {
+    return () => {
+      // Remove any template styles when component unmounts
+      const existingStyles = document.getElementById('template-styles');
+      if (existingStyles) {
+        existingStyles.remove();
+      }
+    };
+  }, []);
+
+  // Force theme refresh function
+  const refreshTheme = useCallback(() => {
+    const body = document.body;
+    const currentTheme = body.classList.contains('dark') ? 'dark' : 'light';
+    body.classList.remove('dark', 'light');
+    setTimeout(() => {
+      body.classList.add(currentTheme);
+    }, 10);
+  }, []);
+  
+  // Load template from URL parameters
+  useEffect(() => {
+    if (templateId && htmlPath && cssPath) {
+      const template: TemplateMeta = {
+        id: templateId,
+        name: 'Loaded Template',
+        category: 'Custom',
+        thumbnail: '',
+        htmlPath,
+        cssPath
+      };
+      
+      loadTemplate(template)
+        .then(parsedSections => {
+          setSections(parsedSections.map(section => ({
+            id: section.id,
+            type: section.type as any,
+            content: section.content
+          })));
+          toast.success('Template loaded successfully!');
+        })
+        .catch(error => {
+          console.error('Error loading template:', error);
+          toast.error('Failed to load template');
+        });
+    }
+  }, [templateId, htmlPath, cssPath, loadTemplate]);
+  
+  // Legacy template loading for backward compatibility
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const html = params.get("html");
-    if (html) {
+    if (html && !templateId) {
       setSections([
         { id: "tpl-html", type: "html", content: { title: "Template", htmlPath: html } },
       ]);
     }
-  }, [location.search]);
+  }, [location.search, templateId]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [preview, setPreview] = useState(false);
   const [zoom, setZoom] = useState(1);
@@ -320,7 +399,56 @@ const Builder = () => {
     setSelectedId(null);
   };
 
-  const templates: { name: string; sections: Section[] }[] = [
+  // Template handling functions
+  const handleTemplatePreview = (template: TemplateMeta) => {
+    setPreviewTemplate(template);
+  };
+
+  const handleTemplateApply = async (template: TemplateMeta) => {
+    try {
+      const parsedSections = await loadTemplate(template);
+      const builderSections = parsedSections.map(section => ({
+        id: section.id,
+        type: section.type as any,
+        content: section.content
+      }));
+      applyTemplate(builderSections);
+      setPreviewTemplate(null);
+      
+      // Ensure theme is not affected by template loading
+      setTimeout(() => {
+        refreshTheme();
+      }, 100);
+      
+      toast.success(`${template.name} template applied successfully!`);
+    } catch (error) {
+      console.error('Error applying template:', error);
+      toast.error('Failed to apply template');
+    }
+  };
+
+  const handleTemplateCancel = () => {
+    setPreviewTemplate(null);
+  };
+
+  // Filter templates based on search and category
+  const filteredTemplates = useMemo(() => {
+    return templates.filter(template => {
+      const matchesCategory = templateFilters.category === 'All' || template.category === templateFilters.category;
+      const matchesSearch = template.name.toLowerCase().includes(templateFilters.searchQuery.toLowerCase()) ||
+                          template.description?.toLowerCase().includes(templateFilters.searchQuery.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+  }, [templates, templateFilters]);
+
+  const templateCategories: TemplateCategory[] = [
+    "Business", "Portfolio", "Blog", "Creative", "Restaurant",
+    "E-commerce", "Education", "Event", "Fashion", "Fitness",
+    "NGO", "Photography", "Product", "Real Estate", "Resume",
+    "SaaS", "Tech", "Travel", "Consulting"
+  ];
+
+  const quickTemplates: { name: string; sections: Section[] }[] = [
     {
       name: "Simple Landing",
       sections: [
@@ -391,6 +519,9 @@ const Builder = () => {
             </Button>
             <Button variant="ghost" size="icon" onClick={() => setPreview((v) => !v)} aria-pressed={preview} className="hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white">
               <Eye className="w-4 h-4" />
+            </Button>
+            <Button variant="ghost" size="icon" onClick={refreshTheme} title="Refresh Theme" className="hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white">
+              <Settings className="w-4 h-4" />
             </Button>
             <Button variant="hero" size="sm" onClick={handleSave} className="gap-2 text-black dark:text-white hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white">
               <Save className="w-4 h-4" />
@@ -489,12 +620,98 @@ const Builder = () => {
                 <Layout className="w-4 h-4" />
                 Templates
               </h3>
-              <div className="space-y-2">
-                {templates.map((t) => (
-                  <Button key={t.name} variant="outline" className="w-full justify-start hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600" onClick={() => applyTemplate(t.sections)}>
-                    {t.name}
+              
+              {/* Template Search */}
+              <div className="mb-3">
+                <Input
+                  placeholder="Search templates..."
+                  value={templateFilters.searchQuery}
+                  onChange={(e) => setTemplateFilters(prev => ({ ...prev, searchQuery: e.target.value }))}
+                  className="text-sm"
+                />
+              </div>
+              
+              {/* Template Categories */}
+              <div className="mb-3">
+                <div className="flex flex-wrap gap-1">
+                  <Button
+                    variant={templateFilters.category === 'All' ? 'default' : 'outline'}
+                    size="sm"
+                    className="text-xs"
+                    onClick={() => setTemplateFilters(prev => ({ ...prev, category: 'All' }))}
+                  >
+                    All
                   </Button>
-                ))}
+                  {templateCategories.slice(0, 4).map(category => (
+                    <Button
+                      key={category}
+                      variant={templateFilters.category === category ? 'default' : 'outline'}
+                      size="sm"
+                      className="text-xs"
+                      onClick={() => setTemplateFilters(prev => ({ ...prev, category }))}
+                    >
+                      {category}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Template List */}
+              <div className="space-y-2 max-h-60 overflow-y-auto">
+                {templateLoading ? (
+                  <div className="text-center py-4 text-sm text-muted-foreground">
+                    Loading templates...
+                  </div>
+                ) : filteredTemplates.length === 0 ? (
+                  <div className="text-center py-4 text-sm text-muted-foreground">
+                    No templates found
+                  </div>
+                ) : (
+                  filteredTemplates.slice(0, 6).map((template) => (
+                    <Card
+                      key={template.id}
+                      className="p-3 cursor-pointer hover:border-primary/50 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white transition-colors group"
+                      onClick={() => handleTemplatePreview(template)}
+                    >
+                      <div className="flex items-start gap-2">
+                        <div className="w-8 h-8 bg-primary/10 rounded flex items-center justify-center flex-shrink-0">
+                          <Star className="w-4 h-4 text-primary group-hover:text-white" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="font-medium text-sm group-hover:text-white truncate">
+                            {template.name}
+                          </div>
+                          <div className="text-xs text-muted-foreground group-hover:text-white/80 truncate">
+                            {template.category}
+                          </div>
+                          {template.description && (
+                            <div className="text-xs text-muted-foreground group-hover:text-white/80 line-clamp-1 mt-1">
+                              {template.description}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </Card>
+                  ))
+                )}
+              </div>
+              
+              {/* Legacy Templates */}
+              <div className="mt-4">
+                <h4 className="text-xs font-medium text-muted-foreground mb-2">Quick Templates</h4>
+                <div className="space-y-1">
+                  {quickTemplates.map((t) => (
+                    <Button 
+                      key={t.name} 
+                      variant="outline" 
+                      size="sm"
+                      className="w-full justify-start text-xs hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600" 
+                      onClick={() => applyTemplate(t.sections)}
+                    >
+                      {t.name}
+                    </Button>
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -576,7 +793,7 @@ const Builder = () => {
               {/* Freeform canvas */}
               <div
                 ref={canvasRef}
-                className="relative h-[800px] editor-grid"
+                className="relative h-[800px] editor-grid builder-canvas"
                 style={{ transform: `scale(${zoom})`, transformOrigin: "top left" }}
                 onDragOver={(e) => {
                   e.preventDefault();
@@ -779,6 +996,16 @@ const Builder = () => {
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>
+      
+      {/* Template Preview Dialog */}
+      {previewTemplate && (
+        <TemplatePreview
+          template={previewTemplate}
+          onApply={(sections) => handleTemplateApply(previewTemplate)}
+          onCancel={handleTemplateCancel}
+          isOpen={!!previewTemplate}
+        />
+      )}
     </div>
   );
 };

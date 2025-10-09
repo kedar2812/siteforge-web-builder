@@ -38,7 +38,16 @@ const Templates = () => {
   }, [templates, category, query]);
 
   const useTemplate = (tpl: TemplateMeta) => {
-    navigate(`/builder?template=${encodeURIComponent(tpl.id)}&html=${encodeURIComponent(tpl.htmlPath)}&css=${encodeURIComponent(tpl.cssPath)}`);
+    // Navigate to Builder with template data
+    const params = new URLSearchParams({
+      template: tpl.id,
+      html: tpl.htmlPath,
+      css: tpl.cssPath,
+      name: tpl.name,
+      category: tpl.category
+    });
+    
+    navigate(`/builder?${params.toString()}`);
   };
 
   return (
