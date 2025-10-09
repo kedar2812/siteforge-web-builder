@@ -476,7 +476,7 @@ const Builder = () => {
             <Link to="/dashboard">
               <div className="flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-primary" />
-                <span className="font-semibold hidden sm:inline">SiteForge</span>
+                <span className="font-semibold hidden sm:inline text-black dark:text-white">SiteForge</span>
               </div>
             </Link>
             <Link to="/dashboard">

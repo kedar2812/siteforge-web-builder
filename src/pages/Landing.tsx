@@ -55,7 +55,7 @@ const Landing = () => {
             <div className="container mx-auto px-4">
               <Link to="/" className="flex items-center gap-2 group cursor-pointer">
                 <Sparkles className="w-6 h-6 text-primary group-hover:rotate-180 transition-transform duration-200 ease-in-out" />
-                <span className="text-xl font-bold bg-gradient-to-r from-blue-700 via-blue-800 to-blue-900 bg-clip-text text-transparent group-hover:from-blue-600 group-hover:via-blue-700 group-hover:to-blue-800 transition-all duration-100">
+                <span className="text-xl font-bold text-black dark:text-white group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:via-blue-700 group-hover:to-blue-800 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-100">
                   SiteForge
                 </span>
               </Link>

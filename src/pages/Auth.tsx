@@ -48,7 +48,7 @@ const Auth = () => {
         <div className="text-center">
           <Link to="/" className="inline-flex items-center gap-2 mb-8">
             <Sparkles className="w-8 h-8 text-primary" />
-            <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary-glow bg-clip-text text-transparent">
+            <span className="text-2xl font-bold text-black dark:text-white">
               SiteForge
             </span>
           </Link>

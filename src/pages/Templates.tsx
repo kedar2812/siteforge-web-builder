@@ -57,7 +57,7 @@ const Templates = () => {
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 group cursor-pointer">
             <Sparkles className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
-            <span className="text-xl font-bold bg-gradient-to-r from-primary to-secondary-glow bg-clip-text text-transparent">
+            <span className="text-xl font-bold text-black dark:text-white">
               SiteForge Templates
             </span>
           </Link>
