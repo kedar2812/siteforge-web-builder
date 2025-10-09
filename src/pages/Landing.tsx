@@ -147,7 +147,7 @@ const Landing = () => {
               Perfect for entrepreneurs, creatives, and businesses.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/templates">
+              <Link to="/templates" state={{ from: 'landing' }}>
                 <Button variant="hero" className="w-full sm:w-auto gap-2 text-black dark:text-white no-hover-effect">
                   View Templates
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
