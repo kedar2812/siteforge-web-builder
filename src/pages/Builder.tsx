@@ -23,6 +23,15 @@ import {
   Search,
   Filter,
   Star,
+  Monitor,
+  Tablet,
+  Smartphone,
+  Download,
+  MousePointer,
+  PanelTop,
+  LayoutGrid,
+  Heading1,
+  Pilcrow,
 } from "lucide-react";
 import { toast } from "sonner";
 import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
@@ -150,6 +159,7 @@ const Builder = () => {
   const [preview, setPreview] = useState(false);
   const [zoom, setZoom] = useState(1);
   const [freeElements, setFreeElements] = useState<FreeElementData[]>([]);
+  const [responsiveView, setResponsiveView] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const canvasRef = useRef<HTMLDivElement | null>(null);
   const canvasWrapperRef = useRef<HTMLDivElement | null>(null);
   const historyRef = useRef<Section[][]>([]);
@@ -213,6 +223,30 @@ const Builder = () => {
     localStorage.setItem("website-project", JSON.stringify(projectData));
     setLastSaved(new Date());
     toast.success("Site saved successfully!");
+  };
+
+  const handleExport = () => {
+    // Create a clean HTML export
+    const exportData = {
+      sections,
+      freeElements,
+      metadata: {
+        title: "My Website",
+        description: "Built with SiteForge",
+        createdAt: new Date().toISOString()
+      }
+    };
+    
+    const dataStr = JSON.stringify(exportData, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'website-export.json';
+    link.click();
+    URL.revokeObjectURL(url);
+    
+    toast.success("Website exported successfully!");
   };
 
   // Autosave every 30 seconds
@@ -520,12 +554,47 @@ const Builder = () => {
             <Button variant="ghost" size="icon" onClick={() => setPreview((v) => !v)} aria-pressed={preview} className="hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white">
               <Eye className="w-4 h-4" />
             </Button>
+            {/* Responsive View Switcher */}
+            <div className="flex items-center gap-1 border border-border/50 rounded-lg p-1">
+              <Button
+                variant={responsiveView === 'desktop' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setResponsiveView('desktop')}
+                className="h-8 w-8 p-0 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white"
+                title="Desktop View"
+              >
+                <Monitor className="w-4 h-4" />
+              </Button>
+              <Button
+                variant={responsiveView === 'tablet' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setResponsiveView('tablet')}
+                className="h-8 w-8 p-0 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white"
+                title="Tablet View"
+              >
+                <Tablet className="w-4 h-4" />
+              </Button>
+              <Button
+                variant={responsiveView === 'mobile' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setResponsiveView('mobile')}
+                className="h-8 w-8 p-0 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white"
+                title="Mobile View"
+              >
+                <Smartphone className="w-4 h-4" />
+              </Button>
+            </div>
+            
             <Button variant="ghost" size="icon" onClick={refreshTheme} title="Refresh Theme" className="hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white">
               <Settings className="w-4 h-4" />
             </Button>
             <Button variant="hero" size="sm" onClick={handleSave} className="gap-2 text-black dark:text-white hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white">
               <Save className="w-4 h-4" />
               <span className="hidden sm:inline">Save</span>
+            </Button>
+            <Button variant="outline" size="sm" onClick={handleExport} className="gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600">
+              <Download className="w-4 h-4" />
+              <span className="hidden sm:inline">Export HTML</span>
             </Button>
             {lastSaved && (
               <span className="text-xs text-muted-foreground hidden md:inline">
@@ -546,49 +615,74 @@ const Builder = () => {
             <div>
               <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
                 <Plus className="w-4 h-4" />
-                Add Sections
+                Components
               </h3>
               <div className="space-y-2">
-                <Button
-                  variant="outline"
-                  className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-                  onClick={() => addSection("hero")}
-                >
-                  <Layout className="w-4 h-4" />
-                  Hero Section
-                </Button>
-                <Button
-                  variant="outline"
-                  className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-                  onClick={() => addSection("text")}
-                >
-                  <Type className="w-4 h-4" />
-                  Text Block
-                </Button>
-                <Button
-                  variant="outline"
-                  className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-                  onClick={() => addSection("image")}
-                >
-                  <ImageIcon className="w-4 h-4" />
-                  Image
-                </Button>
-                <Button
-                  variant="outline"
-                  className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-                  onClick={() => addSection("cta")}
-                >
-                  <Square className="w-4 h-4" />
-                  Call to Action
-                </Button>
-              <Button
-                variant="outline"
-                className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-                onClick={() => addSection("html")}
-              >
-                <Square className="w-4 h-4" />
-                HTML Template
-              </Button>
+                {/* Layout Components */}
+                <div className="space-y-1">
+                  <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Layout</h4>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
+                    onClick={() => addSection("hero")}
+                  >
+                    <Layout className="w-4 h-4" />
+                    Section
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
+                    onClick={() => addSection("html")}
+                  >
+                    <LayoutGrid className="w-4 h-4" />
+                    Card Grid
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
+                    onClick={() => addSection("html")}
+                  >
+                    <PanelTop className="w-4 h-4" />
+                    Navbar
+                  </Button>
+                </div>
+
+                {/* Content Components */}
+                <div className="space-y-1">
+                  <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Content</h4>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
+                    onClick={() => addSection("text")}
+                  >
+                    <Heading1 className="w-4 h-4" />
+                    Heading
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
+                    onClick={() => addSection("text")}
+                  >
+                    <Pilcrow className="w-4 h-4" />
+                    Text Block
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
+                    onClick={() => addSection("cta")}
+                  >
+                    <MousePointer className="w-4 h-4" />
+                    Button
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
+                    onClick={() => addSection("image")}
+                  >
+                    <ImageIcon className="w-4 h-4" />
+                    Image
+                  </Button>
+                </div>
 
                 {/* Draggable freeform elements */}
                 <div
@@ -798,7 +892,14 @@ const Builder = () => {
         {/* Main Canvas */}
           <ResizablePanel defaultSize={60} minSize={30}>
             <main className="h-full overflow-auto bg-muted/30 p-0">
-          <div className="w-full h-full" ref={canvasWrapperRef}>
+          <div 
+            className="w-full h-full transition-all duration-300" 
+            ref={canvasWrapperRef}
+            style={{
+              maxWidth: responsiveView === 'tablet' ? '768px' : responsiveView === 'mobile' ? '420px' : '100%',
+              margin: responsiveView !== 'desktop' ? '0 auto' : '0'
+            }}
+          >
             <Card className="min-h-[600px] bg-background border-border/50 shadow-elevation">
               <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                 <SortableContext items={sections.map((s) => s.id)} strategy={verticalListSortingStrategy}>
@@ -880,7 +981,7 @@ const Builder = () => {
           <div className="space-y-4">
             <h3 className="text-sm font-semibold flex items-center gap-2">
               <Settings className="w-4 h-4" />
-              Properties
+              Inspector
             </h3>
             {!selectedId && (
               <p className="text-sm text-muted-foreground">Select an element or section to edit its properties</p>
