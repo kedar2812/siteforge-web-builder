@@ -24,7 +24,7 @@ const Dashboard = () => {
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <Link to="/templates">
+            <Link to="/templates" state={{ from: 'dashboard' }}>
               <Button variant="outline" className="gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600">
                 <LayoutGrid className="w-4 h-4" />
                 <span className="hidden sm:inline">View Templates</span>

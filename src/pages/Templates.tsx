@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ThemeToggle";
 import { Card } from "@/components/ui/card";
@@ -26,10 +26,37 @@ const Templates = () => {
   const [category, setCategory] = useState<string | null>(null);
   const [preview, setPreview] = useState<TemplateMeta | null>(null);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Check if user came from Dashboard
+  const cameFromDashboard = location.state?.from === 'dashboard' || 
+                          document.referrer.includes('/dashboard') ||
+                          sessionStorage.getItem('cameFromDashboard') === 'true';
+
+  const handleBackClick = () => {
+    // Clear the sessionStorage flag
+    sessionStorage.removeItem('cameFromDashboard');
+    
+    if (cameFromDashboard) {
+      navigate('/dashboard');
+    } else {
+      navigate('/');
+    }
+  };
 
   useEffect(() => {
     fetch("/templates/templates.json").then(r => r.json()).then(setTemplates).catch(() => setTemplates([]));
-  }, []);
+    
+    // Set sessionStorage flag if user came from Dashboard
+    if (location.state?.from === 'dashboard') {
+      sessionStorage.setItem('cameFromDashboard', 'true');
+    }
+    
+    // Cleanup function to clear sessionStorage when component unmounts
+    return () => {
+      sessionStorage.removeItem('cameFromDashboard');
+    };
+  }, [location.state]);
 
   const filtered = useMemo(() => {
     return templates.filter(t =>
@@ -70,9 +97,9 @@ const Templates = () => {
               <Filter className="w-4 h-4 mr-2" />
               Filters
             </Button>
-            <Link to="/">
-              <Button variant="ghost">Back to Home</Button>
-            </Link>
+            <Button variant="ghost" onClick={handleBackClick}>
+              {cameFromDashboard ? 'Back to Dashboard' : 'Back to Home'}
+            </Button>
             <Link to="/settings">
               <Button
                 variant="ghost"
