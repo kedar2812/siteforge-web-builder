@@ -44,6 +44,8 @@ import ColorSwatches from "@/components/builder/ColorSwatches";
 import SectionBlocks from "@/components/builder/SectionBlocks";
 import ExportImport from "@/components/builder/ExportImport";
 import TemplatePreview from "@/components/builder/TemplatePreview";
+import TemplateGallery from "@/components/builder/TemplateGallery";
+import LiveTemplateEditor from "@/components/builder/LiveTemplateEditor";
 import { useTemplateLoader } from "@/hooks/useTemplateLoader";
 import { TemplateMeta, TemplateCategory, TemplateSearchFilters } from "@/types/template";
 
@@ -160,6 +162,9 @@ const Builder = () => {
   const [zoom, setZoom] = useState(1);
   const [freeElements, setFreeElements] = useState<FreeElementData[]>([]);
   const [responsiveView, setResponsiveView] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
+  const [activeSidebarTab, setActiveSidebarTab] = useState<'components' | 'templates'>('components');
+  const [liveEditorOpen, setLiveEditorOpen] = useState(false);
+  const [currentTemplate, setCurrentTemplate] = useState<string>('');
   const canvasRef = useRef<HTMLDivElement | null>(null);
   const canvasWrapperRef = useRef<HTMLDivElement | null>(null);
   const historyRef = useRef<Section[][]>([]);
@@ -247,6 +252,42 @@ const Builder = () => {
     URL.revokeObjectURL(url);
     
     toast.success("Website exported successfully!");
+  };
+
+  // Template loading and live editing functions
+  const handleTemplateLoad = async (templateId: string) => {
+    try {
+      const response = await fetch(`/templates/${templateId}/index.html`);
+      const htmlContent = await response.text();
+      setCurrentTemplate(htmlContent);
+      setLiveEditorOpen(true);
+      toast.success('Template loaded for live editing!');
+    } catch (error) {
+      console.error('Error loading template:', error);
+      toast.error('Failed to load template');
+    }
+  };
+
+  const handleLiveEditorSave = (htmlContent: string) => {
+    // Convert the edited HTML back to sections
+    // This is a simplified conversion - in a real app, you'd want more sophisticated parsing
+    const newSection = {
+      id: `template-${Date.now()}`,
+      type: 'html' as const,
+      content: {
+        title: 'Live Edited Template',
+        htmlPath: htmlContent
+      }
+    };
+    
+    setSections([...sections, newSection]);
+    setLiveEditorOpen(false);
+    toast.success('Template saved to canvas!');
+  };
+
+  const handleLiveEditorClose = () => {
+    setLiveEditorOpen(false);
+    setCurrentTemplate('');
   };
 
   // Autosave every 30 seconds
@@ -611,17 +652,41 @@ const Builder = () => {
         {/* Left Sidebar - Elements */}
           <ResizablePanel defaultSize={20} minSize={15} maxSize={35} className="min-w-[200px]">
             <aside className="h-full border-r border-border/50 bg-card/30 p-4 overflow-y-auto sidebar-scrollbar">
-          <div className="space-y-4">
-            <div>
-              <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
-                <Plus className="w-4 h-4" />
-                Components
-              </h3>
-              <div className="space-y-2">
-                {/* Layout Components */}
-                <div className="space-y-1">
-                  <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Layout</h4>
+              <div className="space-y-4">
+                {/* Sidebar Tabs */}
+                <div className="flex border-b border-border/50 mb-4">
                   <Button
+                    variant={activeSidebarTab === 'components' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => setActiveSidebarTab('components')}
+                    className="flex-1 rounded-none hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white"
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Components
+                  </Button>
+                  <Button
+                    variant={activeSidebarTab === 'templates' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => setActiveSidebarTab('templates')}
+                    className="flex-1 rounded-none hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white"
+                  >
+                    <LayoutGrid className="w-4 h-4 mr-2" />
+                    Templates
+                  </Button>
+                </div>
+
+                {/* Components Tab */}
+                {activeSidebarTab === 'components' && (
+                  <div>
+                    <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
+                      <Plus className="w-4 h-4" />
+                      Components
+                    </h3>
+                    <div className="space-y-2">
+                      {/* Layout Components */}
+                      <div className="space-y-1">
+                        <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Layout</h4>
+                        <Button
                     variant="outline"
                     className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
                     onClick={() => addSection("hero")}
@@ -862,28 +927,40 @@ const Builder = () => {
               </div>
             </div>
 
-            {/* Section Blocks */}
-            <SectionBlocks onAdd={(template) => {
-              const newSection: Section = {
-                id: Date.now().toString(),
-                type: template.type as any,
-                content: template.content,
-              };
-              pushHistory([...sections, newSection]);
-              toast.success("Section block added");
-            }} />
+                    {/* Section Blocks */}
+                    <SectionBlocks onAdd={(template) => {
+                      const newSection: Section = {
+                        id: Date.now().toString(),
+                        type: template.type as any,
+                        content: template.content,
+                      };
+                      pushHistory([...sections, newSection]);
+                      toast.success("Section block added");
+                    }} />
 
-            {/* Export & Import */}
-            <ExportImport 
-              sections={sections}
-              freeElements={freeElements}
-              onImport={(data) => {
-                setSections(data.sections);
-                setFreeElements(data.freeElements);
-                setSelectedId(null);
-                toast.success("Project imported successfully");
-              }}
-            />
+                    {/* Export & Import */}
+                    <ExportImport 
+                      sections={sections}
+                      freeElements={freeElements}
+                      onImport={(data) => {
+                        setSections(data.sections);
+                        setFreeElements(data.freeElements);
+                        setSelectedId(null);
+                        toast.success("Project imported successfully");
+                      }}
+                    />
+                  </div>
+                )}
+
+                {/* Templates Tab */}
+                {activeSidebarTab === 'templates' && (
+                  <div>
+                    <TemplateGallery
+                      onTemplateLoad={handleTemplateLoad}
+                      onTemplatePreview={handleTemplatePreview}
+                    />
+                  </div>
+                )}
           </div>
         </aside>
           </ResizablePanel>
@@ -891,7 +968,14 @@ const Builder = () => {
 
         {/* Main Canvas */}
           <ResizablePanel defaultSize={60} minSize={30}>
-            <main className="h-full overflow-auto bg-muted/30 p-0">
+            {liveEditorOpen ? (
+              <LiveTemplateEditor
+                templateHtml={currentTemplate}
+                onSave={handleLiveEditorSave}
+                onClose={handleLiveEditorClose}
+              />
+            ) : (
+              <main className="h-full overflow-auto bg-muted/30 p-0">
           <div 
             className="w-full h-full transition-all duration-300" 
             ref={canvasWrapperRef}
@@ -970,8 +1054,9 @@ const Builder = () => {
                 </div>
               )}
             </Card>
-          </div>
-        </main>
+              </div>
+            </main>
+            )}
           </ResizablePanel>
           <ResizableHandle withHandle />
 
