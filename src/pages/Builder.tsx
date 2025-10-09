@@ -541,7 +541,7 @@ const Builder = () => {
         <ResizablePanelGroup direction="horizontal" className="w-full">
         {/* Left Sidebar - Elements */}
           <ResizablePanel defaultSize={20} minSize={15} maxSize={35} className="min-w-[200px]">
-            <aside className="h-full border-r border-border/50 bg-card/30 p-4 overflow-y-auto">
+            <aside className="h-full border-r border-border/50 bg-card/30 p-4 overflow-y-auto sidebar-scrollbar">
           <div className="space-y-4">
             <div>
               <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
@@ -743,6 +743,31 @@ const Builder = () => {
               currentColor={freeElements.find(e => e.id === selectedId)?.props?.color}
             />
 
+            {/* Help & Tips Section */}
+            <div className="mt-6">
+              <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
+                <Settings className="w-4 h-4" />
+                Help & Tips
+              </h3>
+              <div className="space-y-2 text-xs text-muted-foreground">
+                <div className="p-2 bg-muted/50 rounded border">
+                  <strong>💡 Tip:</strong> Drag elements from the left sidebar to add them to your canvas.
+                </div>
+                <div className="p-2 bg-muted/50 rounded border">
+                  <strong>⌨️ Shortcut:</strong> Use Ctrl+Z to undo and Ctrl+Y to redo.
+                </div>
+                <div className="p-2 bg-muted/50 rounded border">
+                  <strong>🎨 Style:</strong> Select any element to customize its properties on the right.
+                </div>
+                <div className="p-2 bg-muted/50 rounded border">
+                  <strong>📱 Preview:</strong> Click the eye icon to preview your design.
+                </div>
+                <div className="p-2 bg-muted/50 rounded border">
+                  <strong>💾 Save:</strong> Your work is automatically saved as you build.
+                </div>
+              </div>
+            </div>
+
             {/* Section Blocks */}
             <SectionBlocks onAdd={(template) => {
               const newSection: Section = {
@@ -851,7 +876,7 @@ const Builder = () => {
 
         {/* Right Sidebar - Properties */}
           <ResizablePanel defaultSize={20} minSize={15} maxSize={35} className="min-w-[220px]">
-            <aside className="h-full border-l border-border/50 bg-card/30 p-4 overflow-y-auto">
+            <aside className="h-full border-l border-border/50 bg-card/30 p-4 overflow-y-auto sidebar-scrollbar">
           <div className="space-y-4">
             <h3 className="text-sm font-semibold flex items-center gap-2">
               <Settings className="w-4 h-4" />
@@ -989,6 +1014,34 @@ const Builder = () => {
                       </div>
                     </div>
                   ))}
+              </div>
+            </div>
+
+            {/* Additional Help Content for Right Sidebar */}
+            <div className="mt-6">
+              <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
+                <Settings className="w-4 h-4" />
+                Properties Help
+              </h3>
+              <div className="space-y-2 text-xs text-muted-foreground">
+                <div className="p-2 bg-muted/50 rounded border">
+                  <strong>📐 Position:</strong> Use X, Y coordinates to position elements precisely.
+                </div>
+                <div className="p-2 bg-muted/50 rounded border">
+                  <strong>📏 Size:</strong> Adjust width and height for perfect sizing.
+                </div>
+                <div className="p-2 bg-muted/50 rounded border">
+                  <strong>🎨 Colors:</strong> Use the color picker or enter hex values.
+                </div>
+                <div className="p-2 bg-muted/50 rounded border">
+                  <strong>🔒 Lock:</strong> Lock elements to prevent accidental changes.
+                </div>
+                <div className="p-2 bg-muted/50 rounded border">
+                  <strong>📚 Layers:</strong> Use ↑↓ buttons to change element order.
+                </div>
+                <div className="p-2 bg-muted/50 rounded border">
+                  <strong>🗑️ Delete:</strong> Remove elements you no longer need.
+                </div>
               </div>
             </div>
           </div>
