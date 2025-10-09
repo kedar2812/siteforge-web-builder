@@ -1,16 +1,28 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ThemeToggle";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Sparkles, Layout, Globe, Settings, LogOut, LayoutGrid } from "lucide-react";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  
   // Mock data - will be replaced with real data from Lovable Cloud
   const sites = [
     { id: 1, name: "My Portfolio", url: "portfolio.siteforge.app", lastEdited: "2 hours ago", published: true },
     { id: 2, name: "Coffee Shop", url: "coffee.siteforge.app", lastEdited: "1 day ago", published: true },
     { id: 3, name: "Draft Site", url: "", lastEdited: "3 days ago", published: false },
   ];
+
+  const handleLogout = () => {
+    // Clear authentication flags
+    localStorage.removeItem('user');
+    sessionStorage.removeItem('isAuthenticated');
+    document.cookie = 'authenticated=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    
+    // Navigate to home
+    navigate('/');
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -35,11 +47,9 @@ const Dashboard = () => {
                 <Settings className="w-5 h-5" />
               </Button>
             </Link>
-            <Link to="/">
-              <Button variant="ghost" size="icon" title="Logout">
-                <LogOut className="w-5 h-5" />
-              </Button>
-            </Link>
+            <Button variant="ghost" size="icon" title="Logout" onClick={handleLogout}>
+              <LogOut className="w-5 h-5" />
+            </Button>
             <ThemeToggle />
           </div>
         </div>

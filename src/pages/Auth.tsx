@@ -19,6 +19,11 @@ const Auth = () => {
     
     // Simulate auth - will be replaced with real Lovable Cloud auth
     setTimeout(() => {
+      // Set authentication flags
+      localStorage.setItem('user', JSON.stringify({ email: 'user@example.com', name: 'User' }));
+      sessionStorage.setItem('isAuthenticated', 'true');
+      document.cookie = 'authenticated=true; path=/';
+      
       toast.success("Welcome back!");
       navigate("/dashboard");
       setIsLoading(false);
@@ -31,6 +36,11 @@ const Auth = () => {
     
     // Simulate auth - will be replaced with real Lovable Cloud auth
     setTimeout(() => {
+      // Set authentication flags
+      localStorage.setItem('user', JSON.stringify({ email: 'user@example.com', name: 'User' }));
+      sessionStorage.setItem('isAuthenticated', 'true');
+      document.cookie = 'authenticated=true; path=/';
+      
       toast.success("Account created! Welcome to SiteForge!");
       navigate("/dashboard");
       setIsLoading(false);

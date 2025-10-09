@@ -33,14 +33,35 @@ const Templates = () => {
                           document.referrer.includes('/dashboard') ||
                           sessionStorage.getItem('cameFromDashboard') === 'true';
 
+  // Check if user is authenticated (simplified check - in real app, use proper auth context)
+  const isAuthenticated = localStorage.getItem('user') !== null || 
+                         sessionStorage.getItem('isAuthenticated') === 'true' ||
+                         document.cookie.includes('authenticated=true');
+
   const handleBackClick = () => {
     // Clear the sessionStorage flag
     sessionStorage.removeItem('cameFromDashboard');
     
     if (cameFromDashboard) {
+      // Always go back to Dashboard if came from Dashboard
       navigate('/dashboard');
     } else {
-      navigate('/');
+      // Came from Landing page - check authentication
+      if (isAuthenticated) {
+        navigate('/dashboard');
+      } else {
+        navigate('/');
+      }
+    }
+  };
+
+  // Determine button text
+  const getBackButtonText = () => {
+    if (cameFromDashboard) {
+      return 'Back to Dashboard';
+    } else {
+      // Came from Landing page
+      return isAuthenticated ? 'Back to Dashboard' : 'Back to Home';
     }
   };
 
@@ -98,7 +119,7 @@ const Templates = () => {
               Filters
             </Button>
             <Button variant="ghost" onClick={handleBackClick}>
-              {cameFromDashboard ? 'Back to Dashboard' : 'Back to Home'}
+              {getBackButtonText()}
             </Button>
             <Link to="/settings">
               <Button
