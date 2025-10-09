@@ -731,7 +731,7 @@ const Builder = () => {
                   <Button
                     variant={templateFilters.category === 'All' ? 'default' : 'outline'}
                     size="sm"
-                    className="text-xs"
+                    className="text-xs hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
                     onClick={() => setTemplateFilters(prev => ({ ...prev, category: 'All' }))}
                   >
                     All
@@ -741,7 +741,7 @@ const Builder = () => {
                       key={category}
                       variant={templateFilters.category === category ? 'default' : 'outline'}
                       size="sm"
-                      className="text-xs"
+                      className="text-xs hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
                       onClick={() => setTemplateFilters(prev => ({ ...prev, category }))}
                     >
                       {category}
