@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Sparkles } from "lucide-react";
+import { Sparkles, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 
 const Auth = () => {
@@ -39,6 +39,19 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4 relative">
+      {/* Back Button - Top Left Corner */}
+      <div className="absolute top-4 left-4">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => navigate('/')}
+          className="hover:bg-primary/10 transition-colors"
+          title="Back to Home"
+        >
+          <ArrowLeft className="w-5 h-5" />
+        </Button>
+      </div>
+      
       {/* Theme Toggle - Top Right Corner */}
       <div className="absolute top-4 right-4">
         <ThemeToggle />
