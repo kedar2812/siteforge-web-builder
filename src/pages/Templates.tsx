@@ -14,6 +14,8 @@ type TemplateMeta = {
   thumbnail: string;
   htmlPath: string;
   cssPath: string;
+  description?: string;
+  uniqueFeatures?: string[];
 };
 
 const CATEGORIES = ["All", "Business", "Portfolio", "Blog", "Creative", "Restaurant", "E-commerce", "Education", "Event", "Fashion", "Fitness", "NGO", "Photography", "Product", "Real Estate", "Resume", "SaaS", "Tech", "Travel", "Consulting"];
@@ -148,7 +150,29 @@ const Templates = () => {
                     <span className="text-sm text-muted-foreground">4.8</span>
                   </div>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">{tpl.category}</p>
+                <p className="text-sm text-muted-foreground mb-2">{tpl.category}</p>
+                {tpl.description && (
+                  <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{tpl.description}</p>
+                )}
+                {tpl.uniqueFeatures && tpl.uniqueFeatures.length > 0 && (
+                  <div className="mb-3">
+                    <div className="flex flex-wrap gap-1">
+                      {tpl.uniqueFeatures.slice(0, 3).map((feature, index) => (
+                        <span
+                          key={index}
+                          className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full"
+                        >
+                          {feature}
+                        </span>
+                      ))}
+                      {tpl.uniqueFeatures.length > 3 && (
+                        <span className="text-xs text-muted-foreground">
+                          +{tpl.uniqueFeatures.length - 3} more
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
                 <Button
                   variant="hero"
                   className="w-full text-black dark:text-white"
@@ -166,9 +190,26 @@ const Templates = () => {
       <Dialog open={!!preview} onOpenChange={() => setPreview(null)}>
         <DialogContent className="max-w-[98vw] w-[98vw] h-[98vh] flex flex-col p-0 bg-background">
           <DialogHeader className="px-6 py-4 border-b border-border shrink-0 bg-card/50">
-            <div className="flex items-center justify-between">
-              <DialogTitle className="text-foreground text-xl">Preview: {preview?.name}</DialogTitle>
-              <div className="flex items-center gap-2">
+            <div className="flex items-start justify-between">
+              <div className="flex-1">
+                <DialogTitle className="text-foreground text-xl mb-2">Preview: {preview?.name}</DialogTitle>
+                {preview?.description && (
+                  <p className="text-sm text-muted-foreground mb-2">{preview.description}</p>
+                )}
+                {preview?.uniqueFeatures && preview.uniqueFeatures.length > 0 && (
+                  <div className="flex flex-wrap gap-1">
+                    {preview.uniqueFeatures.map((feature, index) => (
+                      <span
+                        key={index}
+                        className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full"
+                      >
+                        {feature}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="flex items-center gap-2 ml-4">
                 <Button
                   variant="hero"
                   size="sm"

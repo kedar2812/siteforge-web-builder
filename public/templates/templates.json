@@ -3,162 +3,320 @@
     "id": "tpl-001",
     "name": "Business Landing",
     "category": "Business",
-    "thumbnail": "/thumbnails/business-landing.svg",
+    "thumbnail": "/thumbnails/business-landing.png",
     "htmlPath": "/templates/business-landing/index.html",
-    "cssPath": "/templates/business-landing/style.css"
+    "cssPath": "/templates/business-landing/style.css",
+    "description": "Professional business website with animated counters, testimonial carousel, and interactive pricing cards",
+    "uniqueFeatures": [
+      "Animated statistics counters",
+      "Interactive pricing comparison",
+      "Video testimonials",
+      "Live chat integration",
+      "Lead capture forms"
+    ]
   },
   {
     "id": "tpl-002",
     "name": "Personal Portfolio",
     "category": "Portfolio",
-    "thumbnail": "/thumbnails/personal-portfolio.svg",
+    "thumbnail": "/thumbnails/personal-portfolio.png",
     "htmlPath": "/templates/personal-portfolio/index.html",
-    "cssPath": "/templates/personal-portfolio/style.css"
+    "cssPath": "/templates/personal-portfolio/style.css",
+    "description": "Creative portfolio with interactive project showcase, skill progress bars, and contact form",
+    "uniqueFeatures": [
+      "Interactive project gallery",
+      "Animated skill bars",
+      "Parallax scrolling effects",
+      "Dark/light mode toggle",
+      "Contact form with validation"
+    ]
   },
   {
     "id": "tpl-003",
     "name": "Restaurant & Cafe",
     "category": "Restaurant",
-    "thumbnail": "/thumbnails/restaurant-cafe.svg",
+    "thumbnail": "/thumbnails/restaurant-cafe.png",
     "htmlPath": "/templates/restaurant-cafe/index.html",
-    "cssPath": "/templates/restaurant-cafe/style.css"
+    "cssPath": "/templates/restaurant-cafe/style.css",
+    "description": "Elegant restaurant website with online menu, table reservation system, and food gallery",
+    "uniqueFeatures": [
+      "Interactive menu with filters",
+      "Table reservation system",
+      "Food gallery with zoom",
+      "Location map integration",
+      "Online ordering system"
+    ]
   },
   {
     "id": "tpl-004",
     "name": "Tech Startup",
     "category": "Tech",
-    "thumbnail": "/thumbnails/tech-startup.svg",
+    "thumbnail": "/thumbnails/tech-startup.png",
     "htmlPath": "/templates/tech-startup/index.html",
-    "cssPath": "/templates/tech-startup/style.css"
+    "cssPath": "/templates/tech-startup/style.css",
+    "description": "Modern tech startup with animated features, demo videos, and investor deck",
+    "uniqueFeatures": [
+      "Animated feature demonstrations",
+      "Interactive product demos",
+      "Investor pitch deck",
+      "Team member profiles",
+      "Technology stack showcase"
+    ]
   },
   {
     "id": "tpl-005",
     "name": "Fashion & Lifestyle",
     "category": "Fashion",
-    "thumbnail": "/thumbnails/fashion-lifestyle.svg",
+    "thumbnail": "/thumbnails/fashion-lifestyle.png",
     "htmlPath": "/templates/fashion-lifestyle/index.html",
-    "cssPath": "/templates/fashion-lifestyle/style.css"
+    "cssPath": "/templates/fashion-lifestyle/style.css",
+    "description": "Trendy fashion website with lookbook gallery, size guide, and social media integration",
+    "uniqueFeatures": [
+      "Interactive lookbook",
+      "Size guide calculator",
+      "Social media feed",
+      "Wishlist functionality",
+      "Fashion blog integration"
+    ]
   },
   {
     "id": "tpl-006",
     "name": "Education Platform",
     "category": "Education",
-    "thumbnail": "/thumbnails/education-platform.svg",
+    "thumbnail": "/thumbnails/education-platform.png",
     "htmlPath": "/templates/education-platform/index.html",
-    "cssPath": "/templates/education-platform/style.css"
+    "cssPath": "/templates/education-platform/style.css",
+    "description": "Comprehensive education platform with course catalog, student dashboard, and progress tracking",
+    "uniqueFeatures": [
+      "Interactive course catalog",
+      "Student progress tracking",
+      "Video lesson player",
+      "Quiz and assessment tools",
+      "Certificate generation"
+    ]
   },
   {
     "id": "tpl-007",
     "name": "E-commerce Store",
     "category": "E-commerce",
-    "thumbnail": "/thumbnails/ecommerce-store.svg",
+    "thumbnail": "/thumbnails/ecommerce-store.png",
     "htmlPath": "/templates/ecommerce-store/index.html",
-    "cssPath": "/templates/ecommerce-store/style.css"
+    "cssPath": "/templates/ecommerce-store/style.css",
+    "description": "Full-featured e-commerce store with shopping cart, payment integration, and inventory management",
+    "uniqueFeatures": [
+      "Shopping cart with persistence",
+      "Payment gateway integration",
+      "Product comparison tool",
+      "Wishlist and favorites",
+      "Inventory management system"
+    ]
   },
   {
     "id": "tpl-008",
     "name": "Agency Showcase",
     "category": "Business",
-    "thumbnail": "/thumbnails/agency-showcase.svg",
+    "thumbnail": "/thumbnails/agency-showcase.png",
     "htmlPath": "/templates/agency-showcase/index.html",
-    "cssPath": "/templates/agency-showcase/style.css"
+    "cssPath": "/templates/agency-showcase/style.css",
+    "description": "Creative agency portfolio with case studies, client testimonials, and project timeline",
+    "uniqueFeatures": [
+      "Interactive case studies",
+      "Client testimonial carousel",
+      "Project timeline visualization",
+      "Team member profiles",
+      "Service pricing calculator"
+    ]
   },
   {
     "id": "tpl-009",
     "name": "Event & Conference",
     "category": "Event",
-    "thumbnail": "/thumbnails/event-conference.svg",
+    "thumbnail": "/thumbnails/event-conference.png",
     "htmlPath": "/templates/event-conference/index.html",
-    "cssPath": "/templates/event-conference/style.css"
+    "cssPath": "/templates/event-conference/style.css",
+    "description": "Dynamic event website with registration system, speaker profiles, and live streaming integration",
+    "uniqueFeatures": [
+      "Event registration system",
+      "Speaker profile showcase",
+      "Live streaming integration",
+      "Schedule builder",
+      "Networking features"
+    ]
   },
   {
     "id": "tpl-010",
     "name": "Fitness & Health",
     "category": "Fitness",
-    "thumbnail": "/thumbnails/fitness-health.svg",
+    "thumbnail": "/thumbnails/fitness-health.png",
     "htmlPath": "/templates/fitness-health/index.html",
-    "cssPath": "/templates/fitness-health/style.css"
+    "cssPath": "/templates/fitness-health/style.css",
+    "description": "Fitness website with workout plans, nutrition tracking, and member portal",
+    "uniqueFeatures": [
+      "Interactive workout plans",
+      "Nutrition tracking tools",
+      "Member portal access",
+      "Progress tracking charts",
+      "Class booking system"
+    ]
   },
   {
     "id": "tpl-011",
     "name": "Blog & Magazine",
     "category": "Blog",
-    "thumbnail": "/thumbnails/blog-magazine.svg",
+    "thumbnail": "/thumbnails/blog-magazine.png",
     "htmlPath": "/templates/blog-magazine/index.html",
-    "cssPath": "/templates/blog-magazine/style.css"
+    "cssPath": "/templates/blog-magazine/style.css",
+    "description": "Modern blog platform with article categories, author profiles, and social sharing",
+    "uniqueFeatures": [
+      "Article categorization",
+      "Author profile pages",
+      "Social sharing buttons",
+      "Comment system",
+      "Newsletter subscription"
+    ]
   },
   {
     "id": "tpl-012",
     "name": "Photography",
     "category": "Photography",
-    "thumbnail": "/thumbnails/photography.svg",
+    "thumbnail": "/thumbnails/photography.png",
     "htmlPath": "/templates/photography/index.html",
-    "cssPath": "/templates/photography/style.css"
+    "cssPath": "/templates/photography/style.css",
+    "description": "Stunning photography portfolio with lightbox gallery, client testimonials, and booking system",
+    "uniqueFeatures": [
+      "Lightbox photo gallery",
+      "Client testimonial section",
+      "Booking system integration",
+      "Portfolio filtering",
+      "Contact form with file upload"
+    ]
   },
   {
     "id": "tpl-013",
     "name": "Travel Agency",
     "category": "Travel",
-    "thumbnail": "/thumbnails/travel-agency.svg",
+    "thumbnail": "/thumbnails/travel-agency.png",
     "htmlPath": "/templates/travel-agency/index.html",
-    "cssPath": "/templates/travel-agency/style.css"
+    "cssPath": "/templates/travel-agency/style.css",
+    "description": "Travel booking website with destination guides, package deals, and customer reviews",
+    "uniqueFeatures": [
+      "Destination search filters",
+      "Package comparison tool",
+      "Customer review system",
+      "Booking calendar",
+      "Travel blog integration"
+    ]
   },
   {
     "id": "tpl-014",
     "name": "Real Estate",
     "category": "Real Estate",
-    "thumbnail": "/thumbnails/real-estate.svg",
+    "thumbnail": "/thumbnails/real-estate.png",
     "htmlPath": "/templates/real-estate/index.html",
-    "cssPath": "/templates/real-estate/style.css"
+    "cssPath": "/templates/real-estate/style.css",
+    "description": "Property listing website with virtual tours, mortgage calculator, and agent profiles",
+    "uniqueFeatures": [
+      "Virtual property tours",
+      "Mortgage calculator",
+      "Property search filters",
+      "Agent profile system",
+      "Property comparison tool"
+    ]
   },
   {
     "id": "tpl-015",
     "name": "Resume & CV",
     "category": "Resume",
-    "thumbnail": "/thumbnails/resume-cv.svg",
+    "thumbnail": "/thumbnails/resume-cv.png",
     "htmlPath": "/templates/resume-cv/index.html",
-    "cssPath": "/templates/resume-cv/style.css"
+    "cssPath": "/templates/resume-cv/style.css",
+    "description": "Professional resume website with skills showcase, work timeline, and downloadable CV",
+    "uniqueFeatures": [
+      "Interactive skills showcase",
+      "Work experience timeline",
+      "Downloadable CV",
+      "Contact form",
+      "Project portfolio section"
+    ]
   },
   {
     "id": "tpl-016",
     "name": "Creative Studio",
     "category": "Creative",
-    "thumbnail": "/thumbnails/creative-studio.svg",
+    "thumbnail": "/thumbnails/creative-studio.png",
     "htmlPath": "/templates/creative-studio/index.html",
-    "cssPath": "/templates/creative-studio/style.css"
+    "cssPath": "/templates/creative-studio/style.css",
+    "description": "Creative agency website with animated portfolio, client showcase, and project case studies",
+    "uniqueFeatures": [
+      "Animated portfolio gallery",
+      "Client showcase carousel",
+      "Project case studies",
+      "Creative process timeline",
+      "Team collaboration features"
+    ]
   },
   {
     "id": "tpl-017",
     "name": "NGO & Charity",
     "category": "NGO",
-    "thumbnail": "/thumbnails/ngo-charity.svg",
+    "thumbnail": "/thumbnails/ngo-charity.png",
     "htmlPath": "/templates/ngo-charity/index.html",
-    "cssPath": "/templates/ngo-charity/style.css"
+    "cssPath": "/templates/ngo-charity/style.css",
+    "description": "Charity website with donation system, impact stories, and volunteer registration",
+    "uniqueFeatures": [
+      "Donation tracking system",
+      "Impact story showcase",
+      "Volunteer registration",
+      "Event calendar",
+      "Newsletter signup"
+    ]
   },
   {
     "id": "tpl-018",
     "name": "Product Launch",
     "category": "Product",
-    "thumbnail": "/thumbnails/product-launch.svg",
+    "thumbnail": "/thumbnails/product-launch.png",
     "htmlPath": "/templates/product-launch/index.html",
-    "cssPath": "/templates/product-launch/style.css"
+    "cssPath": "/templates/product-launch/style.css",
+    "description": "Product launch website with countdown timer, pre-order system, and feature demonstrations",
+    "uniqueFeatures": [
+      "Launch countdown timer",
+      "Pre-order system",
+      "Product demo videos",
+      "Feature comparison",
+      "Early bird pricing"
+    ]
   },
   {
     "id": "tpl-019",
     "name": "SaaS Product",
     "category": "SaaS",
-    "thumbnail": "/thumbnails/saas-product.svg",
+    "thumbnail": "/thumbnails/saas-product.png",
     "htmlPath": "/templates/saas-product/index.html",
-    "cssPath": "/templates/saas-product/style.css"
+    "cssPath": "/templates/saas-product/style.css",
+    "description": "SaaS application website with feature demonstrations, pricing tiers, and free trial signup",
+    "uniqueFeatures": [
+      "Interactive feature demos",
+      "Pricing tier comparison",
+      "Free trial signup",
+      "Customer success stories",
+      "API documentation"
+    ]
   },
   {
     "id": "tpl-020",
     "name": "Consulting Service",
     "category": "Consulting",
-    "thumbnail": "/thumbnails/consulting-service.svg",
+    "thumbnail": "/thumbnails/consulting-service.png",
     "htmlPath": "/templates/consulting-service/index.html",
-    "cssPath": "/templates/consulting-service/style.css"
+    "cssPath": "/templates/consulting-service/style.css",
+    "description": "Professional consulting website with service packages, client testimonials, and consultation booking",
+    "uniqueFeatures": [
+      "Service package builder",
+      "Client testimonial carousel",
+      "Consultation booking system",
+      "Case study showcase",
+      "Expert team profiles"
+    ]
   }
 ]
-
-
