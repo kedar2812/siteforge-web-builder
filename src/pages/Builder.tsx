@@ -160,6 +160,8 @@ const Builder = () => {
   const [zoom, setZoom] = useState(1);
   const [freeElements, setFreeElements] = useState<FreeElementData[]>([]);
   const [responsiveView, setResponsiveView] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
+  const [activeSidebarTab, setActiveSidebarTab] = useState<'components' | 'templates'>('components');
+  const [domBreadcrumbs, setDomBreadcrumbs] = useState<string[]>([]);
   const canvasRef = useRef<HTMLDivElement | null>(null);
   const canvasWrapperRef = useRef<HTMLDivElement | null>(null);
   const historyRef = useRef<Section[][]>([]);
@@ -247,6 +249,156 @@ const Builder = () => {
     URL.revokeObjectURL(url);
     
     toast.success("Website exported successfully!");
+  };
+
+  // Template Integration Architecture - Core Functions
+  const activateElement = (element: HTMLElement): void => {
+    /**
+     * The heart of the template integration system.
+     * Augments static HTML elements with interactive capabilities.
+     */
+    
+    // Assign unique ID for precise DOM manipulation
+    const uniqueId = `editor-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    element.setAttribute('data-editor-id', uniqueId);
+    
+    // Identify and activate editable text elements
+    const textElements = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'a'];
+    if (textElements.includes(element.tagName.toLowerCase())) {
+      element.setAttribute('data-editable', 'text');
+      element.style.cursor = 'pointer';
+    }
+    
+    // Identify and activate editable images
+    if (element.tagName.toLowerCase() === 'img') {
+      element.setAttribute('data-editable', 'image');
+      element.style.cursor = 'pointer';
+    }
+    
+    // Identify structural components (containers with children)
+    const hasDirectChildren = element.children.length > 0;
+    const hasEditableChildren = Array.from(element.children).some(child => 
+      textElements.includes(child.tagName.toLowerCase()) || 
+      child.tagName.toLowerCase() === 'img'
+    );
+    
+    if (hasDirectChildren && (hasEditableChildren || element.children.length > 1)) {
+      element.setAttribute('data-component', 'true');
+      element.style.cursor = 'pointer';
+    }
+    
+    // Enable dragging for top-level components
+    const isTopLevel = element.parentElement?.id === 'website-canvas' || 
+                      element.parentElement?.classList.contains('builder-canvas');
+    if (isTopLevel && element.getAttribute('data-component') === 'true') {
+      element.setAttribute('draggable', 'true');
+    }
+    
+    // Recursively activate child elements
+    Array.from(element.children).forEach(child => {
+      if (child instanceof HTMLElement) {
+        activateElement(child);
+      }
+    });
+  };
+
+  const loadTemplateHTML = async (templateId: string): Promise<void> => {
+    /**
+     * Load and activate a template with full DOM processing
+     */
+    try {
+      // Clear existing canvas content
+      const canvas = document.getElementById('website-canvas');
+      if (canvas) {
+        canvas.innerHTML = '';
+      }
+      
+      // Load template HTML
+      const response = await fetch(`/templates/${templateId}/index.html`);
+      const htmlContent = await response.text();
+      
+      // Create DOM fragment for processing
+      const fragment = document.createDocumentFragment();
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = htmlContent;
+      
+      // Process and activate all elements
+      Array.from(tempDiv.children).forEach(child => {
+        if (child instanceof HTMLElement) {
+          activateElement(child);
+          fragment.appendChild(child);
+        }
+      });
+      
+      // Inject into canvas
+      if (canvas) {
+        canvas.appendChild(fragment);
+      }
+      
+      // Attach global listeners
+      attachCanvasListeners();
+      
+      toast.success('Template loaded successfully!');
+    } catch (error) {
+      console.error('Error loading template:', error);
+      toast.error('Failed to load template');
+    }
+  };
+
+  const attachCanvasListeners = (): void => {
+    /**
+     * Attach global event listeners for template elements
+     */
+    const canvas = document.getElementById('website-canvas');
+    if (!canvas) return;
+    
+    // Click handler for element selection
+    canvas.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const target = e.target as HTMLElement;
+      
+      if (target.getAttribute('data-editable') || target.getAttribute('data-component')) {
+        setSelectedId(target.getAttribute('data-editor-id') || null);
+        updateBreadcrumbs(target);
+      }
+    });
+    
+    // Double-click handler for inline editing
+    canvas.addEventListener('dblclick', (e) => {
+      e.stopPropagation();
+      const target = e.target as HTMLElement;
+      
+      if (target.getAttribute('data-editable') === 'text') {
+        target.contentEditable = 'true';
+        target.focus();
+        
+        // Save changes on blur
+        const saveChanges = () => {
+          target.contentEditable = 'false';
+          target.removeEventListener('blur', saveChanges);
+        };
+        target.addEventListener('blur', saveChanges);
+      }
+    });
+  };
+
+  const updateBreadcrumbs = (element: HTMLElement): void => {
+    /**
+     * Generate DOM breadcrumbs for selected element
+     */
+    const breadcrumbs: string[] = [];
+    let current = element;
+    
+    while (current && current !== document.body) {
+      const tagName = current.tagName.toLowerCase();
+      const className = current.className ? `.${current.className.split(' ')[0]}` : '';
+      const id = current.id ? `#${current.id}` : '';
+      
+      breadcrumbs.unshift(`${tagName}${id}${className}`);
+      current = current.parentElement as HTMLElement;
+    }
+    
+    setDomBreadcrumbs(breadcrumbs);
   };
 
   // Autosave every 30 seconds
@@ -611,26 +763,50 @@ const Builder = () => {
         {/* Left Sidebar - Elements */}
           <ResizablePanel defaultSize={20} minSize={15} maxSize={35} className="min-w-[200px]">
             <aside className="h-full border-r border-border/50 bg-card/30 p-4 overflow-y-auto sidebar-scrollbar">
-          <div className="space-y-4">
-            <div>
-              <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
-                <Plus className="w-4 h-4" />
-                Components
-              </h3>
-              <div className="space-y-2">
+              <div className="space-y-4">
+                {/* Sidebar Tabs */}
+                <div className="flex border-b border-border/50 mb-4">
+                  <Button
+                    variant={activeSidebarTab === 'components' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => setActiveSidebarTab('components')}
+                    className="flex-1 rounded-none hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white"
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Components
+                  </Button>
+                  <Button
+                    variant={activeSidebarTab === 'templates' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => setActiveSidebarTab('templates')}
+                    className="flex-1 rounded-none hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white"
+                  >
+                    <LayoutGrid className="w-4 h-4 mr-2" />
+                    Templates
+                  </Button>
+                </div>
+
+                {/* Components Tab */}
+                {activeSidebarTab === 'components' && (
+                  <div>
+                    <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
+                      <Plus className="w-4 h-4" />
+                      Components
+                    </h3>
+                    <div className="space-y-2">
                 {/* Layout Components */}
                 <div className="space-y-1">
                   <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Layout</h4>
-                  <Button
-                    variant="outline"
+                <Button
+                  variant="outline"
                     className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-                    onClick={() => addSection("hero")}
-                  >
-                    <Layout className="w-4 h-4" />
+                  onClick={() => addSection("hero")}
+                >
+                  <Layout className="w-4 h-4" />
                     Section
-                  </Button>
-                  <Button
-                    variant="outline"
+                </Button>
+                <Button
+                  variant="outline"
                     className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
                     onClick={() => addSection("html")}
                   >
@@ -653,35 +829,35 @@ const Builder = () => {
                   <Button
                     variant="outline"
                     className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-                    onClick={() => addSection("text")}
-                  >
+                  onClick={() => addSection("text")}
+                >
                     <Heading1 className="w-4 h-4" />
                     Heading
-                  </Button>
-                  <Button
-                    variant="outline"
+                </Button>
+                <Button
+                  variant="outline"
                     className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
                     onClick={() => addSection("text")}
-                  >
+                >
                     <Pilcrow className="w-4 h-4" />
                     Text Block
-                  </Button>
-                  <Button
-                    variant="outline"
+                </Button>
+                <Button
+                  variant="outline"
                     className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-                    onClick={() => addSection("cta")}
-                  >
+                  onClick={() => addSection("cta")}
+                >
                     <MousePointer className="w-4 h-4" />
                     Button
-                  </Button>
-                  <Button
-                    variant="outline"
+                </Button>
+              <Button
+                variant="outline"
                     className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
                     onClick={() => addSection("image")}
-                  >
+              >
                     <ImageIcon className="w-4 h-4" />
                     Image
-                  </Button>
+              </Button>
                 </div>
 
                 {/* Draggable freeform elements */}
@@ -802,12 +978,82 @@ const Builder = () => {
                       className="w-full justify-start text-xs hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600" 
                       onClick={() => applyTemplate(t.sections)}
                     >
-                      {t.name}
+                    {t.name}
+                  </Button>
+                ))}
+                </div>
+              </div>
+            )}
+
+            {/* Templates Tab */}
+            {activeSidebarTab === 'templates' && (
+              <div>
+                <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
+                  <LayoutGrid className="w-4 h-4" />
+                  Template Gallery
+                </h3>
+                
+                {/* Template Search */}
+                <div className="mb-3">
+                  <Input
+                    placeholder="Search templates..."
+                    value={templateFilters.searchQuery}
+                    onChange={(e) => setTemplateFilters(prev => ({ ...prev, searchQuery: e.target.value }))}
+                    className="text-sm"
+                  />
+                </div>
+                
+                {/* Template Categories */}
+                <div className="mb-3">
+                  <div className="flex flex-wrap gap-1">
+                    <Button
+                      variant={templateFilters.category === 'All' ? 'default' : 'outline'}
+                      size="sm"
+                      className="text-xs"
+                      onClick={() => setTemplateFilters(prev => ({ ...prev, category: 'All' }))}
+                    >
+                      All
                     </Button>
+                    {templateCategories.slice(0, 3).map(category => (
+                      <Button
+                        key={category}
+                        variant={templateFilters.category === category ? 'default' : 'outline'}
+                        size="sm"
+                        className="text-xs"
+                        onClick={() => setTemplateFilters(prev => ({ ...prev, category }))}
+                      >
+                        {category}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Template Grid */}
+                <div className="grid grid-cols-2 gap-2 max-h-96 overflow-y-auto">
+                  {filteredTemplates.slice(0, 8).map((template) => (
+                    <Card
+                      key={template.id}
+                      className="p-2 cursor-pointer hover:border-primary/50 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white transition-colors group"
+                      onClick={() => {
+                        if (confirm('Replace current content with this template?')) {
+                          loadTemplateHTML(template.id);
+                        }
+                      }}
+                    >
+                      <div className="aspect-video bg-muted rounded mb-2 flex items-center justify-center">
+                        <ImageIcon className="w-8 h-8 text-muted-foreground group-hover:text-white" />
+                      </div>
+                      <div className="text-xs font-medium group-hover:text-white truncate">
+                        {template.name}
+                      </div>
+                      <div className="text-xs text-muted-foreground group-hover:text-white/80 truncate">
+                        {template.category}
+                      </div>
+                    </Card>
                   ))}
                 </div>
               </div>
-            </div>
+            )}
 
             {/* Typography Presets */}
             <TypographyPresets onApply={(preset) => {
@@ -884,13 +1130,40 @@ const Builder = () => {
                 toast.success("Project imported successfully");
               }}
             />
-          </div>
-        </aside>
+              </div>
+            </aside>
           </ResizablePanel>
           <ResizableHandle withHandle />
 
         {/* Main Canvas */}
           <ResizablePanel defaultSize={60} minSize={30}>
+            {/* DOM Breadcrumbs */}
+            {domBreadcrumbs.length > 0 && (
+              <div className="bg-card/50 border-b border-border/50 px-4 py-2">
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="text-muted-foreground">Path:</span>
+                  {domBreadcrumbs.map((crumb, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      {index > 0 && <span className="text-muted-foreground">&gt;</span>}
+                      <button
+                        className="text-primary hover:text-primary/80 hover:underline"
+                        onClick={() => {
+                          // Find and select the element corresponding to this breadcrumb
+                          const element = document.querySelector(`[data-editor-id="${selectedId}"]`);
+                          if (element) {
+                            setSelectedId(element.getAttribute('data-editor-id'));
+                            updateBreadcrumbs(element as HTMLElement);
+                          }
+                        }}
+                      >
+                        {crumb}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            
             <main className="h-full overflow-auto bg-muted/30 p-0">
           <div 
             className="w-full h-full transition-all duration-300" 
@@ -900,7 +1173,7 @@ const Builder = () => {
               margin: responsiveView !== 'desktop' ? '0 auto' : '0'
             }}
           >
-            <Card className="min-h-[600px] bg-background border-border/50 shadow-elevation">
+            <Card className="min-h-[600px] bg-background border-border/50 shadow-elevation" id="website-canvas">
               <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                 <SortableContext items={sections.map((s) => s.id)} strategy={verticalListSortingStrategy}>
                   {sections.map((section) => (
@@ -988,6 +1261,115 @@ const Builder = () => {
             )}
             {selectedId && (
               <div className="space-y-4">
+                {/* Dynamic Inspector for Template Elements */}
+                {(() => {
+                  const element = document.querySelector(`[data-editor-id="${selectedId}"]`) as HTMLElement;
+                  if (!element) return null;
+                  
+                  const classList = Array.from(element.classList);
+                  const tagName = element.tagName.toLowerCase();
+                  
+                  return (
+                    <div className="space-y-3">
+                      <div>
+                        <h4 className="text-sm font-medium mb-2">Element: {tagName}</h4>
+                        <div className="text-xs text-muted-foreground mb-2">
+                          Classes: {classList.join(' ')}
+                        </div>
+                      </div>
+                      
+                      {/* Dynamic Controls Based on Classes */}
+                      {classList.some(cls => cls.startsWith('p-') || cls.startsWith('px-') || cls.startsWith('py-')) && (
+                        <div>
+                          <label className="text-xs font-medium">Padding</label>
+                          <Input
+                            type="number"
+                            placeholder="Padding value"
+                            onChange={(e) => {
+                              const value = e.target.value;
+                              if (value) {
+                                // Remove existing padding classes
+                                classList.forEach(cls => {
+                                  if (cls.startsWith('p-') || cls.startsWith('px-') || cls.startsWith('py-')) {
+                                    element.classList.remove(cls);
+                                  }
+                                });
+                                // Add new padding class
+                                element.classList.add(`p-${value}`);
+                              }
+                            }}
+                          />
+                        </div>
+                      )}
+                      
+                      {classList.some(cls => cls.startsWith('bg-')) && (
+                        <div>
+                          <label className="text-xs font-medium">Background Color</label>
+                          <Input
+                            type="color"
+                            onChange={(e) => {
+                              const color = e.target.value;
+                              // Remove existing background classes
+                              classList.forEach(cls => {
+                                if (cls.startsWith('bg-')) {
+                                  element.classList.remove(cls);
+                                }
+                              });
+                              // Set inline style for custom color
+                              element.style.backgroundColor = color;
+                            }}
+                          />
+                        </div>
+                      )}
+                      
+                      {classList.some(cls => cls.startsWith('text-')) && (
+                        <div>
+                          <label className="text-xs font-medium">Text Color</label>
+                          <Input
+                            type="color"
+                            onChange={(e) => {
+                              const color = e.target.value;
+                              // Remove existing text color classes
+                              classList.forEach(cls => {
+                                if (cls.startsWith('text-')) {
+                                  element.classList.remove(cls);
+                                }
+                              });
+                              // Set inline style for custom color
+                              element.style.color = color;
+                            }}
+                          />
+                        </div>
+                      )}
+                      
+                      {tagName === 'img' && (
+                        <div>
+                          <label className="text-xs font-medium">Image URL</label>
+                          <Input
+                            placeholder="Image URL"
+                            defaultValue={element.getAttribute('src') || ''}
+                            onChange={(e) => {
+                              element.setAttribute('src', e.target.value);
+                            }}
+                          />
+                        </div>
+                      )}
+                      
+                      {element.getAttribute('data-editable') === 'text' && (
+                        <div>
+                          <label className="text-xs font-medium">Text Content</label>
+                          <Textarea
+                            placeholder="Text content"
+                            defaultValue={element.textContent || ''}
+                            onChange={(e) => {
+                              element.textContent = e.target.value;
+                            }}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
                 {(() => {
                   const sectionTarget = sections.find((s) => s.id === selectedId);
                   if (sectionTarget) {
@@ -1145,8 +1527,8 @@ const Builder = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </aside>
+              </div>
+            </aside>
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>
