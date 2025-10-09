@@ -7,6 +7,20 @@ All colors MUST be HSL.
 */
 
 @layer base {
+  /* Global Button Hover Effects - SiteForge Standard */
+  button:not([disabled]):hover:not(.no-hover-effect),
+  .btn-hover-effect:hover {
+    background: linear-gradient(to right, rgb(29 78 216), rgb(30 64 175)) !important;
+    color: white !important;
+    border-color: rgb(37 99 235) !important;
+  }
+  
+  /* Ensure text and icons turn white on hover */
+  button:not([disabled]):hover:not(.no-hover-effect) *,
+  .btn-hover-effect:hover * {
+    color: white !important;
+  }
+
   :root {
     /* Light theme - SiteForge Brand Identity - Balanced */
     --background: 220 25% 95%; /* More vibrant light blue */

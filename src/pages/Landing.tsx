@@ -49,16 +49,23 @@ const Landing = () => {
 
       {/* Navigation */}
       <nav className="border-b border-border/50 backdrop-blur-xl bg-card/50 fixed top-0 left-0 right-0 z-50 shadow-elevation">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 group cursor-pointer">
-            <Sparkles className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
-            <span className="text-xl font-bold bg-gradient-to-r from-primary to-secondary-glow bg-clip-text text-transparent">
-              SiteForge
-            </span>
-          </Link>
-          <div className="flex items-center gap-4">
-            <Link to="/templates" className="text-base font-semibold relative group cursor-pointer">
-              <span className="relative z-10 text-foreground hover:text-primary transition-all duration-300">Templates</span>
+        <div className="relative w-full h-16 flex items-center">
+          {/* Left Section */}
+          <div className="absolute left-0 z-10">
+            <div className="container mx-auto px-4">
+              <Link to="/" className="flex items-center gap-2 group cursor-pointer">
+                <Sparkles className="w-6 h-6 text-primary group-hover:rotate-180 transition-transform duration-500 ease-in-out" />
+                <span className="text-xl font-bold bg-gradient-to-r from-blue-700 via-blue-800 to-blue-900 bg-clip-text text-transparent group-hover:from-blue-600 group-hover:via-blue-700 group-hover:to-blue-800 transition-all duration-300">
+                  SiteForge
+                </span>
+              </Link>
+            </div>
+          </div>
+          
+          {/* Center Navigation - Centered to entire website width */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-4">
+            <Link to="/templates" className="text-base font-semibold relative group cursor-pointer px-4 py-2 rounded-lg hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white transition-all duration-300">
+              <span className="relative z-10">Templates</span>
             </Link>
             <button 
               onClick={(e) => {
@@ -70,22 +77,30 @@ const Landing = () => {
                   window.scrollTo({ top: y, behavior: 'smooth' });
                 }
               }}
-              className="text-base font-semibold relative group cursor-pointer text-foreground hover:text-primary transition-all duration-300"
+              className="text-base font-semibold relative group cursor-pointer px-4 py-2 rounded-lg hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white transition-all duration-300"
             >
               Features
             </button>
-            <Link to="/auth">
-              <Button className="hidden sm:inline-flex text-black dark:text-white" variant="hero">
-                Sign In
-              </Button>
-            </Link>
-            <Link to="/auth">
-              <Button variant="hero" className="gap-2 text-black dark:text-white">
-                Get Started
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
-            <ThemeToggle />
+          </div>
+          
+          {/* Right Section */}
+          <div className="absolute right-0 z-10">
+            <div className="container mx-auto px-4">
+              <div className="flex items-center gap-4">
+                <Link to="/auth">
+                  <Button className="hidden sm:inline-flex text-black dark:text-white no-hover-effect" variant="hero">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link to="/auth">
+                  <Button variant="hero" className="gap-2 text-black dark:text-white no-hover-effect">
+                    Get Started
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
+                <ThemeToggle />
+              </div>
+            </div>
           </div>
         </div>
       </nav>
@@ -123,7 +138,7 @@ const Landing = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/templates">
-                <Button variant="hero" className="w-full sm:w-auto gap-2 text-black dark:text-white">
+                <Button variant="hero" className="w-full sm:w-auto gap-2 text-black dark:text-white no-hover-effect">
                   View Templates
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
