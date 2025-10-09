@@ -17,8 +17,8 @@ const Dashboard = () => {
       {/* Header */}
       <header className="border-b border-border/50 sticky top-0 z-50 bg-background/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-6 h-6 text-primary" />
+          <div className="flex items-center gap-2 group cursor-pointer">
+            <Sparkles className="w-6 h-6 text-primary group-hover:rotate-180 transition-transform duration-200 ease-in-out" />
             <span className="text-xl font-bold text-black dark:text-white">
               SiteForge
             </span>

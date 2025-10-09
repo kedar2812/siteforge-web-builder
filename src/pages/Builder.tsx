@@ -474,8 +474,8 @@ const Builder = () => {
         <div className="flex items-center justify-between px-4 h-14">
           <div className="flex items-center gap-4">
             <Link to="/dashboard">
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-primary" />
+              <div className="flex items-center gap-2 group cursor-pointer">
+                <Sparkles className="w-5 h-5 text-primary group-hover:rotate-180 transition-transform duration-200 ease-in-out" />
                 <span className="font-semibold hidden sm:inline text-black dark:text-white">SiteForge</span>
               </div>
             </Link>

@@ -46,8 +46,8 @@ const Auth = () => {
       
       <div className="w-full max-w-md space-y-8 animate-scale-in">
         <div className="text-center">
-          <Link to="/" className="inline-flex items-center gap-2 mb-8">
-            <Sparkles className="w-8 h-8 text-primary" />
+          <Link to="/" className="inline-flex items-center gap-2 mb-8 group cursor-pointer">
+            <Sparkles className="w-8 h-8 text-primary group-hover:rotate-180 transition-transform duration-200 ease-in-out" />
             <span className="text-2xl font-bold text-black dark:text-white">
               SiteForge
             </span>

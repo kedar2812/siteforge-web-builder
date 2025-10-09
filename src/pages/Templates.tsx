@@ -56,7 +56,7 @@ const Templates = () => {
       <header className="sticky top-0 z-50 bg-card/50 backdrop-blur-xl border-b border-border/50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 group cursor-pointer">
-            <Sparkles className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
+            <Sparkles className="w-6 h-6 text-primary group-hover:rotate-180 transition-transform duration-200 ease-in-out" />
             <span className="text-xl font-bold text-black dark:text-white">
               SiteForge Templates
             </span>
