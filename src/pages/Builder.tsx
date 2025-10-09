@@ -794,102 +794,105 @@ const Builder = () => {
                       Components
                     </h3>
                     <div className="space-y-2">
-                {/* Layout Components */}
-                <div className="space-y-1">
-                  <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Layout</h4>
-                <Button
-                  variant="outline"
-                    className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-                  onClick={() => addSection("hero")}
-                >
-                  <Layout className="w-4 h-4" />
-                    Section
-                </Button>
-                <Button
-                  variant="outline"
-                    className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-                    onClick={() => addSection("html")}
-                  >
-                    <LayoutGrid className="w-4 h-4" />
-                    Card Grid
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-                    onClick={() => addSection("html")}
-                  >
-                    <PanelTop className="w-4 h-4" />
-                    Navbar
-                  </Button>
-                </div>
+                      {/* Layout Components */}
+                      <div className="space-y-1">
+                        <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Layout</h4>
+                        <Button
+                          variant="outline"
+                          className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
+                          onClick={() => addSection("hero")}
+                        >
+                          <Layout className="w-4 h-4" />
+                          Section
+                        </Button>
+                        <Button
+                          variant="outline"
+                          className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
+                          onClick={() => addSection("html")}
+                        >
+                          <LayoutGrid className="w-4 h-4" />
+                          Card Grid
+                        </Button>
+                        <Button
+                          variant="outline"
+                          className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
+                          onClick={() => addSection("html")}
+                        >
+                          <PanelTop className="w-4 h-4" />
+                          Navbar
+                        </Button>
+                      </div>
 
-                {/* Content Components */}
-                <div className="space-y-1">
-                  <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Content</h4>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-                  onClick={() => addSection("text")}
-                >
-                    <Heading1 className="w-4 h-4" />
-                    Heading
-                </Button>
-                <Button
-                  variant="outline"
-                    className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-                    onClick={() => addSection("text")}
-                >
-                    <Pilcrow className="w-4 h-4" />
-                    Text Block
-                </Button>
-                <Button
-                  variant="outline"
-                    className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-                  onClick={() => addSection("cta")}
-                >
-                    <MousePointer className="w-4 h-4" />
-                    Button
-                </Button>
-              <Button
-                variant="outline"
-                    className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-                    onClick={() => addSection("image")}
-              >
-                    <ImageIcon className="w-4 h-4" />
-                    Image
-              </Button>
-                </div>
+                      {/* Content Components */}
+                      <div className="space-y-1">
+                        <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Content</h4>
+                        <Button
+                          variant="outline"
+                          className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
+                          onClick={() => addSection("text")}
+                        >
+                          <Heading1 className="w-4 h-4" />
+                          Heading
+                        </Button>
+                        <Button
+                          variant="outline"
+                          className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
+                          onClick={() => addSection("text")}
+                        >
+                          <Pilcrow className="w-4 h-4" />
+                          Text Block
+                        </Button>
+                        <Button
+                          variant="outline"
+                          className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
+                          onClick={() => addSection("cta")}
+                        >
+                          <MousePointer className="w-4 h-4" />
+                          Button
+                        </Button>
+                        <Button
+                          variant="outline"
+                          className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
+                          onClick={() => addSection("image")}
+                        >
+                          <ImageIcon className="w-4 h-4" />
+                          Image
+                        </Button>
+                      </div>
 
-                {/* Draggable freeform elements */}
-                <div
-                  draggable
-                  onDragStart={(e) => e.dataTransfer.setData("application/x-element-type", "text")}
-                  className="w-full px-3 py-2 rounded border bg-card cursor-grab hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-                >
-                  Add Text
-                </div>
-                <div
-                  draggable
-                  onDragStart={(e) => e.dataTransfer.setData("application/x-element-type", "shape")}
-                  className="w-full px-3 py-2 rounded border bg-card cursor-grab hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-                >
-                  Add Shape
-                </div>
-                <div
-                  draggable
-                  onDragStart={(e) => e.dataTransfer.setData("application/x-element-type", "image")}
-                  className="w-full px-3 py-2 rounded border bg-card cursor-grab hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-                >
-                  Add Image
-                </div>
-              </div>
-            </div>
+                      {/* Draggable freeform elements */}
+                      <div
+                        draggable
+                        onDragStart={(e) => e.dataTransfer.setData("application/x-element-type", "text")}
+                        className="w-full px-3 py-2 rounded border bg-card cursor-grab hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
+                      >
+                        Add Text
+                      </div>
+                      <div
+                        draggable
+                        onDragStart={(e) => e.dataTransfer.setData("application/x-element-type", "shape")}
+                        className="w-full px-3 py-2 rounded border bg-card cursor-grab hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
+                      >
+                        Add Shape
+                      </div>
+                      <div
+                        draggable
+                        onDragStart={(e) => e.dataTransfer.setData("application/x-element-type", "image")}
+                        className="w-full px-3 py-2 rounded border bg-card cursor-grab hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
+                      >
+                        Add Image
+                      </div>
+                    </div>
+                  </div>
+                )}
 
-            <div>
-              <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
-                <Layout className="w-4 h-4" />
-                Templates
-              </h3>
+            {/* Templates Tab */}
+            {activeSidebarTab === 'templates' && (
+              <div>
+                <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
+                  <LayoutGrid className="w-4 h-4" />
+                  Template Gallery
+                </h3>
               
               {/* Template Search */}
               <div className="mb-3">
@@ -981,76 +984,6 @@ const Builder = () => {
                     {t.name}
                   </Button>
                 ))}
-                </div>
-              </div>
-            )}
-
-            {/* Templates Tab */}
-            {activeSidebarTab === 'templates' && (
-              <div>
-                <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
-                  <LayoutGrid className="w-4 h-4" />
-                  Template Gallery
-                </h3>
-                
-                {/* Template Search */}
-                <div className="mb-3">
-                  <Input
-                    placeholder="Search templates..."
-                    value={templateFilters.searchQuery}
-                    onChange={(e) => setTemplateFilters(prev => ({ ...prev, searchQuery: e.target.value }))}
-                    className="text-sm"
-                  />
-                </div>
-                
-                {/* Template Categories */}
-                <div className="mb-3">
-                  <div className="flex flex-wrap gap-1">
-                    <Button
-                      variant={templateFilters.category === 'All' ? 'default' : 'outline'}
-                      size="sm"
-                      className="text-xs"
-                      onClick={() => setTemplateFilters(prev => ({ ...prev, category: 'All' }))}
-                    >
-                      All
-                    </Button>
-                    {templateCategories.slice(0, 3).map(category => (
-                      <Button
-                        key={category}
-                        variant={templateFilters.category === category ? 'default' : 'outline'}
-                        size="sm"
-                        className="text-xs"
-                        onClick={() => setTemplateFilters(prev => ({ ...prev, category }))}
-                      >
-                        {category}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-                
-                {/* Template Grid */}
-                <div className="grid grid-cols-2 gap-2 max-h-96 overflow-y-auto">
-                  {filteredTemplates.slice(0, 8).map((template) => (
-                    <Card
-                      key={template.id}
-                      className="p-2 cursor-pointer hover:border-primary/50 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white transition-colors group"
-                      onClick={() => {
-                        if (confirm('Replace current content with this template?')) {
-                          loadTemplateHTML(template.id);
-                        }
-                      }}
-                    >
-                      <div className="aspect-video bg-muted rounded mb-2 flex items-center justify-center">
-                        <ImageIcon className="w-8 h-8 text-muted-foreground group-hover:text-white" />
-                      </div>
-                      <div className="text-xs font-medium group-hover:text-white truncate">
-                        {template.name}
-                      </div>
-                      <div className="text-xs text-muted-foreground group-hover:text-white/80 truncate">
-                        {template.category}
-                      </div>
-                    </Card>
-                  ))}
                 </div>
               </div>
             )}
