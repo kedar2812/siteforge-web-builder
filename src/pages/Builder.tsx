@@ -925,6 +925,7 @@ const Builder = () => {
                         toast.success("Project imported successfully");
                       }}
                     />
+                  </div>
                 </div>
 
                 {/* Templates Tab - temporarily disabled */}
@@ -1228,15 +1229,15 @@ const Builder = () => {
         </ResizablePanelGroup>
       </div>
       
-      {/* Template Preview Dialog */}
-      {previewTemplate && (
+      {/* Template Preview Dialog - temporarily disabled */}
+      {/* {previewTemplate && (
         <TemplatePreview
           template={previewTemplate}
           onApply={(sections) => handleTemplateApply(previewTemplate)}
           onCancel={handleTemplateCancel}
           isOpen={!!previewTemplate}
         />
-      )}
+      )} */}
     </div>
   );
 };
