@@ -3,25 +3,25 @@ import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ThemeToggle";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Sparkles, Layout, Globe, Settings, LogOut, LayoutGrid } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { user, signOut } = useAuth();
   
-  // Mock data - will be replaced with real data from Lovable Cloud
+  // Mock data - will be replaced with real data from backend
   const sites = [
     { id: 1, name: "My Portfolio", url: "portfolio.siteforge.app", lastEdited: "2 hours ago", published: true },
     { id: 2, name: "Coffee Shop", url: "coffee.siteforge.app", lastEdited: "1 day ago", published: true },
     { id: 3, name: "Draft Site", url: "", lastEdited: "3 days ago", published: false },
   ];
 
-  const handleLogout = () => {
-    // Clear authentication flags
-    localStorage.removeItem('user');
-    sessionStorage.removeItem('isAuthenticated');
-    document.cookie = 'authenticated=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-    
-    // Navigate to home
-    navigate('/');
+  const handleLogout = async () => {
+    try {
+      await signOut();
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
   return (

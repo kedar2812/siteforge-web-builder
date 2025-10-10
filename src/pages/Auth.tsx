@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ThemeToggle";
 import { Input } from "@/components/ui/input";
@@ -8,21 +8,24 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Sparkles, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Auth = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { signIn, signUp, loading } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Simulate auth - will be replaced with real Lovable Cloud auth
-    setTimeout(() => {
-      // Set authentication flags
-      localStorage.setItem('user', JSON.stringify({ email: 'user@example.com', name: 'User' }));
-      sessionStorage.setItem('isAuthenticated', 'true');
-      document.cookie = 'authenticated=true; path=/';
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    
+    try {
+      await signIn(email, password);
       
       // Check if there's a pending template
       const pendingTemplate = sessionStorage.getItem('pendingTemplate');
@@ -49,23 +52,28 @@ const Auth = () => {
           navigate("/dashboard");
         }
       } else {
-        toast.success("Welcome back!");
-        navigate("/dashboard");
+        // Redirect to intended page or dashboard
+        const from = location.state?.from?.pathname || '/dashboard';
+        navigate(from, { replace: true });
       }
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Failed to sign in');
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Simulate auth - will be replaced with real Lovable Cloud auth
-    setTimeout(() => {
-      // Set authentication flags
-      localStorage.setItem('user', JSON.stringify({ email: 'user@example.com', name: 'User' }));
-      sessionStorage.setItem('isAuthenticated', 'true');
-      document.cookie = 'authenticated=true; path=/';
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    
+    try {
+      await signUp(email, password, name);
       
       // Check if there's a pending template
       const pendingTemplate = sessionStorage.getItem('pendingTemplate');
@@ -95,8 +103,11 @@ const Auth = () => {
         toast.success("Account created! Welcome to SiteForge!");
         navigate("/dashboard");
       }
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Failed to create account');
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -147,6 +158,7 @@ const Auth = () => {
                     <Label htmlFor="signin-email">Email</Label>
                     <Input
                       id="signin-email"
+                      name="email"
                       type="email"
                       placeholder="you@example.com"
                       required
@@ -156,6 +168,7 @@ const Auth = () => {
                     <Label htmlFor="signin-password">Password</Label>
                     <Input
                       id="signin-password"
+                      name="password"
                       type="password"
                       placeholder="••••••••"
                       required
@@ -173,6 +186,7 @@ const Auth = () => {
                     <Label htmlFor="signup-name">Full Name</Label>
                     <Input
                       id="signup-name"
+                      name="name"
                       type="text"
                       placeholder="John Doe"
                       required
@@ -182,6 +196,7 @@ const Auth = () => {
                     <Label htmlFor="signup-email">Email</Label>
                     <Input
                       id="signup-email"
+                      name="email"
                       type="email"
                       placeholder="you@example.com"
                       required
@@ -191,6 +206,7 @@ const Auth = () => {
                     <Label htmlFor="signup-password">Password</Label>
                     <Input
                       id="signup-password"
+                      name="password"
                       type="password"
                       placeholder="••••••••"
                       required

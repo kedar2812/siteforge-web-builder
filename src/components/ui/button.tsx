@@ -9,14 +9,16 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white shadow-elevation",
+        default: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-elevation",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline: "border border-input bg-background hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white",
-        ghost: "hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white",
+        outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        hero: "bg-gradient-primary text-primary-foreground hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:shadow-glow transition-all duration-100 font-semibold",
-        "hero-outline": "border-2 border-primary bg-transparent text-foreground hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600 backdrop-blur-sm",
+        hero: "bg-gradient-primary text-primary-foreground hover:opacity-90 hover:shadow-glow transition-all duration-200 font-semibold",
+        "hero-outline": "border-2 border-primary bg-transparent text-foreground hover:bg-primary hover:text-primary-foreground backdrop-blur-sm transition-all duration-200",
+        "siteforge-primary": "bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-elevation transition-all duration-200",
+        "siteforge-secondary": "bg-white text-blue-600 border-2 border-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200",
       },
       size: {
         default: "h-10 px-4 py-2",

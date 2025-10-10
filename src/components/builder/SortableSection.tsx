@@ -3,8 +3,11 @@ import { CSS } from "@dnd-kit/utilities";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { GripVertical, Trash2 } from "lucide-react";
+import { GripVertical, Trash2, Menu, Star, Quote } from "lucide-react";
 import { Section } from "@/pages/Builder";
+import { NavbarSection } from "./sections/NavbarSection";
+import { FooterSection } from "./sections/FooterSection";
+import { TestimonialsSection } from "./sections/TestimonialsSection";
 
 interface SortableSectionProps {
   section: Section;
@@ -129,8 +132,40 @@ export const SortableSection = ({ section, onUpdate, onDelete, onSelect, selecte
             )}
           </div>
         );
+
+      case "navbar":
+        return (
+          <NavbarSection
+            content={section.content}
+            onUpdate={(content) => onUpdate(section.id, content)}
+            preview={preview}
+          />
+        );
+
+      case "footer":
+        return (
+          <FooterSection
+            content={section.content}
+            onUpdate={(content) => onUpdate(section.id, content)}
+            preview={preview}
+          />
+        );
+
+      case "testimonials":
+        return (
+          <TestimonialsSection
+            content={section.content}
+            onUpdate={(content) => onUpdate(section.id, content)}
+            preview={preview}
+          />
+        );
+
       default:
-        return null;
+        return (
+          <div className="p-8 text-center text-muted-foreground">
+            <p>Section type "{section.type}" not implemented yet</p>
+          </div>
+        );
     }
   };
 

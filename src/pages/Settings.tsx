@@ -24,9 +24,11 @@ import {
 } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
 import { toast } from "sonner";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Settings = () => {
   const navigate = useNavigate();
+  const { user, updateProfile, signOut } = useAuth();
   const [notifications, setNotifications] = useState({
     email: true,
     push: false,
@@ -40,8 +42,19 @@ const Settings = () => {
     cookies: true
   });
 
-  const handleSave = () => {
-    toast.success("Settings saved successfully!");
+  const [profileData, setProfileData] = useState({
+    name: user?.name || '',
+    email: user?.email || '',
+    bio: ''
+  });
+
+  const handleSave = async () => {
+    try {
+      await updateProfile(profileData);
+      toast.success("Settings saved successfully!");
+    } catch (error) {
+      toast.error("Failed to save settings. Please try again.");
+    }
   };
 
   const handleExport = () => {
@@ -52,9 +65,14 @@ const Settings = () => {
     toast.success("Data imported successfully!");
   };
 
-  const handleDeleteAccount = () => {
+  const handleDeleteAccount = async () => {
     if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
-      toast.success("Account deletion requested. You will receive an email confirmation.");
+      try {
+        await signOut();
+        toast.success("Account deletion requested. You will receive an email confirmation.");
+      } catch (error) {
+        toast.error("Failed to delete account. Please try again.");
+      }
     }
   };
 
@@ -113,17 +131,33 @@ const Settings = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">Full Name</Label>
-                  <Input id="name" placeholder="John Doe" />
+                  <Input 
+                    id="name" 
+                    value={profileData.name}
+                    onChange={(e) => setProfileData(prev => ({ ...prev, name: e.target.value }))}
+                    placeholder="John Doe" 
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="john@example.com" />
+                  <Input 
+                    id="email" 
+                    type="email" 
+                    value={profileData.email}
+                    onChange={(e) => setProfileData(prev => ({ ...prev, email: e.target.value }))}
+                    placeholder="john@example.com" 
+                  />
                 </div>
               </div>
               
               <div className="space-y-2">
                 <Label htmlFor="bio">Bio</Label>
-                <Input id="bio" placeholder="Tell us about yourself..." />
+                <Input 
+                  id="bio" 
+                  value={profileData.bio}
+                  onChange={(e) => setProfileData(prev => ({ ...prev, bio: e.target.value }))}
+                  placeholder="Tell us about yourself..." 
+                />
               </div>
               
               <div className="flex gap-2">

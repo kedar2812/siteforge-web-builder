@@ -5,6 +5,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { exportHTML, ExportOptions } from "@/utils/htmlExporter";
 import {
   Sparkles,
   Save,
@@ -51,7 +52,7 @@ import { TemplateMeta, TemplateCategory, TemplateSearchFilters } from "@/types/t
 
 export interface Section {
   id: string;
-  type: "hero" | "text" | "image" | "cta" | "html";
+  type: "hero" | "text" | "image" | "cta" | "html" | "navbar" | "footer" | "testimonials" | "pricing" | "features" | "contact" | "gallery" | "stats" | "team" | "faq" | "timeline";
   content: {
     title?: string;
     subtitle?: string;
@@ -59,6 +60,32 @@ export interface Section {
     imageUrl?: string;
     buttonText?: string;
     htmlPath?: string;
+    // Navbar specific
+    logo?: string;
+    brandName?: string;
+    menuItems?: Array<{ label: string; href: string; }>;
+    ctaText?: string;
+    ctaLink?: string;
+    phone?: string;
+    email?: string;
+    // Footer specific
+    companyName?: string;
+    description?: string;
+    address?: string;
+    socialLinks?: Array<{ platform: string; url: string; }>;
+    quickLinks?: Array<{ label: string; href: string; }>;
+    copyright?: string;
+    // Testimonials specific
+    testimonials?: Array<{
+      name: string;
+      role: string;
+      company: string;
+      content: string;
+      avatar?: string;
+      rating?: number;
+    }>;
+    // Generic content
+    [key: string]: any;
   };
 }
 
@@ -203,6 +230,35 @@ const Builder = () => {
         imageUrl: type === "image" ? "https://via.placeholder.com/800x400" : undefined,
         buttonText: type === "cta" ? "Click Here" : undefined,
         htmlPath: type === "html" ? "/templates/business-landing/index.html" : undefined,
+        // Navbar defaults
+        brandName: type === "navbar" ? "Your Brand" : undefined,
+        menuItems: type === "navbar" ? [
+          { label: "Home", href: "#home" },
+          { label: "About", href: "#about" },
+          { label: "Services", href: "#services" },
+          { label: "Contact", href: "#contact" }
+        ] : undefined,
+        ctaText: type === "navbar" ? "Get Started" : undefined,
+        ctaLink: type === "navbar" ? "#contact" : undefined,
+        // Footer defaults
+        companyName: type === "footer" ? "Your Company" : undefined,
+        description: type === "footer" ? "Building amazing websites with SiteForge." : undefined,
+        address: type === "footer" ? "123 Business St, City, State 12345" : undefined,
+        phone: type === "footer" ? "+1 (555) 123-4567" : undefined,
+        email: type === "footer" ? "hello@company.com" : undefined,
+        copyright: type === "footer" ? "© 2024 Your Company. All rights reserved." : undefined,
+        // Testimonials defaults
+        title: type === "testimonials" ? "What Our Clients Say" : undefined,
+        subtitle: type === "testimonials" ? "Don't just take our word for it." : undefined,
+        testimonials: type === "testimonials" ? [
+          {
+            name: "Sarah Johnson",
+            role: "CEO",
+            company: "TechCorp",
+            content: "SiteForge has completely transformed our online presence.",
+            rating: 5
+          }
+        ] : undefined,
       },
     };
     pushHistory([...sections, newSection]);
@@ -231,27 +287,44 @@ const Builder = () => {
   };
 
   const handleExport = () => {
-    // Create a clean HTML export
-    const exportData = {
-      sections,
-      freeElements,
-      metadata: {
+    try {
+      const exportOptions: ExportOptions = {
         title: "My Website",
         description: "Built with SiteForge",
-        createdAt: new Date().toISOString()
+        author: "SiteForge User",
+        keywords: "website, responsive, modern",
+        includeMeta: true,
+        minify: true,
+        includeComments: false
+      };
+
+      const result = exportHTML(sections, freeElements, exportOptions);
+      
+      // Create and download HTML file
+      const htmlBlob = new Blob([result.html], { type: 'text/html' });
+      const htmlUrl = URL.createObjectURL(htmlBlob);
+      const htmlLink = document.createElement('a');
+      htmlLink.href = htmlUrl;
+      htmlLink.download = 'website.html';
+      htmlLink.click();
+      URL.revokeObjectURL(htmlUrl);
+      
+      // Also create CSS file if needed
+      if (result.css) {
+        const cssBlob = new Blob([result.css], { type: 'text/css' });
+        const cssUrl = URL.createObjectURL(cssBlob);
+        const cssLink = document.createElement('a');
+        cssLink.href = cssUrl;
+        cssLink.download = 'styles.css';
+        cssLink.click();
+        URL.revokeObjectURL(cssUrl);
       }
-    };
-    
-    const dataStr = JSON.stringify(exportData, null, 2);
-    const dataBlob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(dataBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'website-export.json';
-    link.click();
-    URL.revokeObjectURL(url);
-    
-    toast.success("Website exported successfully!");
+      
+      toast.success("Website exported successfully! HTML and CSS files downloaded.");
+    } catch (error) {
+      console.error('Export error:', error);
+      toast.error("Failed to export website. Please try again.");
+    }
   };
 
   // Template loading and live editing functions - temporarily disabled
@@ -669,32 +742,32 @@ const Builder = () => {
                     Components
                   </h3>
                     <div className="space-y-2">
-                      {/* Layout Components */}
-                      <div className="space-y-1">
-                        <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Layout</h4>
-                        <Button
+                {/* Layout Components */}
+                <div className="space-y-1">
+                  <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Layout</h4>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
+                    onClick={() => addSection("navbar")}
+                  >
+                    <PanelTop className="w-4 h-4" />
+                    Navbar
+                  </Button>
+                  <Button
                     variant="outline"
                     className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
                     onClick={() => addSection("hero")}
                   >
                     <Layout className="w-4 h-4" />
-                    Section
+                    Hero Section
                   </Button>
                   <Button
                     variant="outline"
                     className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-                    onClick={() => addSection("html")}
+                    onClick={() => addSection("footer")}
                   >
                     <LayoutGrid className="w-4 h-4" />
-                    Card Grid
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-                    onClick={() => addSection("html")}
-                  >
-                    <PanelTop className="w-4 h-4" />
-                    Navbar
+                    Footer
                   </Button>
                 </div>
 
@@ -707,23 +780,7 @@ const Builder = () => {
                     onClick={() => addSection("text")}
                   >
                     <Heading1 className="w-4 h-4" />
-                    Heading
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-                    onClick={() => addSection("text")}
-                  >
-                    <Pilcrow className="w-4 h-4" />
                     Text Block
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
-                    onClick={() => addSection("cta")}
-                  >
-                    <MousePointer className="w-4 h-4" />
-                    Button
                   </Button>
                   <Button
                     variant="outline"
@@ -732,6 +789,22 @@ const Builder = () => {
                   >
                     <ImageIcon className="w-4 h-4" />
                     Image
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
+                    onClick={() => addSection("cta")}
+                  >
+                    <MousePointer className="w-4 h-4" />
+                    Call to Action
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start gap-2 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white hover:border-blue-600"
+                    onClick={() => addSection("testimonials")}
+                  >
+                    <Star className="w-4 h-4" />
+                    Testimonials
                   </Button>
                 </div>
 

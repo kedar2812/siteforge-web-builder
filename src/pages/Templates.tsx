@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Input } from "@/components/ui/input";
 import { Sparkles, Search, Eye, ExternalLink, Star, Filter, Settings } from "lucide-react";
 import { toast } from "sonner";
+import { useAuth } from "@/contexts/AuthContext";
 
 type TemplateMeta = {
   id: string;
@@ -28,45 +29,21 @@ const Templates = () => {
   const [preview, setPreview] = useState<TemplateMeta | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const { user } = useAuth();
 
   // Check if user came from Dashboard
   const cameFromDashboard = location.state?.from === 'dashboard' || 
                           document.referrer.includes('/dashboard') ||
                           sessionStorage.getItem('cameFromDashboard') === 'true';
 
-  // Check if user came from Landing page
-  const cameFromLanding = location.state?.from === 'landing' || 
-                         document.referrer.includes('/') ||
-                         !cameFromDashboard;
-
-  // Check if user is authenticated (simplified check - in real app, use proper auth context)
-  const isAuthenticated = localStorage.getItem('user') !== null || 
-                         sessionStorage.getItem('isAuthenticated') === 'true' ||
-                         document.cookie.includes('authenticated=true');
-
   // Determine button text
   const getBackButtonText = () => {
     if (cameFromDashboard) {
       return 'Back to Dashboard';
     } else {
-      // Came from Landing page
-      return isAuthenticated ? 'Back to Dashboard' : 'Back to Home';
+      return user ? 'Back to Dashboard' : 'Back to Home';
     }
   };
-
-  // Debug logging
-  console.log('Templates Debug:', {
-    cameFromDashboard,
-    cameFromLanding,
-    isAuthenticated,
-    locationState: location.state,
-    referrer: document.referrer,
-    sessionStorage: sessionStorage.getItem('cameFromDashboard'),
-    localStorage: localStorage.getItem('user'),
-    sessionAuth: sessionStorage.getItem('isAuthenticated'),
-    cookie: document.cookie,
-    buttonText: getBackButtonText()
-  });
 
   const handleBackClick = () => {
     // Clear the sessionStorage flag
@@ -77,7 +54,7 @@ const Templates = () => {
       navigate('/dashboard');
     } else {
       // Came from Landing page - check authentication
-      if (isAuthenticated) {
+      if (user) {
         navigate('/dashboard');
       } else {
         navigate('/');
@@ -107,7 +84,7 @@ const Templates = () => {
 
   const useTemplate = (tpl: TemplateMeta) => {
     // Check if user is authenticated
-    if (!isAuthenticated) {
+    if (!user) {
       // Store template data for after authentication
       sessionStorage.setItem('pendingTemplate', JSON.stringify({
         template: tpl.id,
