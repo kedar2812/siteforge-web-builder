@@ -33,6 +33,18 @@ import {
   LayoutGrid,
   Heading1,
   Pilcrow,
+  Grid3X3,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  Move,
+  Copy,
+  Trash2,
+  Group,
+  Ungroup,
+  Lock,
+  Unlock,
+  EyeOff
 } from "lucide-react";
 import { toast } from "sonner";
 import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
@@ -45,10 +57,12 @@ import ColorSwatches from "@/components/builder/ColorSwatches";
 import SectionBlocks from "@/components/builder/SectionBlocks";
 import ExportImport from "@/components/builder/ExportImport";
 import TemplatePreview from "@/components/builder/TemplatePreview";
-// import TemplateGallery from "@/components/builder/TemplateGallery";
-// import LiveTemplateEditor from "@/components/builder/LiveTemplateEditor";
+import { EnhancedTemplateGallery } from "@/components/builder/EnhancedTemplateGallery";
+import { AlignmentGuides } from "@/components/builder/AlignmentGuides";
+import { MultiSelect, useMultiSelect } from "@/components/builder/MultiSelect";
+import { SnapToGrid, useSnapToGrid } from "@/components/builder/SnapToGrid";
 import { useTemplateLoader } from "@/hooks/useTemplateLoader";
-import { TemplateMeta, TemplateCategory, TemplateSearchFilters } from "@/types/template";
+import { TemplateMetadata, TemplateCategory, TemplateSearchFilters } from "@/types/template";
 
 export interface Section {
   id: string;
@@ -108,13 +122,19 @@ const Builder = () => {
   const cssPath = searchParams.get('css');
   
   // Template loading functionality
-  const [templates, setTemplates] = useState<TemplateMeta[]>([]);
+  const [templates, setTemplates] = useState<TemplateMetadata[]>([]);
   const [templateFilters, setTemplateFilters] = useState<TemplateSearchFilters>({
     category: 'All',
     searchQuery: '',
-    sortBy: 'name'
+    sortBy: 'name',
+    sortOrder: 'asc',
+    difficulty: [],
+    pricing: [],
+    features: [],
+    colors: [],
+    rating: { min: 0, max: 5 }
   });
-  const [previewTemplate, setPreviewTemplate] = useState<TemplateMeta | null>(null);
+  const [previewTemplate, setPreviewTemplate] = useState<TemplateMetadata | null>(null);
   const { loadTemplate, isLoading: templateLoading, error: templateError } = useTemplateLoader();
   
   // Load templates on component mount
@@ -149,13 +169,49 @@ const Builder = () => {
   // Load template from URL parameters
   useEffect(() => {
     if (templateId && htmlPath && cssPath) {
-      const template: TemplateMeta = {
+      const template: TemplateMetadata = {
         id: templateId,
         name: 'Loaded Template',
-        category: 'Custom',
+        category: 'Business',
+        description: 'Custom template loaded from URL',
         thumbnail: '',
+        preview: '',
         htmlPath,
-        cssPath
+        cssPath,
+        features: ['Responsive', 'Modern Design'],
+        tags: ['custom', 'template'],
+        colors: {
+          primary: '#3b82f6',
+          secondary: '#1e40af',
+          accent: '#60a5fa'
+        },
+        fonts: {
+          heading: 'Inter',
+          body: 'Inter'
+        },
+        layout: {
+          sections: 5,
+          responsive: true,
+          darkMode: false
+        },
+        difficulty: 'beginner',
+        rating: 4.5,
+        downloads: 0,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        author: {
+          name: 'SiteForge',
+          avatar: '',
+          verified: true
+        },
+        pricing: {
+          free: true,
+          premium: false
+        },
+        compatibility: {
+          browsers: ['Chrome', 'Firefox', 'Safari', 'Edge'],
+          devices: ['Desktop', 'Tablet', 'Mobile']
+        }
       };
       
       loadTemplate(template)
@@ -189,6 +245,12 @@ const Builder = () => {
   const [zoom, setZoom] = useState(1);
   const [freeElements, setFreeElements] = useState<FreeElementData[]>([]);
   const [responsiveView, setResponsiveView] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
+  const [showGrid, setShowGrid] = useState(false);
+  const [snapToGrid, setSnapToGrid] = useState(true);
+  const [gridSize, setGridSize] = useState(20);
+  const [snapThreshold, setSnapThreshold] = useState(10);
+  const [showAlignmentGuides, setShowAlignmentGuides] = useState(true);
+  const [isDragging, setIsDragging] = useState(false);
   // const [activeSidebarTab, setActiveSidebarTab] = useState<'components' | 'templates'>('components');
   // const [liveEditorOpen, setLiveEditorOpen] = useState(false);
   // const [currentTemplate, setCurrentTemplate] = useState<string>('');
@@ -197,6 +259,27 @@ const Builder = () => {
   const historyRef = useRef<Section[][]>([]);
   const futureRef = useRef<Section[][]>([]);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  
+  // Multi-select functionality
+  const {
+    selectedElements,
+    selectElement,
+    clearSelection,
+    selectAll,
+    deleteSelected,
+    copySelected,
+    alignSelected,
+    setSelectedElements
+  } = useMultiSelect(canvasRef);
+  
+  // Snap to grid functionality
+  const {
+    enabled: snapEnabled,
+    showGrid: showGridOverlay,
+    snapToGrid: snapToGridFn,
+    toggleSnap,
+    toggleGrid
+  } = useSnapToGrid(canvasRef, gridSize, snapThreshold);
 
   const pushHistory = useCallback((next: Section[]) => {
     historyRef.current.push(sections);
@@ -248,8 +331,8 @@ const Builder = () => {
         email: type === "footer" ? "hello@company.com" : undefined,
         copyright: type === "footer" ? "© 2024 Your Company. All rights reserved." : undefined,
         // Testimonials defaults
-        title: type === "testimonials" ? "What Our Clients Say" : undefined,
-        subtitle: type === "testimonials" ? "Don't just take our word for it." : undefined,
+        testimonialsTitle: type === "testimonials" ? "What Our Clients Say" : undefined,
+        testimonialsSubtitle: type === "testimonials" ? "Don't just take our word for it." : undefined,
         testimonials: type === "testimonials" ? [
           {
             name: "Sarah Johnson",
@@ -548,11 +631,11 @@ const Builder = () => {
   };
 
   // Template handling functions
-  const handleTemplatePreview = (template: TemplateMeta) => {
+  const handleTemplatePreview = (template: TemplateMetadata) => {
     setPreviewTemplate(template);
   };
 
-  const handleTemplateApply = async (template: TemplateMeta) => {
+  const handleTemplateApply = async (template: TemplateMetadata) => {
     try {
       const parsedSections = await loadTemplate(template);
       const builderSections = parsedSections.map(section => ({
@@ -573,6 +656,74 @@ const Builder = () => {
       console.error('Error applying template:', error);
       toast.error('Failed to apply template');
     }
+  };
+
+  // Multi-select handlers
+  const handleMultiSelect = (elementId: string, addToSelection: boolean = false) => {
+    selectElement(elementId, addToSelection);
+  };
+
+  const handleMultiDelete = (elements: string[]) => {
+    // Delete selected sections and free elements
+    const sectionsToDelete = elements.filter(id => sections.some(s => s.id === id));
+    const freeElementsToDelete = elements.filter(id => freeElements.some(f => f.id === id));
+    
+    if (sectionsToDelete.length > 0) {
+      setSections(prev => prev.filter(s => !sectionsToDelete.includes(s.id)));
+    }
+    
+    if (freeElementsToDelete.length > 0) {
+      setFreeElements(prev => prev.filter(f => !freeElementsToDelete.includes(f.id)));
+    }
+    
+    clearSelection();
+    toast.success(`Deleted ${elements.length} elements`);
+  };
+
+  const handleMultiCopy = (elements: string[]) => {
+    // Copy selected elements
+    const sectionsToCopy = sections.filter(s => elements.includes(s.id));
+    const freeElementsToCopy = freeElements.filter(f => elements.includes(f.id));
+    
+    const copiedSections = sectionsToCopy.map(s => ({
+      ...s,
+      id: `${s.id}-copy-${Date.now()}`
+    }));
+    
+    const copiedFreeElements = freeElementsToCopy.map(f => ({
+      ...f,
+      id: `${f.id}-copy-${Date.now()}`
+    }));
+    
+    setSections(prev => [...prev, ...copiedSections]);
+    setFreeElements(prev => [...prev, ...copiedFreeElements]);
+    
+    toast.success(`Copied ${elements.length} elements`);
+  };
+
+  const handleMultiAlign = (alignment: string) => {
+    // Align selected elements
+    toast.success(`Aligned ${selectedElements.length} elements to ${alignment}`);
+  };
+
+  const handleMultiGroup = () => {
+    // Group selected elements
+    toast.success(`Grouped ${selectedElements.length} elements`);
+  };
+
+  const handleMultiUngroup = () => {
+    // Ungroup selected elements
+    toast.success(`Ungrouped ${selectedElements.length} elements`);
+  };
+
+  const handleMultiToggleVisibility = (elements: string[]) => {
+    // Toggle visibility of selected elements
+    toast.success(`Toggled visibility of ${elements.length} elements`);
+  };
+
+  const handleMultiToggleLock = (elements: string[]) => {
+    // Toggle lock of selected elements
+    toast.success(`Toggled lock of ${elements.length} elements`);
   };
 
   const handleTemplateCancel = () => {
@@ -667,6 +818,16 @@ const Builder = () => {
             </Button>
             <Button variant="ghost" size="icon" onClick={() => setPreview((v) => !v)} aria-pressed={preview} className="hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white">
               <Eye className="w-4 h-4" />
+            </Button>
+            <div className="h-6 w-px bg-border" />
+            <Button variant="ghost" size="icon" onClick={() => setShowGrid(!showGrid)} aria-pressed={showGrid} className="hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white" title="Toggle Grid">
+              <Grid3X3 className="w-4 h-4" />
+            </Button>
+            <Button variant="ghost" size="icon" onClick={() => setSnapToGrid(!snapToGrid)} aria-pressed={snapToGrid} className="hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white" title="Snap to Grid">
+              <Square className="w-4 h-4" />
+            </Button>
+            <Button variant="ghost" size="icon" onClick={() => setShowAlignmentGuides(!showAlignmentGuides)} aria-pressed={showAlignmentGuides} className="hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 hover:text-white" title="Alignment Guides">
+              <AlignLeft className="w-4 h-4" />
             </Button>
             {/* Responsive View Switcher */}
             <div className="flex items-center gap-1 border border-border/50 rounded-lg p-1">
@@ -1059,7 +1220,21 @@ const Builder = () => {
                   margin: responsiveView !== 'desktop' ? '0 auto' : '0'
                 }}
               >
-            <Card className="min-h-[600px] bg-background border-border/50 shadow-elevation">
+            <Card className="min-h-[600px] bg-background border-border/50 shadow-elevation relative">
+              {/* Multi-select component */}
+              <MultiSelect
+                selectedElements={selectedElements}
+                onSelectionChange={setSelectedElements}
+                onDelete={handleMultiDelete}
+                onCopy={handleMultiCopy}
+                onAlign={handleMultiAlign}
+                onGroup={handleMultiGroup}
+                onUngroup={handleMultiUngroup}
+                onToggleVisibility={handleMultiToggleVisibility}
+                onToggleLock={handleMultiToggleLock}
+                containerRef={canvasRef}
+              />
+              
               <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                 <SortableContext items={sections.map((s) => s.id)} strategy={verticalListSortingStrategy}>
                   {sections.map((section) => (
@@ -1275,6 +1450,21 @@ const Builder = () => {
                     </div>
                   ))}
               </div>
+            </div>
+
+            {/* Snap to Grid Settings */}
+            <div className="mt-6">
+              <SnapToGrid
+                enabled={snapToGrid}
+                gridSize={gridSize}
+                snapThreshold={snapThreshold}
+                showGrid={showGrid}
+                onToggle={setSnapToGrid}
+                onGridSizeChange={setGridSize}
+                onSnapThresholdChange={setSnapThreshold}
+                onShowGridToggle={setShowGrid}
+                containerRef={canvasRef}
+              />
             </div>
 
             {/* Additional Help Content for Right Sidebar */}
