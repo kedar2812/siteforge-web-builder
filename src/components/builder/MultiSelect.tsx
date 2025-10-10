@@ -11,8 +11,8 @@ import {
   AlignCenter, 
   AlignRight,
   AlignJustify,
-  AlignVerticalCenter,
-  AlignHorizontalCenter,
+  AlignVerticalJustifyCenter,
+  AlignHorizontalJustifyCenter,
   Group,
   Ungroup,
   Lock,
@@ -336,7 +336,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
                     onClick={() => onAlign('top')}
                     title="Align Top"
                   >
-                    <AlignVerticalCenter className="w-4 h-4" />
+                    <AlignVerticalJustifyCenter className="w-4 h-4" />
                   </Button>
                   <Button
                     variant="outline"
@@ -344,7 +344,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
                     onClick={() => onAlign('middle')}
                     title="Align Middle"
                   >
-                    <AlignHorizontalCenter className="w-4 h-4" />
+                    <AlignHorizontalJustifyCenter className="w-4 h-4" />
                   </Button>
                 </div>
 
