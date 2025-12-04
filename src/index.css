@@ -69,14 +69,14 @@ All colors MUST be HSL.
   }
 
   .dark {
-    /* Dark theme - SiteForge Brand Identity - Balanced */
-    --background: 225 45% 20%; /* Lighter navy - more balanced */
+    /* Dark theme - SiteForge Brand Identity - Navy */
+    --background: 222 84% 4%; /* Deep navy background (approx. #020617) */
     --foreground: 0 0% 100%; /* #FFFFFF - White text */
 
-    --card: 225 35% 25%; /* Lighter dark card */
+    --card: 222 47% 7%; /* Very dark navy card */
     --card-foreground: 0 0% 100%;
 
-    --popover: 225 35% 25%;
+    --popover: 222 47% 7%; /* Very dark navy popover */
     --popover-foreground: 0 0% 100%;
 
     --primary: 195 100% 50%; /* #00BFFF - Accent blue */
@@ -85,10 +85,10 @@ All colors MUST be HSL.
     --primary-glow: 217 92% 70%;
     --secondary-glow: 195 100% 50%;
 
-    --secondary: 225 30% 18%; /* Lighter dark panel */
+    --secondary: 222 47% 11%; /* Dark navy panel */
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 225 30% 18%;
+    --muted: 222 20% 18%; /* Muted navy */
     --muted-foreground: 220 30% 75%; /* #C0C8E0 - Muted text */
 
     --accent: 195 100% 50%;
@@ -97,29 +97,29 @@ All colors MUST be HSL.
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 225 25% 30%; /* Lighter borders */
-    --input: 225 25% 30%;
+    --border: 222 20% 20%; /* Navy-tinted borders */
+    --input: 222 20% 20%; /* Navy-tinted input */
     --ring: 195 100% 50%;
 
     --radius: 0.75rem;
 
-    /* SiteForge Gradients - Dark Mode - More Balanced */
-    --bg-gradient-start: 225 45% 20%; /* Lighter start */
-    --bg-gradient-end: 225 60% 30%; /* More vibrant end */
-    --gradient-primary: linear-gradient(135deg, hsl(225 45% 20%) 0%, hsl(225 60% 30%) 100%);
-    --gradient-secondary: linear-gradient(135deg, hsl(195 100% 50%) 0%, hsl(225 60% 30%) 100%);
-    --gradient-hero: linear-gradient(180deg, hsl(225 45% 20%) 0%, hsl(225 30% 18%) 100%);
+    /* SiteForge Gradients - Dark Mode - Navy Theme */
+    --bg-gradient-start: 222 84% 4%; /* Deep navy start */
+    --bg-gradient-end: 222 47% 14%; /* Slightly lighter navy end */
+    --gradient-primary: linear-gradient(135deg, hsl(222 84% 4%) 0%, hsl(222 47% 14%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(195 100% 50%) 0%, hsl(222 47% 14%) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(222 84% 4%) 0%, hsl(222 47% 11%) 100%);
     
     /* Canvas and Panel Backgrounds */
-    --canvas-bg: 225 40% 22%; /* Lighter canvas */
-    --panel-bg: 225 30% 18%; /* Lighter panel */
+    --canvas-bg: 222 84% 4%; /* Deep navy canvas */
+    --panel-bg: 222 47% 11%; /* Dark navy panel */
     
     /* Shadows */
     --shadow-glow: 0 0 40px hsl(195 100% 50% / 0.3);
-    --shadow-elevation: 0 10px 30px -10px hsl(0 0% 0% / 0.5);
+    --shadow-elevation: 0 10px 30px -10px hsl(222 84% 4% / 0.5);
     
     /* Theme color for meta tag */
-    --theme-color: #2A3F5F;
+    --theme-color: #020617;
     
     /* Animations */
     --transition-smooth: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
